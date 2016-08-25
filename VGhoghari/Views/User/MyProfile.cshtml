@@ -1,0 +1,312 @@
+﻿@model VGhoghari.Models.UserTO
+@using VGhoghari.AppCodes.Enum;
+
+@{
+  ViewBag.Title = Model.Fullname + "\'s Profile";
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+          <li class="active">User</li>
+          <li class="active">Profile</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1>User Profile</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h2 class="post-title">
+              Hello @Model.Fullname!
+            </h2>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div class="tabs">
+                  <ul class="nav nav-tabs">
+                    <li class="active"> <a data-toggle="tab" href="#basic-info"> Basic Info </a> </li>
+                    <li> <a data-toggle="tab" href="#account-info"> Account Info </a> </li>
+                    <li> <a data-toggle="tab" href="#contact-info"> Contact Info </a> </li>
+                    <li> <a data-toggle="tab" href="#address-info"> Address Info </a> </li>
+                    @Html.ActionLink("Edit Profile", "EditProfile", "User", null, new { @class = "btn btn-info pull-right" })
+                  </ul>
+                  <div class="tab-content">
+                    <div id="basic-info" class="tab-pane active">
+                      <div class="row">
+                        <div class="col-md-4 margin-15">
+                          @if (!string.IsNullOrWhiteSpace(Model.ProfileImage)) {
+                            <img id="profile-image" src="@Url.Content("~/AppData/profile_image/" + Model.ProfileImage)" class="img-thumbnail" />
+                          }
+                          else {
+                            <img id="profile-image" src="http://placehold.it/300x300&amp;text=Profile Image" alt="Profile Image" class="img-thumbnail" />
+                          }
+                        </div>
+                        <div class="col-md-8">
+                          <section class="counters padding-tb45 accent-color text-align-center">
+                            <div class="row">
+                              <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="fact-ico">
+                                  @if (Model.Gender == enGender.Male) {
+                                    <i class="fa fa-male fa-4x"></i>
+                                  }
+                                  else if (Model.Gender == enGender.Female) {
+                                    <i class="fa fa-female fa-4x"></i>
+                                  }
+                                  else {
+                                    <i class="fa fa-genderless fa-4x"></i>
+                                  }
+                                </div>
+                                <div class="clearfix"></div>
+                                @if (Model.Gender != enGender.UnSpecified) {
+                                  <div class="timer"> <span class="custom-timer">@Model.Gender</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">Gender</span>
+                              </div>
+                              <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="fact-ico"> <i class="fa fa-birthday-cake fa-4x"></i> </div>
+                                <div class="clearfix"></div>
+                                @if (Model.Dob.HasValue && Model.Dob.Value.Date.Year != 1870) {
+                                  <div class="timer"> <span class="custom-timer">@Model.Dob.Value.Date.Day-@Model.Dob.Value.Date.Month-@Model.Dob.Value.Date.Year</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">Date of Birth</span>
+                              </div>
+                              <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="fact-ico"> <i class="fa fa-group fa-4x"></i> </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.Religion)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.Religion</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">Religion/Caste</span>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="account-info" class="tab-pane">
+                      <div class="row">
+                        <div class="col-md-12 margin-15">
+                          <section class="counters padding-tb45 accent-color text-align-center">
+                            <div class="row">
+                              <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="fact-ico">
+                                  <i class="fa fa-sign-in fa-4x"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="timer"> <span class="custom-timer">@Model.Username</span> </div>
+                                <div class="clearfix"></div>
+                                <span class="fact">Username</span>
+                              </div>
+                              <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="fact-ico"> <i class="fa fa-user-secret fa-4x"></i> </div>
+                                <div class="clearfix"></div>
+                                <div class="timer"> <span class="custom-timer">@Model.Code</span> </div>
+                                <div class="clearfix"></div>
+                                <span class="fact">User Code</span>
+                              </div>
+                              <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="fact-ico"> <i class="fa fa-calendar fa-4x"></i> </div>
+                                <div class="clearfix"></div>
+                                <div class="timer"><span class="custom-timer">@Model.EffectiveFrom.Date.Day-@Model.EffectiveFrom.Date.Month-@Model.EffectiveFrom.Date.Year</span></div>
+                                <div class="clearfix"></div>
+                                <span class="fact">Active Since</span>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="contact-info" class="tab-pane">
+                      <div class="row">
+                        <div class="col-md-12 margin-15">
+                          <section class="counters padding-tb45 accent-color text-align-center">
+                            <div class="row">
+                              <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="fact-ico">
+                                  <i class="fa fa-mobile-phone fa-4x"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.MobileNumber)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.MobileNumber</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+
+                                <div class="clearfix"></div>
+                                <span class="fact">Mobile Number</span>
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="fact-ico">
+                                  <i class="fa fa-envelope fa-4x"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.EmailId)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.EmailId</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+
+                                <div class="clearfix"></div>
+                                <span class="fact">Email Id</span>
+                              </div>
+                              <div class="clearfix"></div>
+                              <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="fact-ico">
+                                  <i class="fa fa-phone fa-4x"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.LandlineNumber)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.LandlineNumber</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+
+                                <div class="clearfix"></div>
+                                <span class="fact">Landline Number</span>
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="fact-ico">
+                                  <i class="fa fa-facebook-official fa-4x"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.FacebookUrl)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.FacebookUrl</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+
+                                <div class="clearfix"></div>
+                                <span class="fact">Facebook Profile</span>
+                              </div>
+                              <div class="clearfix"></div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="address-info" class="tab-pane">
+                      <div class="row">
+                        <div class="col-md-12 margin-15">
+                          <section class="counters padding-tb45 accent-color text-align-center">
+                            <div class="row">
+                              <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="fact-ico">
+                                  <i class="fa fa-road fa-4x"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.Address)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.Address</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">Address</span>
+                              </div>
+                              <div class="clearfix"></div>
+                              <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="fact-ico">
+                                  <i class="fa fa-map-marker fa-4x"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.Pincode)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.Pincode</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">Pincode</span>
+                              </div>
+                              <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="fact-ico"> <i class="fa fa-train fa-4x"></i> </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.City)) {
+                                  <div class="timer"> <span class="custom-timer">@Model.City</span> </div>
+                                }
+                                else {
+                                  <div class="timer"> <span>...</span> </div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">City</span>
+                              </div>
+                              <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="fact-ico"> <i class="fa fa-street-view fa-4x"></i> </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.State)) {
+                                  <div class="timer"><span class="custom-timer">@Model.State</span></div>
+                                }
+                                else {
+                                  <div class="timer"><span>...</span></div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">State</span>
+                              </div>
+                              <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="fact-ico"> <i class="fa fa-globe fa-4x"></i> </div>
+                                <div class="clearfix"></div>
+                                @if (!string.IsNullOrWhiteSpace(Model.Country)) {
+                                  <div class="timer"><span class="custom-timer">@Model.Country</span></div>
+                                }
+                                else {
+                                  <div class="timer"><span>...</span></div>
+                                }
+                                <div class="clearfix"></div>
+                                <span class="fact">Country</span>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using VGhoghari.AppCodes.Utilities;
 
 namespace VGhoghari {
   public class WebApiApplication : System.Web.HttpApplication {
@@ -15,6 +16,10 @@ namespace VGhoghari {
       FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       BundleConfig.RegisterBundles(BundleTable.Bundles);
+    }
+
+    protected void Application_AuthenticateRequest(Object sender, EventArgs e) {
+      FormsAuthenticationUtils.AttachRolesToUser();
     }
   }
 }

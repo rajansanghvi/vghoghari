@@ -17,7 +17,7 @@
     <AssemblyName>VGhoghari</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -108,6 +108,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -170,12 +171,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AppData\profile_image\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="images\page_headers\" />
     <Folder Include="Theme\audio\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCodes\Business_Layer\UserBL.cs" />
+    <Compile Include="AppCodes\Data_Layer\GlobalDL.cs" />
+    <Compile Include="AppCodes\Data_Layer\UserDL.cs" />
+    <Compile Include="AppCodes\Enum\enGender.cs" />
+    <Compile Include="AppCodes\Utilities\FilterTO.cs" />
+    <Compile Include="AppCodes\Utilities\FormsAuthenticationUtils.cs" />
+    <Compile Include="AppCodes\Utilities\Utility.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -209,11 +217,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MediaTO.cs" />
+    <Compile Include="Models\UserTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +236,18 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="plugins\bootstrap-datetimepicker-master\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="plugins\bootstrap-datetimepicker-master\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="plugins\bootstrap-fileinput-master\css\fileinput.min.css" />
+    <Content Include="plugins\bootstrap-fileinput-master\js\canvas-to-blob.min.js" />
+    <Content Include="plugins\bootstrap-fileinput-master\js\fileinput.min.js" />
+    <Content Include="plugins\bootstrap-select-1.10.0\css\bootstrap-select.min.css" />
+    <Content Include="plugins\bootstrap-select-1.10.0\js\bootstrap-select.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\validations\constants.js" />
+    <Content Include="Scripts\validations\login.js" />
+    <Content Include="Scripts\validations\userProfile.js" />
+    <Content Include="Scripts\validations\validation.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -269,6 +292,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\validations\register.js" />
     <Content Include="Theme\colors\color1.css" />
     <Content Include="Theme\colors\color10.css" />
     <Content Include="Theme\colors\color2.css" />
@@ -295,7 +319,6 @@
     <Content Include="Theme\images\assets\error.gif" />
     <Content Include="Theme\images\assets\success.gif" />
     <Content Include="Theme\images\checkers.png" />
-    <Content Include="Theme\images\loader.gif" />
     <Content Include="Theme\images\logo%402x.png" />
     <Content Include="Theme\images\logo.png" />
     <Content Include="Theme\images\pattern.png" />
@@ -314,6 +337,7 @@
     <Content Include="Theme\images\patterns\pt7.png" />
     <Content Include="Theme\images\patterns\pt8.png" />
     <Content Include="Theme\images\patterns\pt9.png" />
+    <Content Include="Theme\images\loader.gif" />
     <Content Include="Theme\js\bootstrap.js" />
     <Content Include="Theme\js\helper-plugins.js" />
     <Content Include="Theme\js\init.js" />
@@ -561,6 +585,10 @@
     <Content Include="Theme\plugins\rs-plugin\images\.DS_Store" />
     <Content Include="Theme\plugins\rs-plugin\js\.DS_Store" />
     <Content Include="Theme\plugins\.DS_Store" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\MyProfile.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -587,7 +615,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61145</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61145/</IISUrl>
+          <IISUrl>http://localhost:61145</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

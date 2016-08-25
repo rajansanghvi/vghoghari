@@ -1,0 +1,240 @@
+﻿@{
+  ViewBag.Title = "Update Your Profile Details";
+}
+
+@section css{
+  @Styles.Render("~/plugins/bootstrap-select-1.10.0/css/bootstrap-select.min.css")
+  @Styles.Render("~/plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css")
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+          <li class="active">User</li>
+          <li class="active">Profile</li>
+          <li class="active">Edit</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1>Edit Profile</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 margin-15">
+          <header class="single-post-header clearfix">
+            <h2 class="post-title">Update Your Profile Details.</h2>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details to update your profile.
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message">
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12 margin-15">
+                    <h4 class="post-title">Basic Info</h4>
+                  </div>
+                  <div class="clearfix"></div>
+
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-md-12 margin-15">
+                        <img id="profile-image" src="http://placehold.it/300x300&amp;text=Profile Image" alt="Profile Image" class="img-thumbnail" />
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-md-12">
+                        <div class="input-group">
+                          <label class="input-group-btn">
+                            <span class="btn btn-primary">
+                              Browse<input type="file" id="user-profile-image" name="user-profile-image" style="display: none;">
+                            </span>
+                          </label>
+                          <input type="text" class="form-control input-sm" readonly>
+                        </div>
+                        <span id="image-upload-info">
+                          Please select an image in either .jpg, .jpeg, .png or.gif format.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group text-align-left">
+                          <label for="fullname" class="control-label">Full Name:<span class="red">*</span></label>
+                          <input type="text" id="fullname" name="fullname" class="form-control input-sm" />
+                          <div id="fullname-error" class="text-danger text-justify"></div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group text-align-left">
+                          <label for="religion" class="control-label">Religion/Caste:</label>
+                          <input type="text" id="religion" name="religion" class="form-control input-sm" />
+                          <div id="religion-error" class="text-danger text-justify"></div>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+
+                      <div class="col-md-6">
+                        <div class="form-group text-align-left">
+                          <label for="gender" class="control-label">Gender:</label>
+                          <select id="gender" name="gender" class="form-control input-sm selectpicker">
+                            <option value="0">Select One</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                          </select>
+                          <div id="gender-error" class="text-danger text-justify"></div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group text-align-left">
+                          <label for="dob" class="control-label">Date of Birth:</label>
+                          <input type="text" id="dob" name="dob" class="form-control input-sm" />
+                          <div id="dob-error" class="text-danger text-justify"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                  <div class="col-md-12 margin-15">
+                    <h4 class="post-title">Contact Info</h4>
+                  </div>
+                  <div class="clearfix"></div>
+
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="landline-no" class="control-label">Landline Number:</label>
+                      <input type="text" id="landline-no" name="landline-no" class="form-control input-sm" />
+                      <div id="landline-no-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="mobile-no" class="control-label">Mobile Number:<span class="red">*</span></label>
+                      <input type="text" id="mobile-no" name="mobile-no" class="form-control input-sm" />
+                      <div id="mobile-no-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="email-id" class="control-label">Email Id:</label>
+                      <input type="text" id="email-id" name="email-id" class="form-control input-sm" />
+                      <div id="email-id-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="facebook-url" class="control-label">Facebook Url:</label>
+                      <input type="text" id="facebook-url" name="facebook-url" class="form-control input-sm" />
+                      <div id="facebook-url-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <hr />
+
+                <div class="row">
+                  <div class="col-md-12 margin-15">
+                    <h4 class="post-title">Address Info</h4>
+                  </div>
+                  <div class="clearfix"></div>
+
+                  <div class="col-md-12">
+                    <div class="form-group text-align-left">
+                      <label for="landline-no" class="control-label">Address:</label>
+                      <textarea id="address" name="address" class="form-control input-sm"></textarea>
+                      <div id="address-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="pincode" class="control-label">Pincode:</label>
+                      <input type="text" id="pincode" name="pincode" class="form-control input-sm" />
+                      <div id="pincode-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="city" class="control-label">City:</label>
+                      <input type="text" id="city" name="city" class="form-control input-sm" />
+                      <div id="city-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="state" class="control-label">State:</label>
+                      <input type="text" id="state" name="state" class="form-control input-sm" />
+                      <div id="state-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group text-align-left">
+                      <label for="coountry" class="control-label">Country:</label>
+                      <input type="text" id="country" name="country" class="form-control input-sm" />
+                      <div id="country-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Update Profile">
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="col-md-12">
+                    <h6>
+                      @Html.ActionLink("Go back to view your profile.", "MyProfile", "User", null, new { @class = "pull-right" })
+                    </h6>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts{
+  @Scripts.Render("~/Scripts/moment.js")
+  @Scripts.Render("~/plugins/bootstrap-select-1.10.0/js/bootstrap-select.min.js")
+  @Scripts.Render("~/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js")
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/Validation.js")
+  @Scripts.Render("~/Scripts/validations/userProfile.js")
+}

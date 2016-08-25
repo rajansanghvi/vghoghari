@@ -4,7 +4,7 @@
   <!-- Basic Page Needs
   ================================================== -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>VGhoghari.org : Shree Visha Shrimali Ghoghari Mahila Federation</title>
+  <title>@ViewBag.Title - VGhoghari.org : Shree Visha Shrimali Ghoghari Mahila Federation</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="Rajan Sanghvi">
@@ -20,6 +20,9 @@
   @Styles.Render("~/Theme/plugins/mediaelement/mediaelementplayer.css")
   @Styles.Render("~/Theme/css/style.css")
   @Styles.Render("~/Theme/plugins/prettyphoto/css/prettyPhoto.css")
+
+  @RenderSection("css", required: false)
+
   <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href=" @Url.Content("~/Theme/css/ie8.css")" media="screen" /><![endif]-->
   <!-- Color Style -->
   @Styles.Render("~/Theme/colors/color1.css")
@@ -35,6 +38,7 @@
   <![endif]-->
 
   <div class="body">
+    <div class="se-pre-con"></div>
     <!-- Start Site Header -->
     <header class="site-header">
       <div class="topbar">
@@ -45,8 +49,14 @@
             </div>
             <div class="col-md-8 col-sm-6 col-xs-4">
               <ul class="top-navigation hidden-sm hidden-xs">
-                <li>@Html.ActionLink("Register", "Register", "User")</li>
-                <li><a href="events-calendar.html">Calendar</a></li>
+                @if (User.Identity.IsAuthenticated) {
+                  <li>@Html.ActionLink("My Profile", "MyProfile", "User")</li>
+                  <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                }
+                else {
+                  <li>@Html.ActionLink("Register", "Register", "User")</li>
+                  <li>@Html.ActionLink("Login", "Login", "User")</li>
+                }
                 <li><a href="donate.html">Donate Now</a></li>
               </ul>
               <a href="#" class="visible-sm visible-xs menu-toggle"><i class="fa fa-bars"></i></a>
@@ -105,7 +115,7 @@
                           <div class="row">
                             <div class="col-md-3 hidden-sm hidden-xs">
                               <span class="megamenu-sub-title"><i class="fa fa-bell"></i> Today's Prayer</span>
-                              <iframe width="200" height="150" src="http://player.vimeo.com/video/19564018?title=0&amp;byline=0&amp;color=007F7B"></iframe>
+                              @*<iframe width="200" height="150" src="http://player.vimeo.com/video/19564018?title=0&amp;byline=0&amp;color=007F7B"></iframe>*@
                             </div>
                             <div class="col-md-3">
                               <span class="megamenu-sub-title"><i class="fa fa-pagelines"></i> Our Ministries</span>
@@ -263,5 +273,18 @@
   @Scripts.Render("~/Theme/plugins/countdown/js/jquery.countdown.min.js")<!-- Jquery Timer -->
 
   @RenderSection("scripts", false)
+
+  <script>
+    $(window).load(function () {
+      // Animate loader off screen
+      $(".se-pre-con").fadeOut("slow");;
+    });
+
+    $('.se-pre-con').bind('ajaxStart', function () {
+      $(this).show();
+    }).bind('ajaxStop', function () {
+      $(this).hide();
+    });
+  </script>
 </body>
 </html>

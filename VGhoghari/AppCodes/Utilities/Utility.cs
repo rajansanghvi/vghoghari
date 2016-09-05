@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Web;
+using VGhoghari.AppCodes.Business_Layer;
 
 namespace VGhoghari.AppCodes.Utilities {
   public static class Utility {
@@ -64,6 +65,17 @@ namespace VGhoghari.AppCodes.Utilities {
       get {
         try {
           return Thread.CurrentPrincipal.Identity.IsAuthenticated;
+        }
+        catch (Exception) {
+          return false;
+        }
+      }
+    }
+
+    public static bool isUserActive {
+      get {
+        try {
+          return UserBL.isUserActive(CurrentUser);
         }
         catch (Exception) {
           return false;

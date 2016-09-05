@@ -1,0 +1,272 @@
+﻿@{
+  ViewBag.Title = "Create Your Biodata Online And Register As A Bride Or A Groom";
+}
+
+@section css{
+  @Styles.Render("~/plugins/bootstrap-select-1.10.0/css/bootstrap-select.min.css")
+  @Styles.Render("~/plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css")
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax" style="background-image:url(@Url.Content("~/images/page_headers/biodata_page_header.jpg"));">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300;" })</li>
+          <li class="active" style="color: #BA6E0B">Matrimonial</li>
+          <li class="active" style="color: #BA6E0B">Create Biodata</li>
+          <li class="active" style="color: #BA6E0B">Basic Info</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="color: #EDA159">Create Biodata</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title" style="color: #eea546;">Register As A Bride Or A Groom</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details and register yourselves as a bride or a groom.</h6>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message" class="alert alert-error fade in hide">
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Basic Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="gender" class="control-label thin-label required">Register As: <span class="red">*</span></label>
+                  <select id="gender" name="gender" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="2">Bride</option>
+                    <option value="1">Groom</option>
+                  </select>
+                  <div id="gender-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label for="fullname" class="control-label thin-label required">Full Name: <span class="red">*</span></label>
+                  <input type="text" id="fullname" name="fullname" class="form-control input-sm" />
+                  <div id="fullname-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="dob" class="control-label thin-label required">Date of Birth: <span class="red">*</span></label>
+                  <input type="text" id="dob" name="dob" class="form-control input-sm" />
+                  <div id="dob-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="birthtime" class="control-label thin-label">Birth Time:</label>
+                  <input type="text" id="birthtime" name="birthtime" class="form-control input-sm" />
+                  <div id="birthtime-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="age" class="control-label thin-label required">Age: <span class="red">*</span></label>
+                  <input type="text" id="age" name="age" class="form-control input-sm" disabled />
+                  <div id="age-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="marital-status" class="control-label thin-label required">Marital Status: <span class="red">*</span></label>
+                  <select id="marital-status" name="marital-status" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Never Married</option>
+                    <option value="2">Engagement Broken</option>
+                    <option value="3">Seperated</option>
+                    <option value="4">Divorced</option>
+                    <option value="5">Widowed / Widower</option>
+                  </select>
+                  <div id="marital-status-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="native" class="control-label thin-label required">Native: <span class="red">*</span></label>
+                  <input type="text" id="native" name="native" class="form-control input-sm" />
+                  <div id="native-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="birth-place" class="control-label thin-label">Birth Place:</label>
+                  <input type="text" id="birth-place" name="birth-place" class="form-control input-sm" />
+                  <div id="birth-place-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="about-me" class="control-label thin-label">About Me:</label>
+                  <textarea id="about-me" name="about-me" class="form-control input-sm"></textarea>
+                  <div id="about-me-error" class="text-danger text-justify"></div>
+                </div>
+                <hr />
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Contact Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="mobile-no" class="control-label thin-label required">Mobile Number: <span class="red">*</span></label>
+                  <input type="text" id="mobile-no" name="mobile-no" class="form-control input-sm" />
+                  <div id="mobile-no-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="landline-no" class="control-label thin-label">Landline Number:</label>
+                  <input type="text" id="landline-no" name="landline-no" class="form-control input-sm" />
+                  <div id="landline-no-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="email-id" class="control-label thin-label">Email Id:</label>
+                  <input type="text" id="email-id" name="email-id" class="form-control input-sm" />
+                  <div id="email-id-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="facebook-url" class="control-label thin-label">Facebook Url:</label>
+                  <input type="text" id="facebook-url" name="facebook-url" class="form-control input-sm" />
+                  <div id="facebook-url-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-9">
+                <div class="form-group">
+                  <label for="address" class="control-label thin-label required">Address: <span class="red">*</span></label>
+                  <textarea id="address" name="address" class="form-control input-sm"></textarea>
+                  <div id="address-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="address-type" class="control-label thin-label required">Residence Status: <span class="red">*</span></label>
+                  <select id="address-type" name="address-type" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Owned</option>
+                    <option value="2">Family Owned</option>
+                    <option value="3">Rented</option>
+                    <option value="4">PG</option>
+                  </select>
+                  <div id="address-type-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="country" class="control-label thin-label required">Country: <span class="red">*</span></label>
+                  <select id="country" name="country" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" data-live-search="true">
+                    <option value="">Select One</option>
+                  </select>
+                  <div id="country-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="state" class="control-label thin-label">State:</label>
+                  <select id="state" name="state" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" data-live-search="true">
+                    <option value="">Select One</option>
+                  </select>
+                  <div id="state-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="city" class="control-label thin-label">City:</label>
+                  <select id="city" name="city" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" data-live-search="true">
+                    <option value="">Select One</option>
+                  </select>
+                  <div id="city-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pincode" class="control-label thin-label">Pincode:</label>
+                  <input type="text" id="pincode" name="pincode" class="form-control input-sm" />
+                  <div id="pincode-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Create Biodata" />
+
+                <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <h6>
+                  @Html.ActionLink("Click here to go back and manage the existing biodata", "Manage", "Matrimonial", null, new { @class = "pull-right" })
+                </h6>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts{
+  @Scripts.Render("~/Scripts/moment.js")
+  @Scripts.Render("~/plugins/bootstrap-select-1.10.0/js/bootstrap-select.min.js")
+  @Scripts.Render("~/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js")
+
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/validation.js")
+  @Scripts.Render("~/Scripts/validations/matrimonial/addBasicInfo.js")
+}

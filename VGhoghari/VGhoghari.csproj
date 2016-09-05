@@ -145,14 +145,20 @@
   <ItemGroup>
     <Folder Include="AppData\profile_image\" />
     <Folder Include="App_Data\" />
-    <Folder Include="images\page_headers\" />
     <Folder Include="Theme\audio\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCodes\Business_Layer\AppBL.cs" />
+    <Compile Include="AppCodes\Business_Layer\MatrimonialBL.cs" />
     <Compile Include="AppCodes\Business_Layer\UserBL.cs" />
+    <Compile Include="AppCodes\Data_Layer\AppDL.cs" />
     <Compile Include="AppCodes\Data_Layer\GlobalDL.cs" />
+    <Compile Include="AppCodes\Data_Layer\MatrimonialDL.cs" />
     <Compile Include="AppCodes\Data_Layer\UserDL.cs" />
+    <Compile Include="AppCodes\Enum\enAddressType.cs" />
+    <Compile Include="AppCodes\Enum\enBiodataStatus.cs" />
     <Compile Include="AppCodes\Enum\enGender.cs" />
+    <Compile Include="AppCodes\Enum\enMaritalStatus.cs" />
     <Compile Include="AppCodes\Utilities\FilterTO.cs" />
     <Compile Include="AppCodes\Utilities\FormsAuthenticationUtils.cs" />
     <Compile Include="AppCodes\Utilities\Utility.cs" />
@@ -188,13 +194,17 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AppApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MatrimonialApiController.cs" />
+    <Compile Include="Controllers\MatrimonialController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BiodataTO.cs" />
     <Compile Include="Models\MediaTO.cs" />
     <Compile Include="Models\UserTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,6 +218,9 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\page_headers\biodata_page_header.jpg" />
+    <Content Include="images\page_headers\login_page_header.jpg" />
+    <Content Include="images\page_headers\register_page_header.jpg" />
     <Content Include="plugins\bootstrap-datetimepicker-master\css\bootstrap-datetimepicker.min.css" />
     <Content Include="plugins\bootstrap-datetimepicker-master\js\bootstrap-datetimepicker.min.js" />
     <Content Include="plugins\bootstrap-fileinput-master\css\fileinput.min.css" />
@@ -217,7 +230,8 @@
     <Content Include="plugins\bootstrap-select-1.10.0\js\bootstrap-select.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\validations\constants.js" />
-    <Content Include="Scripts\validations\login.js" />
+    <Content Include="Scripts\validations\matrimonial\addBasicInfo.js" />
+    <Content Include="Scripts\validations\user\login.js" />
     <Content Include="Scripts\validations\userProfile.js" />
     <Content Include="Scripts\validations\validation.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -264,7 +278,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\validations\register.js" />
+    <Content Include="Scripts\validations\user\register.js" />
     <Content Include="Theme\colors\color1.css" />
     <Content Include="Theme\colors\color10.css" />
     <Content Include="Theme\colors\color2.css" />
@@ -561,6 +575,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\Matrimonial\AddBasicInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

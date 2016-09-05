@@ -17,6 +17,14 @@
   color: #ff0000;
 }
 
+.thin-label {
+  font-weight: 100;
+}
+
+label.required {
+  font-style:italic !important;
+}
+
 .text-justify {
   text-align: justify !important;
 }

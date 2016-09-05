@@ -219,6 +219,6 @@ function registerUser() {
     }
   }
   else {
-    $('#message').html('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
+    $('#message').append('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
   }
 }

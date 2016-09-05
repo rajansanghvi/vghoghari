@@ -10,6 +10,11 @@ using VGhoghari.Models;
 
 namespace VGhoghari.AppCodes.Business_Layer {
   public class UserBL {
+
+    public static bool isUserActive(string username) {
+      return UserDL.isUserActive(username);
+    }
+
     public static bool IsUserNameAvailable(string username) {
       return UserDL.IsUsernameAvailable(username.ToLower());
     }
@@ -44,9 +49,9 @@ namespace VGhoghari.AppCodes.Business_Layer {
       }
 
       if (string.IsNullOrWhiteSpace(data.MobileNumber)
-        || data.MobileNumber.Length < 10
+        || data.MobileNumber.Length < 4
         || data.MobileNumber.Length > 20
-        || !Regex.IsMatch(data.MobileNumber, @"^(\+)?(91)?( )?[789]\d{9}$")) {
+        || !Regex.IsMatch(data.MobileNumber, @"^(\+)?(\d){0,3}( )?\d{4,15}$")) {
         return -1;
       }
 
@@ -145,17 +150,17 @@ namespace VGhoghari.AppCodes.Business_Layer {
       }
 
       if (!string.IsNullOrWhiteSpace(data.LandlineNumber)) {
-        if (data.LandlineNumber.Length < 12
-          || data.LandlineNumber.Length > 14
-          || !Regex.IsMatch(data.LandlineNumber, @"^[0-9]{3,5}[-][0-9]{8}$")) {
+        if (data.LandlineNumber.Length < 4
+          || data.LandlineNumber.Length > 20
+          || !Regex.IsMatch(data.LandlineNumber, @"^(\+)?(\d){0,3}( )?(\d){0,3}( )?\d{4,11}$")) {
           return -1;
         }
       }
 
       if (string.IsNullOrWhiteSpace(data.MobileNumber)
-        || data.MobileNumber.Length < 10
+        || data.MobileNumber.Length < 4
         || data.MobileNumber.Length > 20
-        || !Regex.IsMatch(data.MobileNumber, @"^(\+)?(91)?( )?[789]\d{9}$")) {
+        || !Regex.IsMatch(data.MobileNumber, @"^(\+)?(\d){0,3}( )?\d{4,15}$")) {
         return -1;
       }
 

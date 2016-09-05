@@ -10,6 +10,21 @@ using VGhoghari.Models;
 
 namespace VGhoghari.AppCodes.Data_Layer {
   public class UserDL {
+
+    public static bool isUserActive(string username) {
+      const string sql = @"select 1
+                          from app_users
+                          where
+                          username = ?username
+                          and
+                          active = true;";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("username", username);
+
+      return dl.ExecuteSqlReturnScalar<int>(Utility.ConnectionString, sql) == 1 ? true : false;
+    }
+
     public static bool IsUsernameAvailable(string username) {
       const string sql = @"select 1
                           from app_users

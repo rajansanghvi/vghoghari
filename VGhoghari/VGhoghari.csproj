@@ -157,8 +157,11 @@
     <Compile Include="AppCodes\Data_Layer\UserDL.cs" />
     <Compile Include="AppCodes\Enum\enAddressType.cs" />
     <Compile Include="AppCodes\Enum\enBiodataStatus.cs" />
+    <Compile Include="AppCodes\Enum\enBodyType.cs" />
     <Compile Include="AppCodes\Enum\enGender.cs" />
+    <Compile Include="AppCodes\Enum\enBoolean.cs" />
     <Compile Include="AppCodes\Enum\enMaritalStatus.cs" />
+    <Compile Include="AppCodes\Enum\enStarSign.cs" />
     <Compile Include="AppCodes\Utilities\FilterTO.cs" />
     <Compile Include="AppCodes\Utilities\FormsAuthenticationUtils.cs" />
     <Compile Include="AppCodes\Utilities\Utility.cs" />
@@ -231,6 +234,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\validations\constants.js" />
     <Content Include="Scripts\validations\matrimonial\addBasicInfo.js" />
+    <Content Include="Scripts\validations\matrimonial\addPersonalInfo.js" />
     <Content Include="Scripts\validations\user\login.js" />
     <Content Include="Scripts\validations\userProfile.js" />
     <Content Include="Scripts\validations\validation.js" />
@@ -576,6 +580,7 @@
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
     <Content Include="Views\Matrimonial\AddBasicInfo.cshtml" />
+    <Content Include="Views\Matrimonial\AddPersonalInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -1,0 +1,359 @@
+﻿@{
+  ViewBag.Title = "Personal Info - Continue Creating Your Biodata Online And Register As A Bride Or A Groom";
+}
+
+@section css{
+  @Styles.Render("~/plugins/bootstrap-select-1.10.0/css/bootstrap-select.min.css")
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax" style="background-image:url(@Url.Content("~/images/page_headers/biodata_page_header.jpg"));">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300;" })</li>
+          <li class="active" style="color: #BA6E0B">Matrimonial</li>
+          <li class="active" style="color: #BA6E0B">Create Biodata</li>
+          <li class="active" style="color: #BA6E0B">Personal Info</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="color: #EDA159">Add Personal Info</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title" style="color: #eea546;">Continue By Adding Your Personal Info</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details and continue to register yourselves as a bride or a groom.</h6>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message" class="alert alert-error fade in hide">
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Religion Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="religion" class="control-label thin-label required">Religion: <span class="red">*</span></label>
+                  <select id="religion" name="religion" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" disabled>
+                    <option value="">Select One</option>
+                    <option value="Jain" selected>Jain</option>
+                  </select>
+                  <div id="religion-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="caste" class="control-label thin-label required">Caste: <span class="red">*</span></label>
+                  <select id="caste" name="caste" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="Digamber">Digamber</option>
+                    <option value="Digamber - Bisapantha">Digamber - Bisapantha</option>
+                    <option value="Digamber - Kanjipantha">Digamber - Kanjipantha</option>
+                    <option value="Digamber - Taranapantha">Digamber - Taranapantha</option>
+                    <option value="Digamber - Terapantha">Digamber - Terapantha</option>
+                    <option value="Digamber - Totapantha">Digamber - Totapantha</option>
+                    <option value="Jain">Jain</option>
+                    <option value="Shwetamber">Shwetamber</option>
+                    <option value="Shwetamber - Kharatara Gaccha">Shwetamber - Kharatara Gaccha</option>
+                    <option value="Shwetamber - Murtipujak">Shwetamber - Murtipujak</option>
+                    <option value="Shwetamber - Sthankavasi">Shwetamber - Sthankavasi</option>
+                    <option value="Shwetamber - TapaGaccha">Shwetamber - Tapa Gaccha</option>
+                    <option value="Vania">Vania</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div id="caste-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="sub-caste" class="control-label thin-label">Sub Caste:</label>
+                  <input type="text" id="sub-caste" name="sub-caste" class="form-control input-sm" disabled />
+                  <div id="sub-caste-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <hr />
+              </div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Social Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="manglik" class="control-label thin-label required">Manglik: <span class="red">*</span></label>
+                  <select id="manglik" name="manglik" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
+                  <div id="manglik-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="self-gothra" class="control-label thin-label">Self Gothra:</label>
+                  <input type="text" id="self-gothra" name="self-gothra" class="form-control input-sm" />
+                  <div id="self-gothra-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="maternal-gothra" class="control-label thin-label">Maternal Gothra:</label>
+                  <input type="text" id="maternal-gothra" name="maternal-gothra" class="form-control input-sm" />
+                  <div id="maternal-gothra-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="star-sign" class="control-label thin-label">Star Sign:</label>
+                  <select id="star-sign" name="star-sign" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Aries</option>
+                    <option value="2">Taurus</option>
+                    <option value="3">Gemini</option>
+                    <option value="4">Cancer</option>
+                    <option value="5">Leo</option>
+                    <option value="6">Virgo</option>
+                    <option value="7">Libra</option>
+                    <option value="8">Scorpio</option>
+                    <option value="9">Sagittarius</option>
+                    <option value="10">Capricorn</option>
+                    <option value="11">Aquarius</option>
+                    <option value="12">Pisces</option>
+                  </select>
+                  <div id="star-sign-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <hr />
+              </div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title">Physical Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="height-ft" class="control-label thin-label required">Height Ft: <span class="red">*</span></label>
+                      <select id="height-ft" name="height-ft" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                        <option value="0">Select ft</option>
+                        <option value="3">3 ft</option>
+                        <option value="4">4 ft</option>
+                        <option value="5">5 ft</option>
+                        <option value="6">6 ft</option>
+                        <option value="7">7 ft</option>
+                      </select>
+                      <div id="height-ft-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="height-inch" class="control-label thin-label required">Height Inch: <span class="red">*</span></label>
+                      <select id="height-inch" name="height-inch" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                        <option value="-1"> Select inch</option>
+                        <option value="0"> 0 inch</option>
+                        <option value="1"> 1 inch</option>
+                        <option value="2"> 2 inch</option>
+                        <option value="3"> 3 inch</option>
+                        <option value="4"> 4 inch</option>
+                        <option value="5"> 5 inch</option>
+                        <option value="6"> 6 inch</option>
+                        <option value="7"> 7 inch</option>
+                        <option value="8"> 8 inch</option>
+                        <option value="9"> 9 inch</option>
+                        <option value="10"> 10 inch</option>
+                        <option value="11"> 11 inch</option>
+                        <option value="12"> 12 inch</option>
+                      </select>
+                      <div id="height-inch-error" class="text-danger text-justify"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="weight" class="control-label thin-label">Weight(kgs):</label>
+                  <input type="text" id="weight" name="weight" class="form-control input-sm" />
+                  <div id="weight-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="blood-group" class="control-label thin-label">Blood Group:</label>
+                  <select id="blood-group" name="blood-group" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                  </select>
+                  <div id="blood-group-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="body-type" class="control-label thin-label required">Body Type: <span class="red">*</span></label>
+                  <select id="body-type" name="body-type" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Thin</option>
+                    <option value="2">Normal</option>
+                    <option value="3">Atheletic</option>
+                    <option value="4">Overweight</option>
+                  </select>
+                  <div id="body-type-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="complexion" class="control-label thin-label required">Complexion: <span class="red">*</span></label>
+                  <select id="complexion" name="complexion" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="Very Fair">Very Fair</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Weathish">Weathish</option>
+                    <option value="Medium Weathish">Medium Weathish</option>
+                    <option value="Weathish Brown">Weathish Brown</option>
+                    <option value="Dark">Dark</option>
+                  </select>
+                  <div id="complexion-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="optics" class="control-label thin-label required">Optics: <span class="red">*</span></label>
+                  <select id="optics" name="optics" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
+                  <div id="optics-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="diet" class="control-label thin-label required">Diet: <span class="red">*</span></label>
+                  <select id="diet" name="diet" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="Jain">Jain</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Eggitarian">Eggetarian</option>
+                    <option value="Non Vegetarian">Non Vegetarian</option>
+                  </select>
+                  <div id="diet-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="smoke" class="control-label thin-label required">Smoke: <span class="red">*</span></label>
+                  <select id="smoke" name="smoke" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="Never">Never</option>
+                    <option value="Occasionally">Occasionally</option>
+                    <option value="Regularly">Regularly</option>
+                    <option value="Social">Social</option>
+                  </select>
+                  <div id="smoke-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="drink" class="control-label thin-label required">Drink: <span class="red">*</span></label>
+                  <select id="drink" name="drink" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="Never">Never</option>
+                    <option value="Occasionally">Occasionally</option>
+                    <option value="Regularly">Regularly</option>
+                    <option value="Addicted">Addicted</option>
+                  </select>
+                  <div id="drink-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="deformity" class="control-label thin-label">Deformity:</label>
+                  <textarea id="deformity" name="deformity" class="form-control input-sm"></textarea>
+                  <div id="deformity-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Create Biodata" />
+
+                <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <h6>
+                  @Html.ActionLink("Click here to go back and manage the existing biodata", "Manage", "Matrimonial", null, new { @class = "pull-right" })
+                </h6>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts{
+  @Scripts.Render("~/plugins/bootstrap-select-1.10.0/js/bootstrap-select.min.js")
+
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/validation.js")
+  @Scripts.Render("~/Scripts/validations/matrimonial/addPersonalInfo.js")
+}

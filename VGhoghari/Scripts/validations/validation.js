@@ -19,6 +19,13 @@ function validateDropdown(content) {
   return '';
 }
 
+function validateDropdownAllowingZero(content) {
+  if (content === undefined || content === null || content === '' || content.length === 0 || content == -1) {
+    return 'This is a required field.';
+  }
+  return '';
+}
+
 function validateFullName(content) {
   if (content === undefined || content === null || content === '' || content.length === 0) {
     return 'This is a required field.';
@@ -104,6 +111,19 @@ function validateOptionalReligion(content) {
     }
     return '';
   }
+  return '';
+}
+
+function validateReligion(content) {
+  if (content === undefined || content === null || content === '' || content.length === 0) {
+    return 'This is a required field';
+  }
+  else if (content.length > 200) {
+    return 'This field can consists of a maximum of 200 characters.';
+  }
+  else if (!content.match(religionPattern)) {
+    return 'This field should have atleast one letter or a number. It can not consists of the following special charaters (`, ~, ^, , { }, [ ], <>, \\, |).';
+   }
   return '';
 }
 
@@ -289,4 +309,13 @@ function validateImageType(fileName) {
     return blnValid;
   }
   return false;
+}
+
+function validateOptionalNumberField(content) {
+  if(content !== undefined && content !== null && content !== '' && content.length > 0) {
+    if(isNaN(content)){
+      return 'This is not a valid number.';
+    }
+  }
+  return '';
 }

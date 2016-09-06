@@ -13,6 +13,10 @@ namespace VGhoghari.Models {
       this.Code = string.Empty;
       this.BasicInfo = null;
       this.ContactInfo = null;
+
+      this.ReligionInfo = null;
+      this.SocialInfo = null;
+      this.PhysicalInfo = null;
     }
 
     [JsonIgnore]
@@ -21,6 +25,10 @@ namespace VGhoghari.Models {
 
     public BasicInfoTO BasicInfo { get; set; }
     public ContactInfoTO ContactInfo { get; set; }
+
+    public ReligionInfoTO ReligionInfo { get; set; }
+    public SocialInfoTO SocialInfo { get; set; }
+    public PhysicalInfoTO PhysicalInfo { get; set; }
   }
 
   public class BasicInfoTO {
@@ -75,5 +83,62 @@ namespace VGhoghari.Models {
     public string State { get; set; }
     public string City { get; set; }
     public string Pincode { get; set; }
+  }
+
+  public class ReligionInfoTO {
+
+    public ReligionInfoTO() {
+      this.Religion = string.Empty;
+      this.Caste = string.Empty;
+      this.SubCaste = string.Empty;
+    }
+
+    public string Religion { get; set; }
+    public string Caste { get; set; }
+    public string SubCaste { get; set; }
+  }
+
+  public class SocialInfoTO {
+
+    public SocialInfoTO() {
+      this.Manglik = enBoolean.UnSpecified;
+      this.SelfGothra = string.Empty;
+      this.MaternalGothra = string.Empty;
+      this.StarSign = enStarSign.UnSpecified;
+    }
+
+    public enBoolean Manglik { get; set; }
+    public string SelfGothra { get; set; }
+    public string MaternalGothra { get; set; }
+    public enStarSign StarSign { get; set; }
+  }
+
+  public class PhysicalInfoTO {
+
+    public PhysicalInfoTO() {
+      this.HeightFt = 0;
+      this.HeightInch = -1;
+      this.Weight = 0;
+      this.BodyType = enBodyType.UnSpecified;
+      this.BloodGroup = string.Empty;
+      this.Complexion = string.Empty;
+      this.Diet = string.Empty;
+      this.Smoke = string.Empty;
+      this.Drink = string.Empty;
+      this.Optics = enBoolean.UnSpecified;
+      this.Deformity = string.Empty;
+    }
+
+    public int HeightFt { get; set; }
+    public int HeightInch { get; set; }
+    public int Weight { get; set; }
+    public enBodyType BodyType { get; set; }
+    public string BloodGroup { get; set; }
+    public string Complexion { get; set; }
+    public string Diet { get; set; }
+    public string Smoke { get; set; }
+    public string Drink { get; set; }
+    public enBoolean Optics { get; set; }
+    public string Deformity { get; set; }
   }
 }

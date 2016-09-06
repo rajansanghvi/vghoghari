@@ -10,6 +10,10 @@ using VGhoghari.Models;
 namespace VGhoghari.AppCodes.Business_Layer {
   public class MatrimonialBL {
 
+    public static bool IsMyBiodata(string code) {
+      return MatrimonialDL.IsMyBiodata(code);
+    }
+
     public static BiodataTO GetBasicInfo(string code) {
       return MatrimonialDL.FetchBasicInfo(code);
     }
@@ -113,6 +117,73 @@ namespace VGhoghari.AppCodes.Business_Layer {
     }
 
     public static KeyValuePair<int, string> SaveBasicInfo(BiodataTO data) {
+      int validationResponse = ValidateBasicInfo(data);
+      if (validationResponse == 0) {
+        if (string.IsNullOrWhiteSpace(data.Code)) {
+          data.Code = Guid.NewGuid().ToString();
+        }
+        else {
+          if (!MatrimonialDL.IsMyBiodata(data.Code)) {
+            return new KeyValuePair<int, string>(-3, string.Empty);
+          }
+        }
+        int id = MatrimonialDL.SaveBasicInfo(data);
+        if (id > 0) {
+          return new KeyValuePair<int, string>(validationResponse, data.Code);
+        }
+        // Some issue in saving details hence failed
+        return new KeyValuePair<int, string>(-2, string.Empty);
+      }
+
+      //validation failed hence -1
+      return new KeyValuePair<int, string>(validationResponse, string.Empty);
+    }
+
+    private static int ValidatePersonalInfo(BiodataTO data) {
+      if (string.IsNullOrWhiteSpace(data.ReligionInfo.Religion)) {
+        return -1;
+      }
+      if (string.IsNullOrWhiteSpace(data.ReligionInfo.Caste)) {
+        return -1;
+      }
+      else {
+        if (string.Equals(data.ReligionInfo.Caste.ToLower(), "other")) {
+          if (string.IsNullOrWhiteSpace(data.ReligionInfo.SubCaste)
+            || data.ReligionInfo.SubCaste.Length > 200
+            || !Regex.IsMatch(data.ReligionInfo.SubCaste, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+            return -1;
+          }
+        }
+      }
+
+      if (data.SocialInfo.Manglik == enBoolean.UnSpecified) {
+        return -1;
+      }
+      if (!string.IsNullOrWhiteSpace(data.SocialInfo.SelfGothra)) {
+        if (data.SocialInfo.SelfGothra.Length > 200
+          || !Regex.IsMatch(data.SocialInfo.SelfGothra, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+      if (!string.IsNullOrWhiteSpace(data.SocialInfo.MaternalGothra)) {
+        if (data.SocialInfo.MaternalGothra.Length > 200
+          || !Regex.IsMatch(data.SocialInfo.MaternalGothra, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if (data.PhysicalInfo.HeightFt <= 0) {
+        return -1;
+      }
+
+      if (data.PhysicalInfo.HeightInch < 0) {
+        return -1;
+      }
+
+      if(data.wei)
+    }
+
+    public static KeyValuePair<int, string> SavePersonalInfo(BiodataTO data) {
       int validationResponse = ValidateBasicInfo(data);
       if (validationResponse == 0) {
         if (string.IsNullOrWhiteSpace(data.Code)) {

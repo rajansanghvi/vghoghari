@@ -492,12 +492,12 @@ function optionalPincodeValidation() {
 }
 
 function resetData() {
-  $('#gender').selectpicker('val', '0')
+  $('#gender').selectpicker('val', '0');
   $('#fullname').val('');
   $('#dob').val('');
   $('#birthtime').val('');
   $('#age').val('');
-  $('#marital-status').selectpicker('val', '0')
+  $('#marital-status').selectpicker('val', '0');
   $('#native').val('');
   $('#birth-place').val('');
   $('#about-me').val('');

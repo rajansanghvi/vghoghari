@@ -98,5 +98,83 @@ namespace VGhoghari.Controllers {
       }
       return InternalServerError();
     }
+
+    [HttpPost]
+    [Authorize(Roles = "user")]
+    public IHttpActionResult SavePersonalInfo(dynamic data) {
+      if (!Utility.isUserActive) {
+        return Unauthorized();
+      }
+
+      string code = data.Code;
+
+      string religion = data.Religion;
+      string caste = data.Caste;
+      string subCaste = data.SubCaste;
+      
+      int manglik = data.Manglik;
+      string selfGothra = data.SelfGothra;
+      string maternalGothra = data.MaternalGothra;
+      int starSign = data.StarSign;
+
+
+      int heightFt = data.HeightFt;
+      int heightInch = data.HeightInch;
+
+      int weight = data.Weight;
+      string bloodGroup = data.BloodGroup;
+      int bodyType = data.BodyType;
+      string complexion = data.Complexion;
+      int optics = data.Optics;
+      string diet = data.Diet;
+      string smoke = data.Smoke;
+      string drink = data.Drink;
+      string deformity = data.Deformity;
+
+      ReligionInfoTO religionInfo = new ReligionInfoTO();
+      religionInfo.Religion = religion;
+      religionInfo.Caste= caste;
+      religionInfo.SubCaste= subCaste;
+
+      SocialInfoTO socialInfo = new SocialInfoTO();
+      socialInfo.Manglik = (enBoolean)manglik;
+      socialInfo.SelfGothra = selfGothra;
+      socialInfo.MaternalGothra = maternalGothra;
+      socialInfo.StarSign = (enStarSign)starSign;
+
+      PhysicalInfoTO physicalInfo = new PhysicalInfoTO();
+      physicalInfo.HeightFt = heightFt;
+      physicalInfo.HeightInch = heightInch;
+      physicalInfo.Weight = weight;
+      physicalInfo.BloodGroup = bloodGroup;
+      physicalInfo.BodyType = (enBodyType)bodyType;
+      physicalInfo.Complexion = complexion;
+      physicalInfo.Optics = (enBoolean)optics;
+      physicalInfo.Diet = diet;
+      physicalInfo.Smoke = smoke;
+      physicalInfo.Drink = drink;
+      physicalInfo.Deformity = deformity;
+
+      BiodataTO biodata = new BiodataTO();
+      biodata.Code = code;
+      biodata.ReligionInfo = religionInfo;
+      biodata.SocialInfo= socialInfo;
+      biodata.PhysicalInfo = physicalInfo;
+
+      KeyValuePair<int, string> response = MatrimonialBL.SavePersonalInfo(biodata);
+      if (response.Key == -2) {
+        return InternalServerError();
+      }
+      else if (response.Key == -1) {
+        return BadRequest();
+      }
+      else if (response.Key == -3) {
+        return ResponseMessage(Request.CreateResponse(HttpStatusCode.Forbidden));
+      }
+      else if (response.Key == 0) {
+        return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, response.Value));
+      }
+      return InternalServerError();
+    }
   }
 }

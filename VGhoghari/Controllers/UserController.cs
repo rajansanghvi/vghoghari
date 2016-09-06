@@ -10,14 +10,13 @@ using VGhoghari.Models;
 
 namespace VGhoghari.Controllers {
   public class UserController : Controller {
-
     /// <summary>
     /// End point to show the User Registration Page 
     /// </summary>
     /// <returns></returns>
     [HttpGet]
     public ActionResult Register() {
-      if (Utility.IsUserLoggedIn) {
+      if(Utility.IsUserLoggedIn) {
         return RedirectToAction("Index", "Home");
       }
       return View();
@@ -25,7 +24,7 @@ namespace VGhoghari.Controllers {
 
     [HttpGet]
     public ActionResult Login() {
-      if (Utility.IsUserLoggedIn) {
+      if(Utility.IsUserLoggedIn) {
         return RedirectToAction("Index", "Home");
       }
       return View();
@@ -40,7 +39,7 @@ namespace VGhoghari.Controllers {
     [HttpGet]
     [Authorize(Roles = "user")]
     public ActionResult MyProfile() {
-      if (!Utility.IsUserLoggedIn) {
+      if(!Utility.IsUserLoggedIn) {
         FormsAuthenticationUtils.RedirectToLoginPage();
       }
       UserTO userTO = UserBL.GetUserProfileOfCurrentUser();

@@ -213,6 +213,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppCodes\Database\initial_scripts.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_app_create_default_admin.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_save_basic_biodata_info.sql" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -520,7 +523,9 @@
     <Content Include="Theme\plugins\rs-plugin\js\jquery.themepunch.revolution.js" />
     <Content Include="Theme\plugins\rs-plugin\js\jquery.themepunch.revolution.min.js" />
     <Content Include="Theme\plugins\rs-plugin\js\jquery.themepunch.tools.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

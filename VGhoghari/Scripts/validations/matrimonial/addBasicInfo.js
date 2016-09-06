@@ -45,7 +45,7 @@ $(document).ready(function () {
       }));
     });
 
-    //$('#country').selectpicker('refresh');
+    $('#country').selectpicker('refresh');
   });
 
   $('#country').on('hidden.bs.select', function (e) {
@@ -269,6 +269,7 @@ function fillBasicInfo(data) {
   $('#address').val(data.ContactInfo.Address);
   $('#address-type').val(data.ContactInfo.AddressType);
   $('#country').val(data.ContactInfo.Country);
+  $('#country').selectpicker('refresh');
   loadStates($('#country').val(), data.ContactInfo.State, data.ContactInfo.City);
   $('#pincode').val(data.ContactInfo.Pincode);
 }

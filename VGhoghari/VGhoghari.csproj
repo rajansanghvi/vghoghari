@@ -238,8 +238,6 @@
     <Content Include="Scripts\validations\user\login.js" />
     <Content Include="Scripts\validations\userProfile.js" />
     <Content Include="Scripts\validations\validation.js" />
-    <Content Include="Scripts\ai.0.22.9-build00167.js" />
-    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />

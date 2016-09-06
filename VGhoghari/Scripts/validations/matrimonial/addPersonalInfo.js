@@ -4,7 +4,15 @@ $(document).ready(function () {
 
   var code = getQueryStringValue('code');
   
-  //fetchPersonalBiodataInfo(code, function () {});
+  fetchPersonalBiodataInfo(code, function (response) {
+    console.log(response);
+    if (response !== undefined && response !== null) {
+      fillPersonalInfo(response);
+    }
+    else {
+      $(location).attr('href', BASEURL + '/Matrimonial/Manage');
+    }
+  });
 
   $('#religion').on('hidden.bs.select', function (e) {
     religionValidation();
@@ -99,6 +107,59 @@ function fetchPersonalBiodataInfo(code, callback) {
       callback(responseData);
     }
   });
+}
+
+function fillPersonalInfo(data) {
+  $('#religion').val(data.ReligionInfo.Religion);
+  $('#religion').selectpicker('refresh');
+
+  $('#caste').val(data.ReligionInfo.Caste);
+  $('#caste').selectpicker('refresh');
+  if ($('#caste').val() === 'Other') {
+    $('#sub-caste').prop('disabled', false);
+  }
+
+  $('#sub-caste').val(data.ReligionInfo.SubCaste);
+
+  $('#manglik').val(data.SocialInfo.Manglik);
+  $('#manglik').selectpicker('refresh');
+
+  $('#self-gothra').val(data.SocialInfo.SelfGothra);
+  $('#maternal-gothra').val(data.SocialInfo.MaternalGothra);
+
+  $('#star-sign').val(data.SocialInfo.StarSign);
+  $('#star-sign').selectpicker('refresh');
+
+  $('#height-ft').val(data.PhysicalInfo.HeightFt);
+  $('#height-ft').selectpicker('refresh');
+
+  $('#height-inch').val(data.PhysicalInfo.HeightInch);
+  $('#height-inch').selectpicker('refresh');
+
+  $('#weight').val(data.PhysicalInfo.Weight);
+
+  $('#blood-group').val(data.PhysicalInfo.BloodGroup);
+  $('#blood-group').selectpicker('refresh');
+
+  $('#body-type').val(data.PhysicalInfo.BodyType);
+  $('#body-type').selectpicker('refresh');
+
+  $('#complexion').val(data.PhysicalInfo.Complexion);
+  $('#complexion').selectpicker('refresh');
+
+  $('#optics').val(data.PhysicalInfo.Optics);
+  $('#optics').selectpicker('refresh');
+
+  $('#diet').val(data.PhysicalInfo.Diet);
+  $('#diet').selectpicker('refresh');
+
+  $('#smoke').val(data.PhysicalInfo.Smoke);
+  $('#smoke').selectpicker('refresh');
+
+  $('#drink').val(data.PhysicalInfo.Drink);
+  $('#drink').selectpicker('refresh');
+
+  $('#deformity').val(data.PhysicalInfo.Deformity);
 }
 
 function religionValidation() {
@@ -360,7 +421,7 @@ function resetData() {
   $('#message').addClass('hide');
 }
 
-function savePersonalInfo() {
+function savePersonalInfo(code) {
   religionValidation();
   casteValidation();
 
@@ -421,8 +482,8 @@ function savePersonalInfo() {
           $('#message').html('<strong> Error! </strong>There are certain invalid or empty fields. Please fill in all the required information correctly and try again.');
           $('#message').removeClass('hide');
         },
-        201: function (responseData) {
-          $(location).attr('href', BASEURL + '/Matrimonial/AddPersonalInfo?code=' + responseData);
+        200: function (responseData) {
+          $(location).attr('href', BASEURL + '/Matrimonial/AddFamilyInfo?code=' + responseData);
         },
         401: function () {
           $(location).attr('href', BASEURL + '/User/Logout');

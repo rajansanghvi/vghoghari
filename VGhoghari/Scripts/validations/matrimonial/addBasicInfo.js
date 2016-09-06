@@ -246,6 +246,7 @@ function fillBasicInfo(data) {
 
   console.log(data);
   $('#gender').val(data.BasicInfo.Gender);
+  $('#gender').selectpicker('refresh');
   $('#fullname').val(data.BasicInfo.Fullname);
   $('#dob').data("DateTimePicker").date(moment(data.BasicInfo.Dob, 'YYYY-MM-DD'));
 
@@ -258,6 +259,7 @@ function fillBasicInfo(data) {
 
   $('#age').val(data.BasicInfo.Age);
   $('#marital-status').val(data.BasicInfo.MaritalStatus);
+  $('#marital-status').selectpicker('refresh');
   $('#native').val(data.BasicInfo.Native);
   $('#birth-place').val(data.BasicInfo.BirthPlace);
   $('#about-me').val(data.BasicInfo.AboutMe);
@@ -268,6 +270,7 @@ function fillBasicInfo(data) {
   $('#facebook-url').val(data.ContactInfo.FacebookUrl);
   $('#address').val(data.ContactInfo.Address);
   $('#address-type').val(data.ContactInfo.AddressType);
+  $('#address-type').selectpicker('refresh');
   $('#country').val(data.ContactInfo.Country);
   $('#country').selectpicker('refresh');
   loadStates($('#country').val(), data.ContactInfo.State, data.ContactInfo.City);

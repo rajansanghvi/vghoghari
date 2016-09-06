@@ -216,6 +216,7 @@
     <Content Include="AppCodes\Database\initial_scripts.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_app_create_default_admin.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_save_basic_biodata_info.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_save_personal_biodata_info.sql" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

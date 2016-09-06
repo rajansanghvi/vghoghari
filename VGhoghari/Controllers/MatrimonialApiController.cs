@@ -99,6 +99,12 @@ namespace VGhoghari.Controllers {
       return InternalServerError();
     }
 
+    [HttpGet]
+    [Authorize(Roles = "user")]
+    public BiodataTO GetPersonalInfo(string code) {
+      return MatrimonialBL.GetPersonalInfo(code);
+    }
+
     [HttpPost]
     [Authorize(Roles = "user")]
     public IHttpActionResult SavePersonalInfo(dynamic data) {
@@ -120,7 +126,6 @@ namespace VGhoghari.Controllers {
 
       int heightFt = data.HeightFt;
       int heightInch = data.HeightInch;
-
       int weight = data.Weight;
       string bloodGroup = data.BloodGroup;
       int bodyType = data.BodyType;
@@ -172,7 +177,7 @@ namespace VGhoghari.Controllers {
         return ResponseMessage(Request.CreateResponse(HttpStatusCode.Forbidden));
       }
       else if (response.Key == 0) {
-        return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, response.Value));
+        return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, response.Value));
       }
       return InternalServerError();
     }

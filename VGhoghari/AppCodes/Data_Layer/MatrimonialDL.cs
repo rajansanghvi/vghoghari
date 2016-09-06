@@ -132,5 +132,116 @@ namespace VGhoghari.AppCodes.Data_Layer {
         return id;
       }
     }
+
+    public static BiodataTO FetchPersonalInfo(string code) {
+      const string sql = @"select
+                          r.religion as religion
+                          , r.caste as caste
+                          , ifnull(r.subcaste, '') as subcaste
+                          , s.manglik as manglik
+                          , ifnull(s.self_gothra, '') as self_gothra
+                          , ifnull(s.maternal_gothra, '') as maternal_gothra
+                          , ifnull(s.star_sign, 0) as star_sign
+                          , p.height_ft as height_ft
+                          , p.height_inch as height_inch
+                          , ifnull(p.weight, 0) as weight
+                          , ifnull(p.blood_group, '') as blood_group
+                          , p.body_type as body_type
+                          , p.complexion as complexion
+                          , p.optic as optics
+                          , p.diet as diet
+                          , p.smoke as smoke
+                          , p.drink as drink
+                          , ifnull(deformity, '') as deformity
+                          from
+                          app_biodata_basic_infos b
+                          left join
+                          app_biodata_religion_infos r
+                          on b.id = r.biodata_id
+                          left join
+                          app_biodata_social_infos s
+                          on b.id = s.biodata_id
+                          left join
+                          app_biodata_physical_infos p
+                          on b.id = p.biodata_id
+                          where
+                          b.code = ?code
+                          and
+                          b.active = true
+                          and b.user_id = (select id from app_users where username = ?username and active = true);";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("code", code);
+      dl.AddParam("username", Utility.CurrentUser);
+
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+        if(dr.Read()) {
+          return new BiodataTO() {
+            ReligionInfo = new ReligionInfoTO() {
+              Religion = dr.GetString("religion"),
+              Caste = dr.GetString("caste"),
+              SubCaste = dr.GetString("subcaste")
+            },
+            SocialInfo = new SocialInfoTO() {
+              Manglik = (enBoolean) dr.GetInt32("manglik"),
+              SelfGothra = dr.GetString("self_gothra"),
+              MaternalGothra = dr.GetString("maternal_gothra"),
+              StarSign = (enStarSign) dr.GetInt32("star_sign")
+            },
+            PhysicalInfo = new PhysicalInfoTO() {
+              HeightFt = dr.GetInt32("height_ft"),
+              HeightInch = dr.GetInt32("height_inch"),
+              Weight = dr.GetInt32("weight"),
+              BloodGroup = dr.GetString("blood_group"),
+              BodyType = (enBodyType) dr.GetInt32("body_type"),
+              Complexion = dr.GetString("complexion"),
+              Optics = (enBoolean) dr.GetInt32("optics"),
+              Diet = dr.GetString("diet"),
+              Smoke = dr.GetString("smoke"),
+              Drink = dr.GetString("drink"),
+              Deformity = dr.GetString("deformity")
+            }
+          };
+        }
+      }
+      return null;
+    }
+
+
+    public static int SavePersonalInfo(BiodataTO data) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+        string procedureName = @"save_personal_biodata_info";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("a_code", data.Code);
+
+        dl.AddParam("a_religion", data.ReligionInfo.Religion);
+        dl.AddParam("a_caste", data.ReligionInfo.Caste);
+        dl.AddParam("a_sub_caste", data.ReligionInfo.SubCaste);
+
+        dl.AddParam("a_manglik", data.SocialInfo.Manglik);
+        dl.AddParam("a_self_gothra", data.SocialInfo.SelfGothra);
+        dl.AddParam("a_maternal_gothra", data.SocialInfo.MaternalGothra);
+        dl.AddParam("a_star_sign", data.SocialInfo.StarSign);
+
+        dl.AddParam("a_height_ft", data.PhysicalInfo.HeightFt);
+        dl.AddParam("a_height_inch", data.PhysicalInfo.HeightInch);
+        dl.AddParam("a_weight", data.PhysicalInfo.Weight);
+        dl.AddParam("a_blood_group", data.PhysicalInfo.BloodGroup);
+        dl.AddParam("a_body_type", data.PhysicalInfo.BodyType);
+        dl.AddParam("a_complexion", data.PhysicalInfo.Complexion);
+        dl.AddParam("a_optics", data.PhysicalInfo.Optics);
+        dl.AddParam("a_diet", data.PhysicalInfo.Diet);
+        dl.AddParam("a_smoke", data.PhysicalInfo.Smoke);
+        dl.AddParam("a_drink", data.PhysicalInfo.Drink);
+        dl.AddParam("a_deformity", data.PhysicalInfo.Deformity);
+        dl.AddParam("a_username", Utility.CurrentUser);
+        
+
+        int id = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedureName);
+        ts.Complete();
+        return id;
+      }
+    }
   }
 }

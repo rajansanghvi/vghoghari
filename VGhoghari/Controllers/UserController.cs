@@ -10,10 +10,7 @@ using VGhoghari.Models;
 
 namespace VGhoghari.Controllers {
   public class UserController : Controller {
-    /// <summary>
-    /// End point to show the User Registration Page 
-    /// </summary>
-    /// <returns></returns>
+
     [HttpGet]
     public ActionResult Register() {
       if(Utility.IsUserLoggedIn) {

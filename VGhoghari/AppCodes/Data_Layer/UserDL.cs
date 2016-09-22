@@ -33,10 +33,8 @@ namespace VGhoghari.AppCodes.Data_Layer {
 
       GlobalDL dl = new GlobalDL();
       dl.AddParam("username", username);
-
-      /* 
-       * Query returns 1 if username exists in DB. If 1 then username is not available hence return false else return true
-       */
+       
+      //Query returns 1 if username exists in DB. If 1 then username is not available hence return false else return true
       return dl.ExecuteSqlReturnScalar<int>(Utility.ConnectionString, sql) == 1 ? false : true;
     }
 
@@ -44,14 +42,14 @@ namespace VGhoghari.AppCodes.Data_Layer {
       const string procedureName = @"app_register_user";
 
       GlobalDL dl = new GlobalDL();
-      dl.AddParam("code", data.Code);
-      dl.AddParam("authKey", data.AuthKey);
-      dl.AddParam("username", data.Username);
-      dl.AddParam("hashedPassword", data.HashedPassword);
-      dl.AddParam("fullname", data.Fullname);
-      dl.AddParam("mobileNo", data.MobileNumber);
-      dl.AddParam("emailId", data.EmailId);
-      dl.AddParam("religion", data.Religion);
+      dl.AddParam("a_code", data.Code);
+      dl.AddParam("a_authKey", data.AuthKey);
+      dl.AddParam("a_username", data.Username);
+      dl.AddParam("a_hashedPassword", data.HashedPassword);
+      dl.AddParam("a_fullname", data.Fullname);
+      dl.AddParam("a_mobileNo", data.MobileNumber);
+      dl.AddParam("a_emailId", data.EmailId);
+      dl.AddParam("a_religion", data.Religion);
 
       int id = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedureName);
       return id;

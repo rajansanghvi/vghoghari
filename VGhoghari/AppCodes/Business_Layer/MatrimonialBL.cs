@@ -235,5 +235,92 @@ namespace VGhoghari.AppCodes.Business_Layer {
       //validation failed hence -1
       return new KeyValuePair<int, string>(validationResponse, string.Empty);
     }
+
+    public static BiodataTO GetProfessionalInfo(string code) {
+      return MatrimonialDL.FetchProfessionalInfo(code);
+    }
+
+    private static int ValidateProfessionalInfo(BiodataTO data) {
+
+      if(string.IsNullOrWhiteSpace(data.Code)) {
+        return -1;
+      }
+
+      if(data.EducationInfo.HighestEducation == enHighestEducation.UnSpecified) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.EducationInfo.DegreesAchieved)) {
+        return -1;
+      }
+      
+      if(!string.IsNullOrWhiteSpace(data.EducationInfo.UniversityAttended)) {
+        if(data.EducationInfo.UniversityAttended.Length > 500
+          || !Regex.IsMatch(data.EducationInfo.UniversityAttended, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.EducationInfo.AddlInfo)) {
+        if(data.EducationInfo.AddlInfo.Length > 1000
+          || !Regex.IsMatch(data.EducationInfo.AddlInfo, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(data.OccupationInfo.Occupation == enOccupation.UnSpecified) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.OccupationInfo.ProfessionSector)) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.OccupationInfo.OrganizationName)) {
+        if(data.OccupationInfo.OrganizationName.Length > 500
+          || !Regex.IsMatch(data.OccupationInfo.OrganizationName, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.OccupationInfo.Designation)) {
+        if(data.OccupationInfo.Designation.Length > 500
+          || !Regex.IsMatch(data.OccupationInfo.Designation, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.OccupationInfo.OrganizationAddress)) {
+        if(data.OccupationInfo.OrganizationAddress.Length > 1000
+          || !Regex.IsMatch(data.OccupationInfo.OrganizationAddress, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+      
+      return 0;
+    }
+
+    public static KeyValuePair<int, string> SaveProfessionalInfo(BiodataTO data) {
+      if(!MatrimonialDL.IsMyBiodata(data.Code)) {
+        return new KeyValuePair<int, string>(-3, string.Empty);
+      }
+
+      int validationResponse = ValidateProfessionalInfo(data);
+      if(validationResponse == 0) {
+        int id = MatrimonialDL.SaveProfessionalInfo(data);
+        if(id > 0) {
+          return new KeyValuePair<int, string>(validationResponse, data.Code);
+        }
+        // Some issue in saving details hence failed
+        return new KeyValuePair<int, string>(-2, string.Empty);
+      }
+
+      //validation failed hence -1
+      return new KeyValuePair<int, string>(validationResponse, string.Empty);
+    }
+
+    public static BiodataTO GetFamilyInfo(string code) {
+      return MatrimonialDL.FetchFamilyInfo(code);
+    }
   }
 }

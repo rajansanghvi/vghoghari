@@ -82,7 +82,10 @@ namespace VGhoghari.AppCodes.Business_Layer {
         data.Username = data.Username.ToLower();
         data.HashedPassword = Utility.GetMd5Hash(data.Password);
 
-        UserDL.RegisterUser(data);
+        int id = UserDL.RegisterUser(data);
+        if (id <= 0) {
+          return -2;
+        }
       }
 
       return validationResult;

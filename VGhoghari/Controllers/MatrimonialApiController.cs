@@ -181,5 +181,71 @@ namespace VGhoghari.Controllers {
       }
       return InternalServerError();
     }
+
+    [HttpGet]
+    [Authorize(Roles = "user")]
+    public BiodataTO GetProfessionalInfo(string code) {
+      return MatrimonialBL.GetProfessionalInfo(code);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "user")]
+    public IHttpActionResult SaveProfessionalInfo(dynamic data) {
+      if(!Utility.isUserActive) {
+        return Unauthorized();
+      }
+
+      string code = data.Code;
+
+      int education = data.Education;
+      string[] degreesAchieved = data.DegreesAchieved.ToObject<string[]>();
+      string universityAttended = data.UniversityAttended;
+      string addlInfo = data.AddlInfo;
+
+      int occupation = data.Occupation;
+      string professionalSector = data.ProfessionalSector;
+      string organizationName = data.OrganizationName;
+      string designation = data.Designation;
+      string organizationAddress = data.OrganizationAddress;
+
+      EducationInfoTO educationInfo = new EducationInfoTO();
+      educationInfo.HighestEducation = (enHighestEducation) education;
+      educationInfo.DegreesAchieved = string.Join(",", degreesAchieved.ToList());
+      educationInfo.UniversityAttended  = universityAttended;
+      educationInfo.AddlInfo = addlInfo;
+
+      OccupationInfoTO occupationInfo= new OccupationInfoTO();
+      occupationInfo.Occupation = (enOccupation) occupation;
+      occupationInfo.ProfessionSector = professionalSector;
+      occupationInfo.OrganizationName = organizationName;
+      occupationInfo.Designation = designation;
+      occupationInfo.OrganizationAddress = organizationAddress;
+      
+      BiodataTO biodata = new BiodataTO();
+      biodata.Code = code;
+      biodata.EducationInfo = educationInfo;
+      biodata.OccupationInfo= occupationInfo;
+
+      KeyValuePair<int, string> response = MatrimonialBL.SaveProfessionalInfo(biodata);
+      if(response.Key == -2) {
+        return InternalServerError();
+      }
+      else if(response.Key == -1) {
+        return BadRequest();
+      }
+      else if(response.Key == -3) {
+        return ResponseMessage(Request.CreateResponse(HttpStatusCode.Forbidden));
+      }
+      else if(response.Key == 0) {
+        return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, response.Value));
+      }
+      return InternalServerError();
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "user")]
+    public BiodataTO GetFamilyInfo(string code) {
+      return MatrimonialBL.GetFamilyInfo(code);
+    }
   }
 }

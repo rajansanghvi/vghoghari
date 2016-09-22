@@ -483,7 +483,7 @@ function savePersonalInfo(code) {
           $('#message').removeClass('hide');
         },
         200: function (responseData) {
-          $(location).attr('href', BASEURL + '/Matrimonial/AddFamilyInfo?code=' + responseData);
+          $(location).attr('href', BASEURL + '/Matrimonial/AddProfessionalInfo?code=' + responseData);
         },
         401: function () {
           $(location).attr('href', BASEURL + '/User/Logout');

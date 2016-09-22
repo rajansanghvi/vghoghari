@@ -4,6 +4,7 @@ var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&]{8,16}$/;
 var mobileNoPattern = /^(\+)?(\d){0,3}( )?\d{4,15}$/;
 var emailIdPattern = /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/;
 var religionPattern = /^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;"',./?]{2,}$/;
+var properNamePattern = /^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;"',./?]{2,}$/;
 var landlinePattern = /^(\+)?(\d){0,3}( )?(\d){0,3}( )?\d{4,11}$/;
 var facebookPattern = /^((http|https):\/\/|)(www\.|)facebook\.com\/[a-zA-Z0-9.]{1,}$/;
 var addressPattern = /^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;"',./?]{2,}$/;
@@ -15,6 +16,13 @@ var validImageExtensions = ['.jpg', '.jpeg', '.gif', '.png'];
 function validateDropdown(content) {
   if (content === undefined || content === null || content === '' || content.length === 0 || content == 0) {
     return 'This is a required field.';
+  }
+  return '';
+}
+
+function validateMultipleDropdown(content) {
+  if (content === undefined || content === null || content.length === 0) {
+    return 'This is a required field';
   }
   return '';
 }
@@ -94,7 +102,7 @@ function validateOptionalEmailId(content) {
       return 'This field can consists of a maximum of 200 characters.';
     }
     else if (!content.match(emailIdPattern)) {
-      return 'This is an invalid email-id. Please enter a valid email-id.';
+      return 'This is an invalid email id. Please enter a valid email id.';
     }
     return '';
   }
@@ -124,6 +132,19 @@ function validateReligion(content) {
   else if (!content.match(religionPattern)) {
     return 'This field should have atleast one letter or a number. It can not consists of the following special charaters (`, ~, ^, , { }, [ ], <>, \\, |).';
    }
+  return '';
+}
+
+function validateOptionalProperName(content) {
+  if (content !== undefined && content !== null && content !== '' && content.length > 0) {
+    if (content.length > 500) {
+      return 'This field can consists of a maximum of 500 characters.';
+    }
+    else if (!content.match(properNamePattern)) {
+      return 'This field should have atleast one letter or a number. It can not consists of the following special charaters (`, ~, ^, , { }, [ ], <>, \\, |).';
+    }
+    return '';
+  }
   return '';
 }
 

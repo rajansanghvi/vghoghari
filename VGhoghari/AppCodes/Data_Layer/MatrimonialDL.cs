@@ -31,10 +31,10 @@ namespace VGhoghari.AppCodes.Data_Layer {
 
     public static BiodataTO FetchBasicInfo(string code) {
       const string sql = @"select b.code as code
-                          , b.fullname as fullname
-                          , b.gender as gender
+                          , ifnull(b.fullname, '') as fullname
+                          , ifnull(b.gender, 0) as gender
                           , b.dob as dob
-                          , b.age as age
+                          , ifnull(b.age, 0) as age
                           , ifnull(b.birth_time, '') as birth_time
                           , b.native as native
                           , b.marital_status as marital_status
@@ -242,6 +242,153 @@ namespace VGhoghari.AppCodes.Data_Layer {
         ts.Complete();
         return id;
       }
+    }
+
+    public static BiodataTO FetchProfessionalInfo(string code) {
+      const string sql = @"select
+                          ifnull(e.education, 0) as education
+                          , ifnull(e.degrees_achieved, '') as degrees_achieved
+                          , ifnull(e.addl_info, '') as addl_info
+                          , ifnull(e.university_attended, '') as university_attended
+                          , ifnull(o.occupation, 0) as occupation
+                          , ifnull(o.profession, '') as profession
+                          , ifnull(o.occupation_at, '') as occupation_at
+                          , ifnull(o.designation, '') as designation
+                          , ifnull(o.address, '') as address
+                          from
+                          app_biodata_basic_infos b
+                          left join
+                          app_biodata_education_infos e
+                          on b.id = e.biodata_id
+                          left join
+                          app_biodata_occupation_infos o
+                          on b.id = o.biodata_id
+                          where
+                          b.code = ?code
+                          and
+                          b.active = true
+                          and b.user_id = (select id from app_users where username = ?username and active = true);";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("code", code);
+      dl.AddParam("username", Utility.CurrentUser);
+
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+        if(dr.Read()) {
+          return new BiodataTO() {
+            EducationInfo = new EducationInfoTO() {
+              HighestEducation = (enHighestEducation) dr.GetInt32("education"),
+              DegreesAchieved = dr.GetString("degrees_achieved"),
+              DegreesList = dr.GetString("degrees_achieved").Split(',').ToList(),
+              UniversityAttended = dr.GetString("university_attended"),
+              AddlInfo = dr.GetString("addl_info")
+            },
+            OccupationInfo = new OccupationInfoTO() {
+              Occupation = (enOccupation) dr.GetInt32("occupation"),
+              ProfessionSector = dr.GetString("profession"),
+              OrganizationName = dr.GetString("occupation_at"),
+              OrganizationAddress = dr.GetString("address"),
+              Designation = dr.GetString("designation")
+            }
+          };
+        }
+      }
+      return null;
+    }
+
+    public static int SaveProfessionalInfo(BiodataTO data) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+        string procedureName = @"save_professional_biodata_info";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("a_code", data.Code);
+
+        dl.AddParam("a_education", data.EducationInfo.HighestEducation);
+        dl.AddParam("a_degrees_achieved", data.EducationInfo.DegreesAchieved);
+        dl.AddParam("a_university_attended", data.EducationInfo.UniversityAttended);
+        dl.AddParam("a_addl_info", data.EducationInfo.AddlInfo);
+
+        dl.AddParam("a_occupation", data.OccupationInfo.Occupation);
+        dl.AddParam("a_professional_sector", data.OccupationInfo.ProfessionSector);
+        dl.AddParam("a_organization_name", data.OccupationInfo.OrganizationName);
+        dl.AddParam("a_designation", data.OccupationInfo.Designation);
+        dl.AddParam("a_organization_addr", data.OccupationInfo.OrganizationAddress);
+
+        dl.AddParam("a_username", Utility.CurrentUser);
+        
+        int id = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedureName);
+        ts.Complete();
+        return id;
+      }
+    }
+
+    public static BiodataTO FetchFamilyInfo(string code) {
+      const string sql = @"select
+                          ifnull(f.father_name, '') as father_name
+                          , ifnull(f.father_mobile_number, '') as father_mobile_number
+                          , ifnull(f.mother_name, '') as mother_name
+                          , ifnull(f.mother_mobile_number, '') as mother_mobile_number
+                          , ifnull(f.grandfather_name, '') as grandfather_name
+                          , ifnull(f.grandmother_name, '') as grandmother_name
+                          , ifnull(f.no_of_brothers, 0) as no_of_brothers
+                          , ifnull(f.no_of_sisters, 0) as no_of_sisters
+                          , ifnull(f.family_type, 0) as family_type
+                          , ifnull(f.landline_number, '') as landline_number
+                          , ifnull(f.father_occupation, 0) as father_occupation
+                          , ifnull(f.father_profession, '') as father_profession
+                          , ifnull(f.father_occupation_at, '') as father_organization_name
+                          , ifnull(f.father_designation, '') as father_designation
+                          , ifnull(f.father_office_address, '') as father_office_address
+                          , ifnull(f.address, '') as address
+                          , ifnull(f.city, '') as city
+                          , ifnull(f.state, '') as state
+                          , ifnull(f.country, '') as country
+                          , ifnull(f.residential_status, 0) as residential_status
+                          , ifnull(m.uncle_name, '') as uncle_name
+                          , ifnull(m.maternal_grandfather_name, '') as maternal_grandfather_name
+                          , ifnull(m.maternal_grandmother_name, '') as maternal_grandmother_name
+                          , ifnull(m.native, '') as native
+                          , ifnull(m.contact_number, '') as contact_number
+                          , ifnull(m.address, '') as mosal_address
+                          from
+                          app_biodata_basic_infos b
+                          left join
+                          app_biodata_family_infos f
+                          on b.id = f.biodata_id
+                          left join
+                          app_biodata_mosal_infos m
+                          on b.id = m.biodata_id
+                          where
+                          b.code = ?code
+                          and
+                          b.active = true
+                          and b.user_id = (select id from app_users where username = ?username and active = true);";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("code", code);
+      dl.AddParam("username", Utility.CurrentUser);
+
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+        if(dr.Read()) {
+          return new BiodataTO() {
+            EducationInfo = new EducationInfoTO() {
+              HighestEducation = (enHighestEducation) dr.GetInt32("education"),
+              DegreesAchieved = dr.GetString("degrees_achieved"),
+              DegreesList = dr.GetString("degrees_achieved").Split(',').ToList(),
+              UniversityAttended = dr.GetString("university_attended"),
+              AddlInfo = dr.GetString("addl_info")
+            },
+            OccupationInfo = new OccupationInfoTO() {
+              Occupation = (enOccupation) dr.GetInt32("occupation"),
+              ProfessionSector = dr.GetString("profession"),
+              OrganizationName = dr.GetString("occupation_at"),
+              OrganizationAddress = dr.GetString("address"),
+              Designation = dr.GetString("designation")
+            }
+          };
+        }
+      }
+      return null;
     }
   }
 }

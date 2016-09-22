@@ -41,13 +41,15 @@
             <div class="row">
               <div class="col-md-12 margin-15">
                 <div>
-                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details and login to your account.</h6>
+                  <h6>
+                    All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details and login to your account.
+                  </h6>
                 </div>
               </div>
               <div class="clearfix"></div>
 
               <div class="col-md-12">
-                <div id="message">
+                <div id="message" class="alert alert-error fade in hide">
                 </div>
               </div>
               <div class="clearfix"></div>
@@ -59,6 +61,7 @@
                   <div id="username-error" class="text-danger text-justify"></div>
                 </div>
               </div>
+
               <div class="col-md-6">
                 <div class="form-group text-align-left">
                   <label for="password" class="control-label thin-label required">Password: <span class="red">*</span></label>
@@ -82,7 +85,7 @@
 
               <div class="col-md-12">
                 <h6>
-                  @Html.ActionLink("Don't have an account? Click here to register.", "Register", "User", null, new { @class = "pull-right" })
+                  @Html.ActionLink("Don't have an account? Click here to register...", "Register", "User", null, new { @class = "pull-right" })
                 </h6>
               </div>
               <div class="clearfix"></div>

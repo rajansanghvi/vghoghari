@@ -210,8 +210,6 @@ function loadCities(stateName, cityName) {
     $('#city').val(cityName);
     $('#city').selectpicker('refresh');
   });
-
-
 }
 
 function fetchCity(stateName, callback) {

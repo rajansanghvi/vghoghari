@@ -20,7 +20,10 @@ namespace VGhoghari.Controllers {
 
     [HttpPost]
     public IHttpActionResult RegisterUser(UserTO data) {
-
+      if(Utility.IsUserLoggedIn) {
+        return ResponseMessage(Request.CreateResponse(HttpStatusCode.ExpectationFailed));
+      }
+      
       int response = UserBL.RegisterUser(data);
       if (response == -1) {
         return BadRequest();
@@ -36,6 +39,10 @@ namespace VGhoghari.Controllers {
 
     [HttpPost]
     public IHttpActionResult LoginUser(dynamic data) {
+      if(Utility.IsUserLoggedIn) {
+        return ResponseMessage(Request.CreateResponse(HttpStatusCode.ExpectationFailed));
+      }
+
       string username = data.Username;
       string password = data.Password;
       bool isPersistent = data.IsPersistent;

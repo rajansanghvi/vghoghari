@@ -139,14 +139,14 @@ create table if not exists app_users_addl
 
 /*Procedure to Register a new User*/
 CREATE PROCEDURE vghoghari.`app_register_user`(
-  code varchar(100)
-  , authKey varchar(100)
-  , username varchar(200)
-  , hashedPassword varchar(500)
-  , fullname varchar(500)
-  , mobileNo varchar(200)
-  , emailId varchar(200)
-  , religion varchar(200)
+  a_code varchar(100)
+  , a_authKey varchar(100)
+  , a_username varchar(200)
+  , a_hashedPassword varchar(500)
+  , a_fullname varchar(500)
+  , a_mobileNo varchar(200)
+  , a_emailId varchar(200)
+  , a_religion varchar(200)
 )
 BEGIN
 	declare exit handler for sqlexception
@@ -165,8 +165,8 @@ BEGIN
       insert into app_users(code, auth_key, username, hashed_password, fullname, gender, dob, religion, 
       active, effective_from, effective_to, created_by, created_at, modified_by, modified_at)
       values
-      (code, authKey, username, hashedPassword, fullname, 0, null, religion,
-      1, CURRENT_DATE(), null, username, NOW(), username, NOW());
+      (a_code, a_authKey, a_username, a_hashedPassword, a_fullname, 0, null, a_religion,
+      1, CURRENT_DATE(), null, a_username, NOW(), a_username, NOW());
       
       select last_insert_id() into @userId;
       
@@ -174,19 +174,49 @@ BEGIN
         insert into app_user_role_rel(user_id, role_id, active, effective_from, effective_to, created_by, created_at,
         modified_by, modified_at)
         values
-        (@userId, (select id from app_roles where name = 'user'), 1, CURRENT_DATE(), null, 'system', NOW(), 'system', 
+        (@userId, (select id from app_roles where name = 'user' and active = true), 1, CURRENT_DATE(), null, 'system', NOW(), 'system', 
         NOW());
         
         insert into app_users_addl(user_id, landline_number, mobile_number, email_id, facebook_url, address, pincode, 
         city, state, country)
         values
-        (@userId, null, mobileNo, emailId, null, null, null, null, null, null);
-        
+        (@userId, null, a_mobileNo, a_emailId, null, null, null, null, null, null);  
       end if;
       
       select @userId;
     commit;
 END;
+
+create table if not exists app_countries
+(
+  id int(11) not null auto_increment primary key,
+  code int(11) not null,
+  shortname varchar(3) not null,
+  name varchar(200) not null,
+  value varchar(200) null
+)engine InnoDb;
+
+create table if not exists app_states
+(
+  id int(11) not null auto_increment primary key,
+  code int(11) not null,
+  name varchar(200) not null,
+  value varchar(200) null,
+  country_id int(11) not null,
+  foreign key(country_id) REFERENCES app_countries(id)
+  on delete cascade on update CASCADE
+)engine innoDb;
+
+create table if not exists app_cities
+(
+  id int(11) not null auto_increment primary key,
+  code int(11) not null,
+  name varchar(200) not null,
+  value varchar(200) null,
+  state_id int(11) not null,
+  foreign key(state_id) references app_states(id)
+  on delete cascade on UPDATE CASCADE
+)engine InnoDb;
 
 /*Update User Profile*/
 CREATE PROCEDURE vghoghari.`update_user_profile`(
@@ -264,36 +294,6 @@ BEGIN
   commit;
 END;
 
-create table if not exists app_countries
-(
-  id int(11) not null auto_increment primary key,
-  code int(11) not null,
-  shortname varchar(3) not null,
-  name varchar(200) not null,
-  value varchar(200) null
-)engine InnoDb;
-
-create table if not exists app_states
-(
-  id int(11) not null auto_increment primary key,
-  code int(11) not null,
-  name varchar(200) not null,
-  value varchar(200) null,
-  country_id int(11) not null,
-  foreign key(country_id) REFERENCES app_countries(id)
-  on delete cascade on update CASCADE
-)engine innoDb;
-
-create table if not exists app_cities
-(
-  id int(11) not null auto_increment primary key,
-  code int(11) not null,
-  name varchar(200) not null,
-  value varchar(200) null,
-  state_id int(11) not null,
-  foreign key(state_id) references app_states(id)
-  on delete cascade on UPDATE CASCADE
-)engine InnoDb;
 
 
 
@@ -506,6 +506,133 @@ create table if not exists app_biodata_physical_infos
   deformity varchar(1000) null
 )engine InnoDB;
 
+CREATE PROCEDURE vghoghari.`save_personal_biodata_info`(
+  a_code varchar(100)
+  , a_religion varchar(200)
+  , a_caste varchar(200)
+  , a_sub_caste varchar(200)
+  , a_manglik tinyint(4)
+  , a_self_gothra varchar(200)
+  , a_maternal_gothra varchar(200)
+  , a_star_sign tinyint(4)
+  , a_height_ft tinyint(4)
+  , a_height_inch tinyint(4)
+  , a_weight tinyint(4)
+  , a_blood_group varchar(5)
+  , a_body_type tinyint(4)
+  , a_complexion varchar(20)
+  , a_optics tinyint(4)
+  , a_diet varchar(20)
+  , a_smoke varchar(20)
+  , a_drink varchar(20)
+  , a_deformity varchar(1000)
+  , a_username varchar(200)
+)
+BEGIN
+  declare exit handler for sqlexception
+    begin
+      rollback;
+    end;
+    
+  declare exit handler for sqlwarning
+    begin
+      rollback;
+    end;
+    
+  start transaction;
+    
+    set @biodataCount = 0;
+    select count(id) into @biodataCount from app_biodata_basic_infos where code = a_code; 
+      
+    if @biodataCount > 0 then
+      set @biodataId = 0;
+      select id into @biodataId from app_biodata_basic_infos where code = a_code;
+        
+      set @religionCount = 0;
+      select count(id) into @religionCount from app_biodata_religion_infos where biodata_id = @biodataId;
+        
+      if @religionCount > 0 then
+        update app_biodata_religion_infos
+        set
+        religion = a_religion
+        , caste =  a_caste
+        , subcaste =a_sub_caste
+        where
+        biodata_id = @biodataId;  
+      else
+        insert into app_biodata_religion_infos
+        (biodata_id, religion, caste, subcaste)
+        values
+        (@biodataId, a_religion, a_caste, a_sub_caste);
+      end if;
+      
+      set @socialCount = 0;
+      select count(id) into @socialCount from app_biodata_social_infos where biodata_id = @biodataId;
+      
+      if @socialCount > 0 then
+        update app_biodata_social_infos
+        set
+        manglik = a_manglik
+        , self_gothra = a_self_gothra
+        , maternal_gothra = a_maternal_gothra
+        , star_sign = a_star_sign
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_social_infos
+        (biodata_id, manglik, self_gothra, maternal_gothra, star_sign)
+        values
+        (@biodataId, a_manglik, a_self_gothra, a_maternal_gothra, a_star_sign);
+      end if;
+      
+      set @physicalCount = 0;
+      select count(id) into @physicalCount from app_biodata_physical_infos where biodata_id = @biodataId;
+      
+      if @physicalCount > 0 then
+        update app_biodata_physical_infos
+        set
+        height_ft = a_height_ft
+        , height_inch = a_height_inch
+        , weight = a_weight
+        , blood_group = a_blood_group
+        , body_type = a_body_type
+        , complexion = a_complexion
+        , optic = a_optics
+        , diet = a_diet
+        , smoke = a_smoke
+        , drink = a_drink
+        , deformity = a_deformity
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_physical_infos
+        (biodata_id, height_ft, height_inch, weight, blood_group, body_type, complexion, optic, diet, smoke, drink, deformity)
+        values
+        (@biodataId, a_height_ft, a_height_inch, a_weight, a_blood_group, a_body_type, a_complexion, a_optics, a_diet, a_smoke, a_drink, a_deformity);
+      end if;
+        
+      set @status = 0;
+      select approval_status into @status from app_biodata_basic_infos where id = @biodataId;
+        
+      if @status > 0 then
+        set @status = 1;
+      end if;
+        
+      update app_biodata_basic_infos
+      set
+      approval_status = @status
+      , modified_by = a_username
+      , modified_at = now()
+      where
+      id = @biodataId;
+      
+      select @biodataId;
+    else
+      rollback;
+    end if;
+  commit;
+END;
+
 create table if not exists app_biodata_education_infos
 (
   id int(11) not null auto_increment primary key,
@@ -513,7 +640,8 @@ create table if not exists app_biodata_education_infos
   foreign key(biodata_id) references app_biodata_basic_infos(id)
   on delete cascade on update cascade,
   education tinyint(4) not null,
-  degrees_achieved varchar(1000) null,
+  degrees_achieved varchar(1000) not null,
+  addl_info varchar(1000) null,
   university_attended varchar(500) null
 )engine InnoDB;
 
@@ -524,11 +652,105 @@ create table if not exists app_biodata_occupation_infos
   foreign key(biodata_id) references app_biodata_basic_infos(id)
   on delete cascade on update cascade,
   occupation tinyint(4) not null,
-  profession varchar(255) null,
+  profession varchar(500) null,
   occupation_at varchar(500) null,
-  designation varchar(200) null,
+  designation varchar(500) null,
   address varchar(1000) null
 )engine InnoDB;
+
+CREATE PROCEDURE vghoghari.`save_professional_biodata_info`(
+  a_code varchar(100)
+  , a_education tinyint(4)
+  , a_degrees_achieved varchar(1000)
+  , a_university_attended varchar(500)
+  , a_addl_info varchar(1000)
+  , a_occupation tinyint(4)
+  , a_professional_sector varchar(500)
+  , a_organization_name varchar(500)
+  , a_designation varchar(500)
+  , a_organization_addr varchar(1000)
+  , a_username varchar(200)
+)
+BEGIN
+	declare exit handler for sqlexception
+    begin
+      rollback;
+    end;
+    
+  declare exit handler for sqlwarning
+    begin
+      rollback;
+    end;
+    
+  start transaction;
+    set @biodataCount = 0;
+    select count(id) into @biodataCount from app_biodata_basic_infos where code = a_code; 
+    
+    if @biodataCount > 0 then
+      set @biodataId = 0;
+      select id into @biodataId from app_biodata_basic_infos where code = a_code;
+      
+      set @educationCount = 0;
+      select count(id) into @educationCount from app_biodata_education_infos where biodata_id = @biodataId;
+      
+      if @educationCount > 0 then
+        update app_biodata_education_infos
+        set
+        education = a_education
+        , degrees_achieved = a_degrees_achieved
+        , addl_info = a_addl_info
+        , university_attended = a_university_attended
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_education_infos
+        (biodata_id, education, degrees_achieved, addl_info, university_attended)
+        values
+        (@biodataId, a_education, a_degrees_achieved, a_addl_info, a_university_attended);
+      end if;
+      
+       set @occupationCount = 0;
+      select count(id) into @occupationCount from app_biodata_occupation_infos where biodata_id = @biodataId;
+      
+      if @occupationCount > 0 then
+        update app_biodata_occupation_infos
+        set
+        occupation = a_occupation
+        , profession = a_professional_sector
+        , occupation_at = a_organization_name
+        , designation = a_designation
+        , address = a_organization_addr
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_occupation_infos
+        (biodata_id, occupation, profession, occupation_at, designation, address)
+        values
+        (@biodataId, a_occupation, a_professional_sector, a_organization_name, a_designation, a_organization_addr);
+      end if;
+      
+      set @status = 0;
+      select approval_status into @status from app_biodata_basic_infos where id = @biodataId;
+      
+      if @status > 0 then
+        set @status = 1;
+      end if;
+        
+      update app_biodata_basic_infos
+      set
+      approval_status = @status
+      , modified_by = a_username
+      , modified_at = now()
+      where
+      id = @biodataId;
+      
+      select @biodataId;
+    else
+      rollback;
+    end if;
+  commit;
+END;
+
 
 create table if not exists app_biodata_family_infos
 (
@@ -544,13 +766,13 @@ create table if not exists app_biodata_family_infos
   grandmother_name varchar(500) null,
   no_of_brothers tinyint(4) not null default 0,
   no_of_sisters tinyint(4) not null default 0,
+  family_type tinyint(4) null,
+  landline_number varchar(20) null,
   father_occupation tinyint(4) not null,
   father_profession varchar(255) null,
   father_occupation_at varchar(500) null,
   father_designation varchar(200) null,
   father_office_address varchar(1000) null,
-  family_type tinyint(4) null,
-  landline_number varchar(20) null,
   address varchar(1000) not null,
   city varchar(200) null,
   state varchar(200) null,

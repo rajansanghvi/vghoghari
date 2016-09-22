@@ -168,6 +168,7 @@ function resetData() {
   $('#email-id-error').empty();
   $('#religion-error').empty();
   $('#message').empty();
+  $('#message').addClass('hide');
 }
 
 function registerUser() {
@@ -177,12 +178,10 @@ function registerUser() {
     passwordValidation();
     confirmPasswordValidation();
     mobileNoValidation();
-    if (isFilled($('#email-id').val().trim())) {
-      optionalEmailValidation();
-    }
-    if (isFilled($('#religion').val().trim())) {
-      optionalReligionValidation();
-    }
+
+    optionalEmailValidation();
+    
+    optionalReligionValidation();
 
     if (isValid) {
       var dataObject = new Object();
@@ -203,22 +202,29 @@ function registerUser() {
         data: JSON.stringify(dataObject),
         statusCode: {
           400: function () {
-            $('#message').html('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
+            $('#message').html('<strong> Error! </strong>There are certain invalid or empty fields. Please fill in all the required information correctly and try again.');
+            $('#message').removeClass('hide');
           },
           409: function () {
-            $('#message').html('<div class="alert alert-error fade in">Username selected by you is already in use. Please select a new username. Please note usernames are case insensitive.</div>');
+            $('#message').html('<strong> Error! </strong>Username selected by you is already in use. Please select a new username. Please note usernames are case insensitive.');
+            $('#message').removeClass('hide');
           },
           201: function () {
             $(location).attr('href', BASEURL + '/User/Login');
+          },
+          417: function () {
+            $(location).attr('href', BASEURL + '/Home/Index');
           }
         }
       });
     }
     else {
-      $('#message').html('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
+      $('#message').append('<strong> Error! </strong>There are certain invalid or empty fields. Please fill in all the required information correctly and try again.');
+      $('#message').removeClass('hide');
     }
   }
   else {
-    $('#message').append('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
+    $('#message').append('<strong> Error! </strong>There are certain invalid or empty fields. Please fill in all the required information correctly and try again.');
+    $('#message').removeClass('hide');
   }
 }

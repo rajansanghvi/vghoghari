@@ -158,9 +158,12 @@
     <Compile Include="AppCodes\Enum\enAddressType.cs" />
     <Compile Include="AppCodes\Enum\enBiodataStatus.cs" />
     <Compile Include="AppCodes\Enum\enBodyType.cs" />
+    <Compile Include="AppCodes\Enum\enFamilyType.cs" />
     <Compile Include="AppCodes\Enum\enGender.cs" />
     <Compile Include="AppCodes\Enum\enBoolean.cs" />
+    <Compile Include="AppCodes\Enum\enHighestEducation.cs" />
     <Compile Include="AppCodes\Enum\enMaritalStatus.cs" />
+    <Compile Include="AppCodes\Enum\enOccupation.cs" />
     <Compile Include="AppCodes\Enum\enStarSign.cs" />
     <Compile Include="AppCodes\Utilities\FilterTO.cs" />
     <Compile Include="AppCodes\Utilities\FormsAuthenticationUtils.cs" />
@@ -213,7 +216,34 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppCodes\Database\GeographyData\cities_1.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_10.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_11.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_12.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_13.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_14.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_15.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_16.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_17.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_18.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_19.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_2.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_20.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_21.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_22.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_23.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_24.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_3.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_4.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_5.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_6.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_7.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_8.sql" />
+    <Content Include="AppCodes\Database\GeographyData\cities_9.sql" />
+    <Content Include="AppCodes\Database\GeographyData\country.sql" />
+    <Content Include="AppCodes\Database\GeographyData\states.sql" />
     <Content Include="AppCodes\Database\initial_scripts.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_app_register_user.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_app_create_default_admin.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_save_basic_biodata_info.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_save_personal_biodata_info.sql" />
@@ -238,6 +268,8 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\validations\constants.js" />
     <Content Include="Scripts\validations\matrimonial\addBasicInfo.js" />
+    <Content Include="Scripts\validations\matrimonial\addFamilyInfo.js" />
+    <Content Include="Scripts\validations\matrimonial\addProfessionalInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addPersonalInfo.js" />
     <Content Include="Scripts\validations\user\login.js" />
     <Content Include="Scripts\validations\userProfile.js" />
@@ -585,6 +617,8 @@
     <Content Include="Views\User\EditProfile.cshtml" />
     <Content Include="Views\Matrimonial\AddBasicInfo.cshtml" />
     <Content Include="Views\Matrimonial\AddPersonalInfo.cshtml" />
+    <Content Include="Views\Matrimonial\AddProfessionalInfo.cshtml" />
+    <Content Include="Views\Matrimonial\AddFamilyInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

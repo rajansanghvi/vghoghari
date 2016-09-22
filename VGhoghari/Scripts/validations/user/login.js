@@ -52,6 +52,7 @@ function resetData() {
   $('#username-error').empty();
   $('#password-error').empty();
   $('#message').empty();
+  $('#message').addClass('hide');
 }
 
 function loginUser() {
@@ -74,22 +75,25 @@ function loginUser() {
         data: JSON.stringify(dataObject),
         statusCode: {
           400: function () {
-            $('#message').html('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
+            $('#message').html('<strong> Error! </strong>There are certain invalid or empty fields. Please fill in all the required information correctly and try again.');
           },
           409: function () {
-            $('#message').html('<div class="alert alert-error fade in">Invalid login credentials. Please use your username and password combination to log in to your account.</div>');
+            $('#message').html('<strong> Error! </strong>Invalid login credentials. Please use correct username and password combination to log in to your account.</div>');
           },
           200: function () {
+            $(location).attr('href', BASEURL + '/Home/Index');
+          },
+          417: function () {
             $(location).attr('href', BASEURL + '/Home/Index');
           }
         }
       });
     }
     else {
-      $('#message').html('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
+      $('#message').html('<strong> Error! </strong>There are certain invalid or empty fields. Please fill in all the required information correctly and try again.');
     }
   }
   else {
-    $('#message').html('<div class="alert alert-error fade in">There are certain invalid or empty fields. Please fill in all the required information correctly and try again.</div>');
+    $('#message').html('<strong> Error! </strong>There are certain invalid or empty fields. Please fill in all the required information correctly and try again.');
   }
 }

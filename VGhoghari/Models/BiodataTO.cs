@@ -17,6 +17,9 @@ namespace VGhoghari.Models {
       this.ReligionInfo = null;
       this.SocialInfo = null;
       this.PhysicalInfo = null;
+
+      this.EducationInfo = null;
+      this.OccupationInfo = null;
     }
 
     [JsonIgnore]
@@ -29,6 +32,9 @@ namespace VGhoghari.Models {
     public ReligionInfoTO ReligionInfo { get; set; }
     public SocialInfoTO SocialInfo { get; set; }
     public PhysicalInfoTO PhysicalInfo { get; set; }
+
+    public EducationInfoTO EducationInfo { get; set; }
+    public OccupationInfoTO OccupationInfo { get; set; }
   }
 
   public class BasicInfoTO {
@@ -140,5 +146,72 @@ namespace VGhoghari.Models {
     public string Drink { get; set; }
     public enBoolean Optics { get; set; }
     public string Deformity { get; set; }
+  }
+
+  public class EducationInfoTO {
+
+    public EducationInfoTO() {
+      this.HighestEducation = enHighestEducation.UnSpecified;
+      this.DegreesAchieved = string.Empty;
+      this.DegreesList = new List<string>();
+      this.UniversityAttended = string.Empty;
+      this.AddlInfo = string.Empty;
+    }
+
+    public enHighestEducation HighestEducation { get; set; }
+    public string DegreesAchieved { get; set; }
+    public List<string> DegreesList { get; set; }
+    public string UniversityAttended { get; set; }
+    public string AddlInfo { get; set; }
+  }
+
+  public class OccupationInfoTO {
+
+    public OccupationInfoTO() {
+      this.Occupation = enOccupation.UnSpecified;
+      this.ProfessionSector = string.Empty;
+      this.OrganizationName = string.Empty;
+      this.OrganizationAddress = string.Empty;
+      this.Designation = string.Empty;
+    }
+
+    public enOccupation Occupation { get; set; }
+    public string ProfessionSector { get; set; }
+    public string OrganizationName { get; set; }
+    public string Designation { get; set; }
+    public string OrganizationAddress { get; set; }
+  }
+
+  public class FamilyInfoTO {
+
+    public FamilyInfoTO() {
+      this.FatherName = string.Empty;
+      this.FatherMobileNumber = string.Empty;
+      this.MotherName = string.Empty;
+      this.MotherMobileNumber = string.Empty;
+      this.GrandFatherName = string.Empty;
+      this.GrandMotherName = string.Empty;
+    }
+
+    public string FatherName { get; set; }
+    public string FatherMobileNumber { get; set; }
+    public string MotherName { get; set; }
+    public string MotherMobileNumber { get; set; }
+    public string GrandFatherName { get; set; }
+    public string GrandMotherName { get; set; }
+    public int NoOfBrothers { get; set; }
+    public int NoOfSisters { get; set; }
+    public enFamilyType FamilyType { get; set; }
+    public string LandlineNumber { get; set; }
+    public enOccupation FatherOccupation { get; set; }
+    public string FatherProfessionSector { get; set; }
+    public string FatherOrganizationName { get; set; }
+    public string FatherDesignation { get; set; }
+    public string FatherOfficeAddress { get; set; }
+    public string Address { get; set; }
+    public string City { get; set; }
+    public string State { get; set; }
+    public string Country { get; set; }
+    public enAddressType ResidenceStatus { get; set; }
   }
 }

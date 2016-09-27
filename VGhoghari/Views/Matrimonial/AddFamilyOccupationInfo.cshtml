@@ -1,0 +1,276 @@
+﻿@{
+  ViewBag.Title = "Family Occupation - Continue creating your Biodata Online and Register as a Bride or a Groom";
+}
+
+@section css{
+  @Styles.Render("~/plugins/bootstrap-select-1.10.0/css/bootstrap-select.min.css")
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax" style="background-image:url(@Url.Content("~/images/page_headers/biodata_page_header.jpg"));">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300;" })</li>
+          <li class="active" style="color: #BA6E0B">Matrimonial</li>
+          <li class="active" style="color: #BA6E0B">Create Biodata</li>
+          <li class="active" style="color: #BA6E0B">Family Occupation</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="color: #EDA159">Add Family's Occupation Details</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title" style="color: #eea546;">Continue by adding your Family's Occupation Details</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details and continue to register yourselves as a bride or a groom.</h6>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message" class="alert alert-error fade in hide">
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Father's Occupation </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="father-occupation" class="control-label thin-label required">Occupation: <span class="red">*</span></label>
+                  <select id="father-occupation" name="father-occupation" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Business</option>
+                    <option value="2">Profession</option>
+                    <option value="3">Service</option>
+                    <option value="6">Retired</option>
+                    <option value="5">Other</option>
+                  </select>
+                  <div id="father-occupation-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="father-professional-sector" class="control-label thin-label required">Professional Sector: <span class="red">*</span></label>
+                  <select id="father-professional-sector" name="father-professional-sector" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="Admin/Secretarial">Admin/Secretarial</option>
+                    <option value="Advertising/ Entertainment/ Media">Advertising/ Entertainment/ Media</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Architecture & Design">Architecture & Design</option>
+                    <option value="Artists, Animators & Web Designers">Artists, Animators & Web Designers</option>
+                    <option value="Banking, Insurance & Financial Services">Banking, Insurance & Financial Services</option>
+                    <option value="Beauty, Fashion & Jewellery Designers">Beauty, Fashion & Jewellery Designers</option>
+                    <option value="Business Owner / Entrepreneur">Business Owner / Entrepreneur</option>
+                    <option value="Civil Services / Law Enforcement">Civil Services / Law Enforcement</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Customer Service/ Call Centre/BPO">Customer Service/ Call Centre/BPO</option>
+                    <option value="Defence">Defence</option>
+                    <option value="Education/ Training">Education/ Training</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Export/ Import"> Export/ Import</option>
+                    <option value="Finance and Accounts">Finance and Accounts</option>
+                    <option value="Government Employee">Government Employee</option>
+                    <option value="Health Care"> Health Care</option>
+                    <option value="Hotels/ Restaurants">Hotels/ Restaurants</option>
+                    <option value="Human Resource">Human Resource</option>
+                    <option value="IT">IT</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Loss Prevention Manager">Loss Prevention Manager</option>
+                    <option value="Management / Corporate Professionals"> Management / Corporate Professionals</option>
+                    <option value="Manufacturing/ Engineering/ R&D">Manufacturing/ Engineering/ R&D</option>
+                    <option value="Marketing and Communications">Marketing and Communications</option>
+                    <option value="Merchant Navy">Merchant Navy</option>
+                    <option value="Non Working">Non Working</option>
+                    <option value="Oil & Gas">Oil & Gas</option>
+                    <option value="Others">Others</option>
+                    <option value="Pharmaceutical/ Biotechnology">Pharmaceutical/ Biotechnology</option>
+                    <option value="Purchase/ Logistics/ Supply chain">Purchase/ Logistics/ Supply chain</option>
+                    <option value="Real Estate"> Real Estate</option>
+                    <option value="Retail Chains">Retail Chains</option>
+                    <option value="Sales/ Business Development">Sales/ Business Development</option>
+                    <option value="Science">Science</option>
+                    <option value="Telecom/ ISP">Telecom/ ISP</option>
+                    <option value="Travel/ Airlines">Travel/ Airlines</option>
+                  </select>
+                  <div id="father-professional-sector-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="father-organization-name" class="control-label thin-label">Organization Name:</label>
+                  <input type="text" id="father-organization-name" name="father-organization-name" class="form-control input-sm" />
+                  <div id="father-organization-name-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="father-designation" class="control-label thin-label">Designation:</label>
+                  <input type="text" id="father-designation" name="father-designation" class="form-control input-sm" />
+                  <div id="father-designation-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="father-organization-address" class="control-label thin-label">Organization Address :</label>
+                  <textarea id="father-organization-address" name="father-organization-address" class="form-control input-sm"></textarea>
+                  <div id="father-organization-address-error" class="text-danger text-justify"></div>
+                </div>
+                <hr />
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Mother's Occupation </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="mother-occupation" class="control-label thin-label required">Occupation: <span class="red">*</span></label>
+                  <select id="mother-occupation" name="mother-occupation" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Business</option>
+                    <option value="2">Profession</option>
+                    <option value="3">Service</option>
+                    <option value="7">Housewife</option>
+                    <option value="5">Other</option>
+                  </select>
+                  <div id="mother-occupation-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="mother-professional-sector" class="control-label thin-label required">Professional Sector: <span class="red">*</span></label>
+                  <select id="mother-professional-sector" name="mother-professional-sector" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="">Select One</option>
+                    <option value="Admin/Secretarial">Admin/Secretarial</option>
+                    <option value="Advertising/ Entertainment/ Media">Advertising/ Entertainment/ Media</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Architecture & Design">Architecture & Design</option>
+                    <option value="Artists, Animators & Web Designers">Artists, Animators & Web Designers</option>
+                    <option value="Banking, Insurance & Financial Services">Banking, Insurance & Financial Services</option>
+                    <option value="Beauty, Fashion & Jewellery Designers">Beauty, Fashion & Jewellery Designers</option>
+                    <option value="Business Owner / Entrepreneur">Business Owner / Entrepreneur</option>
+                    <option value="Civil Services / Law Enforcement">Civil Services / Law Enforcement</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Customer Service/ Call Centre/BPO">Customer Service/ Call Centre/BPO</option>
+                    <option value="Defence">Defence</option>
+                    <option value="Education/ Training">Education/ Training</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Export/ Import"> Export/ Import</option>
+                    <option value="Finance and Accounts">Finance and Accounts</option>
+                    <option value="Government Employee">Government Employee</option>
+                    <option value="Health Care"> Health Care</option>
+                    <option value="Hotels/ Restaurants">Hotels/ Restaurants</option>
+                    <option value="Human Resource">Human Resource</option>
+                    <option value="IT">IT</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Loss Prevention Manager">Loss Prevention Manager</option>
+                    <option value="Management / Corporate Professionals"> Management / Corporate Professionals</option>
+                    <option value="Manufacturing/ Engineering/ R&D">Manufacturing/ Engineering/ R&D</option>
+                    <option value="Marketing and Communications">Marketing and Communications</option>
+                    <option value="Merchant Navy">Merchant Navy</option>
+                    <option value="Non Working">Non Working</option>
+                    <option value="Oil & Gas">Oil & Gas</option>
+                    <option value="Others">Others</option>
+                    <option value="Pharmaceutical/ Biotechnology">Pharmaceutical/ Biotechnology</option>
+                    <option value="Purchase/ Logistics/ Supply chain">Purchase/ Logistics/ Supply chain</option>
+                    <option value="Real Estate"> Real Estate</option>
+                    <option value="Retail Chains">Retail Chains</option>
+                    <option value="Sales/ Business Development">Sales/ Business Development</option>
+                    <option value="Science">Science</option>
+                    <option value="Telecom/ ISP">Telecom/ ISP</option>
+                    <option value="Travel/ Airlines">Travel/ Airlines</option>
+                  </select>
+                  <div id="mother-professional-sector-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="mother-organization-name" class="control-label thin-label">Organization Name:</label>
+                  <input type="text" id="mother-organization-name" name="mother-organization-name" class="form-control input-sm" />
+                  <div id="mother-organization-name-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="mother-designation" class="control-label thin-label">Designation:</label>
+                  <input type="text" id="mother-designation" name="mother-designation" class="form-control input-sm" />
+                  <div id="mother-designation-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="mother-organization-address" class="control-label thin-label">Organization Address :</label>
+                  <textarea id="mother-organization-address" name="mother-organization-address" class="form-control input-sm"></textarea>
+                  <div id="mother-organization-address-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Save Occupation Details" />
+
+                <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <h6>
+                  @Html.ActionLink("Click here to go back and manage the existing biodata...", "Manage", "Matrimonial", null, new { @class = "pull-right" })
+                </h6>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts{
+  @Scripts.Render("~/plugins/bootstrap-select-1.10.0/js/bootstrap-select.min.js")
+
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/validation.js")
+  @Scripts.Render("~/Scripts/validations/matrimonial/addFamilyOccupationInfo.js")
+}

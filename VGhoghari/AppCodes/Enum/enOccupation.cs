@@ -10,6 +10,8 @@ namespace VGhoghari.AppCodes.Enum {
     Professsion = 2,
     Service = 3,
     Student = 4,
-    Other = 5
+    Other = 5,
+    Retired = 6,
+    Housewife = 7
   }
 }

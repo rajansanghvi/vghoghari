@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -253,7 +254,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
       if(string.IsNullOrWhiteSpace(data.EducationInfo.DegreesAchieved)) {
         return -1;
       }
-      
+
       if(!string.IsNullOrWhiteSpace(data.EducationInfo.UniversityAttended)) {
         if(data.EducationInfo.UniversityAttended.Length > 500
           || !Regex.IsMatch(data.EducationInfo.UniversityAttended, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
@@ -296,7 +297,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
           return -1;
         }
       }
-      
+
       return 0;
     }
 
@@ -321,6 +322,408 @@ namespace VGhoghari.AppCodes.Business_Layer {
 
     public static BiodataTO GetFamilyInfo(string code) {
       return MatrimonialDL.FetchFamilyInfo(code);
+    }
+
+    private static int ValidateFamilyInfo(BiodataTO data) {
+      if(string.IsNullOrWhiteSpace(data.Code)) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.FamilyInfo.Address)
+        || data.FamilyInfo.Address.Length > 1000
+        || !Regex.IsMatch(data.FamilyInfo.Address, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.FamilyInfo.Country)) {
+        return -1;
+      }
+
+      if(data.FamilyInfo.FamilyType == enFamilyType.UnSpecified) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.FamilyInfo.FatherMobileNumber)) {
+        if(data.FamilyInfo.FatherMobileNumber.Length < 4
+          || data.FamilyInfo.FatherMobileNumber.Length > 20
+          || !Regex.IsMatch(data.FamilyInfo.FatherMobileNumber, @"^(\+)?(\d){0,3}( )?\d{4,15}$")) {
+          return -1;
+        }
+      }
+
+      if(string.IsNullOrWhiteSpace(data.FamilyInfo.FatherName)
+        || data.FamilyInfo.FatherName.Length < 2
+        || data.FamilyInfo.FatherName.Length > 500
+        || !Regex.IsMatch(data.FamilyInfo.FatherName, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.FamilyInfo.GrandFatherName)
+        || data.FamilyInfo.GrandFatherName.Length < 2
+        || data.FamilyInfo.GrandFatherName.Length > 500
+        || !Regex.IsMatch(data.FamilyInfo.GrandFatherName, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.FamilyInfo.GrandMotherName)) {
+        if(data.FamilyInfo.GrandMotherName.Length < 2
+        || data.FamilyInfo.GrandMotherName.Length > 500
+        || !Regex.IsMatch(data.FamilyInfo.GrandMotherName, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+          return -1;
+        }
+      }
+
+
+      if(!string.IsNullOrWhiteSpace(data.FamilyInfo.LandlineNumber)) {
+        if(data.FamilyInfo.LandlineNumber.Length < 4
+          || data.FamilyInfo.LandlineNumber.Length > 20
+          || !Regex.IsMatch(data.FamilyInfo.LandlineNumber, @"^(\+)?(\d){0,3}( )?(\d){0,3}( )?\d{4,11}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.FamilyInfo.MotherMobileNumber)) {
+        if(data.FamilyInfo.MotherMobileNumber.Length < 4
+          || data.FamilyInfo.MotherMobileNumber.Length > 20
+          || !Regex.IsMatch(data.FamilyInfo.MotherMobileNumber, @"^(\+)?(\d){0,3}( )?\d{4,15}$")) {
+          return -1;
+        }
+      }
+
+      if(string.IsNullOrWhiteSpace(data.FamilyInfo.MotherName)
+      || data.FamilyInfo.MotherName.Length < 2
+      || data.FamilyInfo.MotherName.Length > 500
+      || !Regex.IsMatch(data.FamilyInfo.MotherName, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+        return -1;
+      }
+
+      if(data.FamilyInfo.NoOfBrothers < 0) {
+        return -1;
+      }
+
+      if(data.FamilyInfo.NoOfSisters < 0) {
+        return -1;
+      }
+
+      if(data.FamilyInfo.ResidenceStatus == enAddressType.UnSpecified) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.FamilyInfo.FatherMobileNumber) && string.IsNullOrWhiteSpace(data.FamilyInfo.MotherMobileNumber) && string.IsNullOrWhiteSpace(data.FamilyInfo.LandlineNumber)) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.MosalInfo.UncleName)) {
+        if(data.MosalInfo.UncleName.Length < 2
+          || data.MosalInfo.UncleName.Length > 500
+          || !Regex.IsMatch(data.MosalInfo.UncleName, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+          return -1;
+        }
+      }
+
+      if(string.IsNullOrWhiteSpace(data.MosalInfo.GrandFatherName)
+        || data.MosalInfo.GrandFatherName.Length < 2
+        || data.MosalInfo.GrandFatherName.Length > 500
+        || !Regex.IsMatch(data.MosalInfo.GrandFatherName, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.MosalInfo.GrandMotherName)) {
+        if(data.MosalInfo.GrandMotherName.Length < 2
+          || data.MosalInfo.GrandMotherName.Length > 500
+          || !Regex.IsMatch(data.MosalInfo.GrandMotherName, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+          return -1;
+        }
+      }
+
+      if(string.IsNullOrWhiteSpace(data.MosalInfo.Native)
+        || data.MosalInfo.Native.Length > 200
+        || !Regex.IsMatch(data.MosalInfo.Native, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.MosalInfo.ContactNumber)) {
+        if(data.MosalInfo.ContactNumber.Length < 4
+          || data.MosalInfo.ContactNumber.Length > 20
+          || (!Regex.IsMatch(data.MosalInfo.ContactNumber, @"^(\+)?(\d){0,3}( )?(\d){0,3}( )?\d{4,11}$")
+                              && !Regex.IsMatch(data.MosalInfo.ContactNumber, @"^(\+)?(\d){0,3}( )?\d{4,15}$"))) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.FamilyInfo.Address)) {
+        if(data.FamilyInfo.Address.Length > 1000
+          || !Regex.IsMatch(data.FamilyInfo.Address, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+      return 0;
+    }
+
+    public static KeyValuePair<int, string> SaveFamilyInfo(BiodataTO data) {
+      if(!MatrimonialDL.IsMyBiodata(data.Code)) {
+        return new KeyValuePair<int, string>(-3, string.Empty);
+      }
+
+      int validationResponse = ValidateFamilyInfo(data);
+      if(validationResponse == 0) {
+        int id = MatrimonialDL.SaveFamilyInfo(data);
+        if(id > 0) {
+          return new KeyValuePair<int, string>(validationResponse, data.Code);
+        }
+        // Some issue in saving details hence failed
+        return new KeyValuePair<int, string>(-2, string.Empty);
+      }
+
+      //validation failed hence -1
+      return new KeyValuePair<int, string>(validationResponse, string.Empty);
+    }
+
+    public static BiodataTO GetFamilyOccupationDetails(string code) {
+      return MatrimonialDL.FetchFamilyOccupationDetails(code);
+    }
+
+    private static int ValidateFamilyOccupationDetails(BiodataTO data) {
+
+      if(string.IsNullOrWhiteSpace(data.Code)) {
+        return -1;
+      }
+
+      if(data.FatherOccupationInfo.Occupation == enOccupation.UnSpecified) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.FatherOccupationInfo.ProfessionSector)) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.FatherOccupationInfo.OrganizationName)) {
+        if(data.FatherOccupationInfo.OrganizationName.Length > 500
+          || !Regex.IsMatch(data.FatherOccupationInfo.OrganizationName, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.FatherOccupationInfo.Designation)) {
+        if(data.FatherOccupationInfo.Designation.Length > 500
+          || !Regex.IsMatch(data.FatherOccupationInfo.Designation, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.FatherOccupationInfo.OrganizationAddress)) {
+        if(data.FatherOccupationInfo.OrganizationAddress.Length > 1000
+          || !Regex.IsMatch(data.FatherOccupationInfo.OrganizationAddress, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(data.MotherOccupationInfo.Occupation == enOccupation.UnSpecified) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.MotherOccupationInfo.ProfessionSector)) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.MotherOccupationInfo.OrganizationName)) {
+        if(data.MotherOccupationInfo.OrganizationName.Length > 500
+          || !Regex.IsMatch(data.MotherOccupationInfo.OrganizationName, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.MotherOccupationInfo.Designation)) {
+        if(data.MotherOccupationInfo.Designation.Length > 500
+          || !Regex.IsMatch(data.MotherOccupationInfo.Designation, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.MotherOccupationInfo.OrganizationAddress)) {
+        if(data.MotherOccupationInfo.OrganizationAddress.Length > 1000
+          || !Regex.IsMatch(data.MotherOccupationInfo.OrganizationAddress, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      return 0;
+    }
+
+    public static KeyValuePair<int, string> SaveFamilyOccupationDetails(BiodataTO data) {
+      if(!MatrimonialDL.IsMyBiodata(data.Code)) {
+        return new KeyValuePair<int, string>(-3, string.Empty);
+      }
+
+      int validationResponse = ValidateFamilyOccupationDetails(data);
+      if(validationResponse == 0) {
+        int id = MatrimonialDL.SaveFamilyOccupationDetails(data);
+        if(id > 0) {
+          return new KeyValuePair<int, string>(validationResponse, data.Code);
+        }
+        // Some issue in saving details hence failed
+        return new KeyValuePair<int, string>(-2, string.Empty);
+      }
+
+      //validation failed hence -1
+      return new KeyValuePair<int, string>(validationResponse, string.Empty);
+    }
+
+    public static List<SibblingInfoTO> GetSibblingInfo(string code) {
+      return MatrimonialDL.FetchSillingInfos(code);
+    }
+
+    private static int ValidateSibblingInfo(string code, SibblingInfoTO data) {
+      if(string.IsNullOrWhiteSpace(code)) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.Name)
+        || data.Name.Length < 2
+        || data.Name.Length > 500
+        || !Regex.IsMatch(data.Name, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+        return -1;
+      }
+
+      if(data.Gender == enGender.UnSpecified) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.Family)
+        || data.Family.Length < 2
+        || data.Family.Length > 500
+        || !Regex.IsMatch(data.Family, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
+        return -1;
+      }
+
+      if(string.IsNullOrWhiteSpace(data.Native)
+        || data.Name.Length > 200
+        || !Regex.IsMatch(data.Native, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+        return -1;
+      }
+
+      return 0;
+    }
+
+    public static KeyValuePair<int, SibblingInfoTO> SaveSibblingInfo(string code, SibblingInfoTO data) {
+      if(!MatrimonialDL.IsMyBiodata(code)) {
+        return new KeyValuePair<int, SibblingInfoTO>(-3, null);
+      }
+
+      int validationResponse = ValidateSibblingInfo(code, data);
+      if(validationResponse == 0) {
+        data.Code = Guid.NewGuid().ToString();
+        int id = MatrimonialDL.SaveSibblingInfo(code, data);
+        if(id > 0) {
+          return new KeyValuePair<int, SibblingInfoTO>(validationResponse, data);
+        }
+        // Some issue in saving details hence failed
+        return new KeyValuePair<int, SibblingInfoTO>(-2, null);
+      }
+      //validation failed hence -1
+      return new KeyValuePair<int, SibblingInfoTO>(validationResponse, null);
+    }
+
+    public static int DeleteSibblingInfo(string code, string sibblingCode) {
+      if(!MatrimonialDL.IsMyBiodata(code)) {
+        return -3;
+      }
+
+      int count = MatrimonialDL.DeleteSibblingInfo(code, sibblingCode);
+      if(count == 0) {
+        return -1;
+      }
+      else if(count > 1) {
+        return -2;
+      }
+      return 0;
+    }
+
+    public static BiodataTO GetAdditionalDetails(string code) {
+      return MatrimonialDL.FetchAdditionDetails(code);
+    }
+
+    private static int ValidateAdditionalInfo(string profileImageData, BiodataTO data) {
+      if(string.IsNullOrWhiteSpace(data.Code)) {
+        return -1;
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.AdditionalInfo.Hobbies)) {
+        if(data.AdditionalInfo.Hobbies.Length > 1000
+          || !Regex.IsMatch(data.AdditionalInfo.Hobbies, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.AdditionalInfo.Interest)) {
+        if(data.AdditionalInfo.Interest.Length > 1000
+          || !Regex.IsMatch(data.AdditionalInfo.Interest, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(!string.IsNullOrWhiteSpace(data.AdditionalInfo.Expectation)) {
+        if(data.AdditionalInfo.Expectation.Length > 1000
+          || !Regex.IsMatch(data.AdditionalInfo.Expectation, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
+          return -1;
+        }
+      }
+
+      if(string.IsNullOrWhiteSpace(MatrimonialDL.GetProfileImageNameByCode(data.Code))) {
+        if(string.IsNullOrWhiteSpace(profileImageData)) {
+          return -1;
+        }
+      }
+
+      return 0;
+    }
+
+    public static int SaveAdditionalInfo(string profileImageData, BiodataTO data) {
+      if(!MatrimonialDL.IsMyBiodata(data.Code)) {
+        return -3;
+      }
+
+      int validationResponse = ValidateAdditionalInfo(profileImageData, data);
+      if(validationResponse == 0) {
+
+        if(!string.IsNullOrWhiteSpace(profileImageData)) {
+          string fileName = Guid.NewGuid().ToString();
+          data.ProfileImage = fileName + ".jpg";
+
+          string imageData = profileImageData.Split(',')[1];
+          string directory = HttpContext.Current.Server.MapPath("~/AppData/biodata/");
+          try {
+            if(!Directory.Exists(directory)) {
+              Directory.CreateDirectory(directory);
+            }
+            string path = Path.Combine(directory, data.ProfileImage);
+            File.WriteAllBytes(path, Convert.FromBase64String(imageData));
+            string oldFileName = MatrimonialDL.GetProfileImageNameByCode(data.Code);
+            if(!string.IsNullOrWhiteSpace(oldFileName)) {
+              string oldFilePath = Path.Combine(directory, oldFileName);
+              if(File.Exists(oldFilePath)) {
+                File.Delete(oldFilePath);
+              }
+            }
+            int rowsAffected = MatrimonialDL.UpdateProfileImageByCode(data.Code, data.ProfileImage);
+            if(rowsAffected != 1) {
+              return -2;
+            }
+          }
+          catch(Exception e) {
+            return -2;
+          }
+        }
+
+        int id = MatrimonialDL.SaveAdditionalInfo(data);
+        if(id > 0) {
+          return validationResponse;
+        }
+        // Some issue in saving details hence failed
+        return -2;
+      }
+      //validation failed hence -1
+      return validationResponse;
     }
   }
 }

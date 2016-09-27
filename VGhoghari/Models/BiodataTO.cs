@@ -11,6 +11,8 @@ namespace VGhoghari.Models {
     public BiodataTO() {
       this.Id = 0;
       this.Code = string.Empty;
+      this.ProfileImage = string.Empty;
+
       this.BasicInfo = null;
       this.ContactInfo = null;
 
@@ -20,11 +22,20 @@ namespace VGhoghari.Models {
 
       this.EducationInfo = null;
       this.OccupationInfo = null;
+
+      this.FamilyInfo = null;
+      this.MosalInfo = null;
+
+      this.FatherOccupationInfo = null;
+      this.MotherOccupationInfo = null;
+
+      this.AdditionalInfo = null;
     }
 
     [JsonIgnore]
     public int Id { get; set; }
     public string Code { get; set; }
+    public string ProfileImage { get; set; }
 
     public BasicInfoTO BasicInfo { get; set; }
     public ContactInfoTO ContactInfo { get; set; }
@@ -35,6 +46,14 @@ namespace VGhoghari.Models {
 
     public EducationInfoTO EducationInfo { get; set; }
     public OccupationInfoTO OccupationInfo { get; set; }
+
+    public FamilyInfoTO FamilyInfo { get; set; }
+    public MosalInfoTO MosalInfo { get; set; }
+
+    public OccupationInfoTO FatherOccupationInfo { get; set; }
+    public OccupationInfoTO MotherOccupationInfo { get; set; }
+
+    public AdditionalBiodataInfoTO AdditionalInfo { get; set; }
   }
 
   public class BasicInfoTO {
@@ -191,6 +210,15 @@ namespace VGhoghari.Models {
       this.MotherMobileNumber = string.Empty;
       this.GrandFatherName = string.Empty;
       this.GrandMotherName = string.Empty;
+      this.NoOfBrothers = 0;
+      this.NoOfSisters = 0;
+      this.FamilyType = enFamilyType.UnSpecified;
+      this.LandlineNumber = string.Empty;
+      this.Address = string.Empty;
+      this.City = string.Empty;
+      this.State = string.Empty;
+      this.Country = string.Empty;
+      this.ResidenceStatus = enAddressType.UnSpecified;
     }
 
     public string FatherName { get; set; }
@@ -203,15 +231,61 @@ namespace VGhoghari.Models {
     public int NoOfSisters { get; set; }
     public enFamilyType FamilyType { get; set; }
     public string LandlineNumber { get; set; }
-    public enOccupation FatherOccupation { get; set; }
-    public string FatherProfessionSector { get; set; }
-    public string FatherOrganizationName { get; set; }
-    public string FatherDesignation { get; set; }
-    public string FatherOfficeAddress { get; set; }
     public string Address { get; set; }
     public string City { get; set; }
     public string State { get; set; }
     public string Country { get; set; }
     public enAddressType ResidenceStatus { get; set; }
+  }
+
+  public class MosalInfoTO {
+
+    public MosalInfoTO() {
+      this.UncleName = string.Empty;
+      this.GrandFatherName = string.Empty;
+      this.GrandMotherName = string.Empty;
+      this.Native = string.Empty;
+      this.ContactNumber = string.Empty;
+      this.Address = string.Empty;
+    }
+
+    public string UncleName { get; set; }
+    public string GrandFatherName { get; set; }
+    public string GrandMotherName { get; set; }
+    public string Native { get; set; }
+    public string ContactNumber { get; set; }
+    public string Address { get; set; }
+  }
+
+  public class SibblingInfoTO {
+
+    public SibblingInfoTO() {
+      this.Code = string.Empty;
+      this.Name = string.Empty;
+      this.Gender = enGender.UnSpecified;
+      this.Family = string.Empty;
+      this.Native = string.Empty;
+      this.GenderString = string.Empty;
+    }
+
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public enGender Gender { get; set; }
+    public string GenderString { get; set; }
+    public string Family { get; set; }
+    public string Native { get; set; }
+  }
+
+  public class AdditionalBiodataInfoTO {
+
+    public AdditionalBiodataInfoTO() {
+      this.Hobbies = string.Empty;
+      this.Interest = string.Empty;
+      this.Expectation = string.Empty;
+    }
+
+    public string Hobbies { get; set; }
+    public string Interest { get; set; }
+    public string Expectation { get; set; }
   }
 }

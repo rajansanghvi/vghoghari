@@ -1,0 +1,157 @@
+﻿@{
+  ViewBag.Title = "Sibbling Info - Continue creating your Biodata Online and Register as a Bride or a Groom";
+}
+
+@section css{
+  @Styles.Render("~/plugins/bootstrap-select-1.10.0/css/bootstrap-select.min.css")
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax" style="background-image:url(@Url.Content("~/images/page_headers/biodata_page_header.jpg"));">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300;" })</li>
+          <li class="active" style="color: #BA6E0B">Matrimonial</li>
+          <li class="active" style="color: #BA6E0B">Create Biodata</li>
+          <li class="active" style="color: #BA6E0B">Sibbling Info</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="color: #EDA159">Add Sibbling Info</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title" style="color: #eea546;">Continue by adding your Sibbling Info</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details and continue to register yourselves as a bride or a groom.</h6>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message" class="alert alert-error fade in hide">
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Sibbling Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="sibbling-name" class="control-label thin-label required">Fullname: <span class="red">*</span></label>
+                  <input type="text" id="sibbling-name" name="sibbling-name" class="form-control input-sm" />
+                  <div id="sibbling-name-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="sibbling-gender" class="control-label thin-label required">Gender: <span class="red">*</span></label>
+                  <select id="sibbling-gender" name="sibbling-gender" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true">
+                    <option value="0">Select One</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                  </select>
+                  <div id="sibbling-gender-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="sibbling-family" class="control-label thin-label">In Law's Family Name:</label>
+                  <input type="text" id="sibbling-family" name="sibbling-family" class="form-control input-sm" />
+                  <div id="sibbling-family-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="sibbling-native" class="control-label thin-label">In Law's Native:</label>
+                  <input type="text" id="sibbling-native" name="sibbling-native" class="form-control input-sm" />
+                  <div id="sibbling-native-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="submit" name="submit" type="submit" class="btn btn-info pull-right" value="Add Sibbling Info" />
+
+                <input id="reset" name="reset" type="reset" class="btn btn-default" value="Reset" />
+                <hr />
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Existing Sibbling's Info </h4>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-12">
+                <table  id="sibbling-data" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th> Full Name </th>
+                      <th> Gender </th>
+                      <th> In Law's Family Name </th>
+                      <th> In Law's Native </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="next" name="next" type="button" class="btn btn-primary btn-lg pull-right" value="Next" />
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <h6>
+                  @Html.ActionLink("Click here to go back and manage the existing biodata...", "Manage", "Matrimonial", null, new { @class = "pull-right" })
+                </h6>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts{
+  @Scripts.Render("~/plugins/bootstrap-select-1.10.0/js/bootstrap-select.min.js")
+
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/validation.js")
+  @Scripts.Render("~/Scripts/validations/matrimonial/addSibblingInfo.js")
+}

@@ -11,9 +11,15 @@ namespace VGhoghari.Controllers {
 
     [HttpGet]
     [Authorize(Roles = "user")]
-    public ActionResult AddBasicInfo() {
+    public ActionResult AddBasicInfo(string code) {
       if(!Utility.isUserActive) {
         return RedirectToAction("Logout", "User");
+      }
+
+      if(!string.IsNullOrWhiteSpace(code)) {
+        if(!MatrimonialBL.IsMyBiodata(code)) {
+          return RedirectToAction("Manage", "Matrimonial");
+        }
       }
       return View();
     }
@@ -49,6 +55,48 @@ namespace VGhoghari.Controllers {
     [HttpGet]
     [Authorize(Roles = "user")]
     public ActionResult AddFamilyInfo(string code) {
+      if(!Utility.isUserActive) {
+        return RedirectToAction("Logout", "User");
+      }
+
+      if(string.IsNullOrWhiteSpace(code)
+        || !MatrimonialBL.IsMyBiodata(code)) {
+        return RedirectToAction("Manage", "Matrimonial");
+      }
+      return View();
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "user")]
+    public ActionResult AddFamilyOccupationInfo(string code) {
+      if(!Utility.isUserActive) {
+        return RedirectToAction("Logout", "User");
+      }
+
+      if(string.IsNullOrWhiteSpace(code)
+        || !MatrimonialBL.IsMyBiodata(code)) {
+        return RedirectToAction("Manage", "Matrimonial");
+      }
+      return View();
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "user")]
+    public ActionResult AddSibblingInfo(string code) {
+      if(!Utility.isUserActive) {
+        return RedirectToAction("Logout", "User");
+      }
+
+      if(string.IsNullOrWhiteSpace(code)
+        || !MatrimonialBL.IsMyBiodata(code)) {
+        return RedirectToAction("Manage", "Matrimonial");
+      }
+      return View();
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "user")]
+    public ActionResult AddAdditionalInfo(string code) {
       if(!Utility.isUserActive) {
         return RedirectToAction("Logout", "User");
       }

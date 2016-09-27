@@ -30,27 +30,27 @@ namespace VGhoghari.AppCodes.Data_Layer {
     }
 
     public static BiodataTO FetchBasicInfo(string code) {
-      const string sql = @"select b.code as code
+      const string sql = @"select ifnull(b.code, '') as code
                           , ifnull(b.fullname, '') as fullname
                           , ifnull(b.gender, 0) as gender
                           , b.dob as dob
                           , ifnull(b.age, 0) as age
                           , ifnull(b.birth_time, '') as birth_time
-                          , b.native as native
-                          , b.marital_status as marital_status
+                          , ifnull(b.native, '') as native
+                          , ifnull(b.marital_status, 0) as marital_status
                           , ifnull(b.birth_place, '') as birth_place
                           , ifnull(b.about_me, '') as about_me
-                          , b.approval_status as approval_status
+                          , ifnull(b.approval_status, 0) as approval_status
                           , ifnull(c.landline_number, '') as landline_number
-                          , c.mobile_number as mobile_number
+                          , ifnull(c.mobile_number, '') as mobile_number
                           , ifnull(c.email_id, '') as email_id
                           , ifnull(c.facebook_url, '') as facebook_url
-                          , c.address as address
+                          , ifnull(c.address, '') as address
                           , ifnull(c.pincode, '') as pincode
                           , ifnull(c.city, '') as city
                           , ifnull(c.state, '') as state
-                          , c.country as country
-                          , c.residential_status as address_type
+                          , ifnull(c.country, '') as country
+                          , ifnull(c.residential_status, 0) as address_type
                           from
                           app_biodata_basic_infos b
                           left join
@@ -135,23 +135,23 @@ namespace VGhoghari.AppCodes.Data_Layer {
 
     public static BiodataTO FetchPersonalInfo(string code) {
       const string sql = @"select
-                          r.religion as religion
-                          , r.caste as caste
+                          if(r.religion, '') as religion
+                          , ifnull(r.caste, '') as caste
                           , ifnull(r.subcaste, '') as subcaste
-                          , s.manglik as manglik
+                          , ifnull(s.manglik, 0) as manglik
                           , ifnull(s.self_gothra, '') as self_gothra
                           , ifnull(s.maternal_gothra, '') as maternal_gothra
                           , ifnull(s.star_sign, 0) as star_sign
-                          , p.height_ft as height_ft
-                          , p.height_inch as height_inch
+                          , ifnull(p.height_ft, 0) as height_ft
+                          , ifnull(p.height_inch, -1) as height_inch
                           , ifnull(p.weight, 0) as weight
                           , ifnull(p.blood_group, '') as blood_group
-                          , p.body_type as body_type
-                          , p.complexion as complexion
-                          , p.optic as optics
-                          , p.diet as diet
-                          , p.smoke as smoke
-                          , p.drink as drink
+                          , ifnull(p.body_type, 0) as body_type
+                          , ifnull(p.complexion, '') as complexion
+                          , ifnull(p.optic, 0) as optics
+                          , ifnull(p.diet, '') as diet
+                          , ifnull(p.smoke, '') as smoke
+                          , ifnull(p.drink, '') as drink
                           , ifnull(deformity, '') as deformity
                           from
                           app_biodata_basic_infos b
@@ -206,7 +206,6 @@ namespace VGhoghari.AppCodes.Data_Layer {
       }
       return null;
     }
-
 
     public static int SavePersonalInfo(BiodataTO data) {
       using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
@@ -334,12 +333,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
                           , ifnull(f.no_of_sisters, 0) as no_of_sisters
                           , ifnull(f.family_type, 0) as family_type
                           , ifnull(f.landline_number, '') as landline_number
-                          , ifnull(f.father_occupation, 0) as father_occupation
-                          , ifnull(f.father_profession, '') as father_profession
-                          , ifnull(f.father_occupation_at, '') as father_organization_name
-                          , ifnull(f.father_designation, '') as father_designation
-                          , ifnull(f.father_office_address, '') as father_office_address
-                          , ifnull(f.address, '') as address
+                          , ifnull(f.address, '') as permanent_address
                           , ifnull(f.city, '') as city
                           , ifnull(f.state, '') as state
                           , ifnull(f.country, '') as country
@@ -347,7 +341,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
                           , ifnull(m.uncle_name, '') as uncle_name
                           , ifnull(m.maternal_grandfather_name, '') as maternal_grandfather_name
                           , ifnull(m.maternal_grandmother_name, '') as maternal_grandmother_name
-                          , ifnull(m.native, '') as native
+                          , ifnull(m.native, '') as maternal_native
                           , ifnull(m.contact_number, '') as contact_number
                           , ifnull(m.address, '') as mosal_address
                           from
@@ -371,24 +365,314 @@ namespace VGhoghari.AppCodes.Data_Layer {
       using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
         if(dr.Read()) {
           return new BiodataTO() {
-            EducationInfo = new EducationInfoTO() {
-              HighestEducation = (enHighestEducation) dr.GetInt32("education"),
-              DegreesAchieved = dr.GetString("degrees_achieved"),
-              DegreesList = dr.GetString("degrees_achieved").Split(',').ToList(),
-              UniversityAttended = dr.GetString("university_attended"),
-              AddlInfo = dr.GetString("addl_info")
+            FamilyInfo = new FamilyInfoTO() {
+              Address = dr.GetString("permanent_address"),
+              City = dr.GetString("city"),
+              Country = dr.GetString("country"),
+              FamilyType = (enFamilyType)dr.GetInt32("family_type"),
+              FatherMobileNumber = dr.GetString("father_mobile_number"),
+              FatherName = dr.GetString("father_name"),
+              GrandFatherName = dr.GetString("grandfather_name"),
+              GrandMotherName = dr.GetString("grandmother_name"),
+              LandlineNumber = dr.GetString("landline_number"),
+              MotherMobileNumber = dr.GetString("mother_mobile_number"),
+              MotherName = dr.GetString("mother_name"),
+              NoOfBrothers = dr.GetInt32("no_of_brothers"),
+              NoOfSisters = dr.GetInt32("no_of_sisters"),
+              ResidenceStatus = (enAddressType)dr.GetInt32("residential_status"),
+              State = dr.GetString("state")
             },
-            OccupationInfo = new OccupationInfoTO() {
-              Occupation = (enOccupation) dr.GetInt32("occupation"),
-              ProfessionSector = dr.GetString("profession"),
-              OrganizationName = dr.GetString("occupation_at"),
-              OrganizationAddress = dr.GetString("address"),
-              Designation = dr.GetString("designation")
+            MosalInfo = new MosalInfoTO() {
+              Address = dr.GetString("mosal_address"),
+              ContactNumber = dr.GetString("contact_number"),
+              GrandFatherName = dr.GetString("maternal_grandfather_name"),
+              GrandMotherName = dr.GetString("maternal_grandmother_name"),
+              Native = dr.GetString("maternal_native"),
+              UncleName = dr.GetString("uncle_name")
             }
           };
         }
       }
       return null;
+    }
+
+    public static int SaveFamilyInfo(BiodataTO data) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+        string procedureName = @"save_family_biodata_info";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("a_code", data.Code);
+
+        dl.AddParam("a_father_name", data.FamilyInfo.FatherName);
+        dl.AddParam("a_father_mobile_number", data.FamilyInfo.FatherMobileNumber);
+        dl.AddParam("a_mother_name", data.FamilyInfo.MotherName);
+        dl.AddParam("a_mother_mobile_number", data.FamilyInfo.MotherMobileNumber);
+        dl.AddParam("a_grandfather_name", data.FamilyInfo.GrandFatherName);
+        dl.AddParam("a_grandmother_name", data.FamilyInfo.GrandMotherName);
+        dl.AddParam("a_no_of_brothers", data.FamilyInfo.NoOfBrothers);
+        dl.AddParam("a_no_of_sisters", data.FamilyInfo.NoOfSisters);
+        dl.AddParam("a_family_type", data.FamilyInfo.FamilyType);
+        dl.AddParam("a_landline_number", data.FamilyInfo.LandlineNumber);
+        dl.AddParam("a_address", data.FamilyInfo.Address);
+        dl.AddParam("a_city", data.FamilyInfo.City);
+        dl.AddParam("a_state", data.FamilyInfo.State);
+        dl.AddParam("a_country", data.FamilyInfo.Country);
+        dl.AddParam("a_residential_status", data.FamilyInfo.ResidenceStatus);
+
+        dl.AddParam("a_uncle_name", data.MosalInfo.UncleName);
+        dl.AddParam("a_maternal_grandfather_name", data.MosalInfo.GrandFatherName);
+        dl.AddParam("a_maternal_grandmother_name", data.MosalInfo.GrandMotherName);
+        dl.AddParam("a_native", data.MosalInfo.Native);
+        dl.AddParam("a_contact_number", data.MosalInfo.ContactNumber);
+        dl.AddParam("a_mosal_address", data.MosalInfo.Address);
+
+        dl.AddParam("a_username", Utility.CurrentUser);
+
+        int id = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedureName);
+        ts.Complete();
+        return id;
+      }
+    }
+
+    public static BiodataTO FetchFamilyOccupationDetails(string code) {
+      const string sql = @"select
+                          ifnull(fo.father_occupation, 0) as father_occupation
+                          , ifnull(fo.father_profession, '') as father_profession
+                          , ifnull(fo.father_occupation_at, '') as father_occupation_at
+                          , ifnull(fo.father_designation, '') as father_designation
+                          , ifnull(fo.father_occupation_address, '') as father_occupation_address
+                          , ifnull(fo.mother_occupation, 0) as mother_occupation
+                          , ifnull(fo.mother_profession, '') as mother_profession
+                          , ifnull(fo.mother_occupation_at, '') as mother_occupation_at
+                          , ifnull(fo.mother_designation, '') as mother_designation
+                          , ifnull(fo.mother_occupation_address, '') as mother_occupation_address
+                          from
+                          app_biodata_basic_infos b
+                          left join
+                          app_biodata_family_occupation_infos fo
+                          on b.id = fo.biodata_id
+                          where
+                          b.code = ?code
+                          and
+                          b.active = true
+                          and b.user_id = (select id from app_users where username = ?username and active = true);";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("code", code);
+      dl.AddParam("username", Utility.CurrentUser);
+
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+        if(dr.Read()) {
+          return new BiodataTO() {
+            FatherOccupationInfo = new OccupationInfoTO() {
+              Occupation = (enOccupation) dr.GetInt32("father_occupation"),
+              ProfessionSector = dr.GetString("father_profession"),
+              OrganizationName = dr.GetString("father_occupation_at"),
+              OrganizationAddress = dr.GetString("father_occupation_address"),
+              Designation = dr.GetString("father_designation")
+            },
+            MotherOccupationInfo = new OccupationInfoTO() {
+              Occupation = (enOccupation) dr.GetInt32("mother_occupation"),
+              ProfessionSector = dr.GetString("mother_profession"),
+              OrganizationName = dr.GetString("mother_occupation_at"),
+              OrganizationAddress = dr.GetString("mother_occupation_address"),
+              Designation = dr.GetString("mother_designation")
+            }
+          };
+        }
+      }
+      return null;
+    }
+
+    public static int SaveFamilyOccupationDetails(BiodataTO data) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+        string procedureName = @"save_family_occupation_biodata_info";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("a_code", data.Code);
+
+        dl.AddParam("a_father_occupation", data.FatherOccupationInfo.Occupation);
+        dl.AddParam("a_father_profession", data.FatherOccupationInfo.ProfessionSector);
+        dl.AddParam("a_father_occupation_at", data.FatherOccupationInfo.OrganizationName);
+        dl.AddParam("a_father_designation", data.FatherOccupationInfo.Designation);
+        dl.AddParam("a_father_occupation_address", data.FatherOccupationInfo.OrganizationAddress);
+
+        dl.AddParam("a_mother_occupation", data.MotherOccupationInfo.Occupation);
+        dl.AddParam("a_mother_profession", data.MotherOccupationInfo.ProfessionSector);
+        dl.AddParam("a_mother_occupation_at", data.MotherOccupationInfo.OrganizationName);
+        dl.AddParam("a_mother_designation", data.MotherOccupationInfo.Designation);
+        dl.AddParam("a_mother_occupation_address", data.MotherOccupationInfo.OrganizationAddress);
+
+        dl.AddParam("a_username", Utility.CurrentUser);
+
+        int id = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedureName);
+        ts.Complete();
+        return id;
+      }
+    }
+
+    public static List<SibblingInfoTO> FetchSillingInfos(string code) {
+      const string sql = @"select
+                          ifnull(s.code, '') as sibbling_code
+                          , ifnull(s.sibbling_name, '') as sibbling_name
+                          , ifnull(s.sibbling_gender, 0) as sibbling_gender
+                          , ifnull(s.sibbling_in_law_name, '') as sibbling_in_law_name
+                          , ifnull(s.sibbling_in_law_native, '') as sibbling_in_law_native
+                          from
+                          app_biodata_basic_infos b
+                          left join
+                          app_biodata_sibbling_infos s
+                          on b.id = s.biodata_id
+                          where
+                          b.code = ?code
+                          and
+                          b.active = true
+                          and b.user_id = (select id from app_users where username = ?username and active = true)
+                          and s.active = true;";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("code", code);
+      dl.AddParam("username", Utility.CurrentUser);
+
+      List<SibblingInfoTO> sibblingInfos = new List<SibblingInfoTO>();
+
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+        while(dr.Read()) {
+          sibblingInfos.Add(new SibblingInfoTO() {
+            Code = dr.GetString("sibbling_code"),
+            Name = dr.GetString("sibbling_name"),
+            Gender = (enGender) dr.GetInt32("sibbling_gender"),
+            Family = dr.GetString("sibbling_in_law_name"),
+            Native = dr.GetString("sibbling_in_law_native"),
+            GenderString = dr.GetInt32("sibbling_gender") != 0 ? ((enGender) dr.GetInt32("sibbling_gender")).ToString() : string.Empty
+          });
+        }
+      }
+      return sibblingInfos;
+    }
+
+    public static int SaveSibblingInfo(string code, SibblingInfoTO data) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+        const string procedure = @"save_sibbling_biodata_info";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("a_code", code);
+        dl.AddParam("a_name", data.Name);
+        dl.AddParam("a_gender", data.Gender);
+        dl.AddParam("a_family_name", data.Family);
+        dl.AddParam("a_native", data.Native);
+        dl.AddParam("a_sibbling_code", data.Code);
+        dl.AddParam("a_username", Utility.CurrentUser);
+
+        int id = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedure);
+        ts.Complete();
+        return id;
+      }
+    }
+
+    public static int DeleteSibblingInfo(string code, string sibblingCode) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+        const string procedureName = @"delete_sibbling_biodata_info";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("a_code", code);
+        dl.AddParam("a_sibbling_code", sibblingCode);
+        dl.AddParam("a_username", Utility.CurrentUser);
+
+        int count = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedureName);
+        ts.Complete();
+        return count;
+      }
+    }
+
+    public static BiodataTO FetchAdditionDetails(string code) {
+      const string sql = @"select
+                          ifnull(b.profile_image, '') as profile_image
+                          , ifnull(o.hobbies, '') as hobbies
+                          , ifnull(o.interest, '') as interest
+                          , ifnull(o.expectation, '') as expectations
+                          from
+                          app_biodata_basic_infos b
+                          left join
+                          app_biodata_other_infos o
+                          on b.id = o.biodata_id
+                          where
+                          b.code = ?code
+                          and
+                          b.active = true
+                          and b.user_id = (select id from app_users where username = ?username and active = true);";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("code", code);
+      dl.AddParam("username", Utility.CurrentUser);
+
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+        if(dr.Read()) {
+          return new BiodataTO() {
+            ProfileImage = dr.GetString("profile_image"),
+            AdditionalInfo = new AdditionalBiodataInfoTO() {
+              Hobbies = dr.GetString("hobbies"),
+              Interest = dr.GetString("interest"),
+              Expectation = dr.GetString("expectations")
+            }
+          };
+        }
+      }
+      return null;
+    }
+
+    public static string GetProfileImageNameByCode(string code) {
+      const string sql = @"select ifnull(profile_image, '') 
+                          from
+                          app_biodata_basic_infos
+                          where
+                          code = ?code
+                          and
+                          active = true";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("code", code);
+
+      string fileName = dl.ExecuteSqlReturnScalar<string>(Utility.ConnectionString, sql);
+      return fileName;
+    }
+
+    public static int UpdateProfileImageByCode(string code, string fileName) {
+      using(TransactionScope ts =  new TransactionScope()) {
+        const string sql = @"update app_biodata_basic_infos
+                            set
+                            profile_image = ?fileName
+                            , approval_status = 1
+                            , modified_by = ?username
+                            , modified_at = now()
+                            where code = ?code
+                            and active = true;";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("fileName", fileName);
+        dl.AddParam("username", Utility.CurrentUser);
+        dl.AddParam("code", code);
+
+        int rowsAffected = dl.ExecuteSqlNonQuery(Utility.ConnectionString, sql);
+        return rowsAffected;
+      }
+    }
+
+   public static int SaveAdditionalInfo(BiodataTO data) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+        const string procedure = @"save_additional_biodata_info";
+
+        GlobalDL dl = new GlobalDL();
+        dl.AddParam("a_code", data.Code);
+        dl.AddParam("a_hobbies", data.AdditionalInfo.Hobbies);
+        dl.AddParam("a_interest", data.AdditionalInfo.Interest);
+        dl.AddParam("a_expectation", data.AdditionalInfo.Expectation);        
+        dl.AddParam("a_username", Utility.CurrentUser);
+
+        int id = dl.ExecuteProcedureReturnScalar<int>(Utility.ConnectionString, procedure);
+        ts.Complete();
+        return id;
+      }
     }
   }
 }

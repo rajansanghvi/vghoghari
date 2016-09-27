@@ -143,7 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppData\profile_image\" />
+    <Folder Include="AppData\" />
     <Folder Include="App_Data\" />
     <Folder Include="Theme\audio\" />
   </ItemGroup>
@@ -245,8 +245,13 @@
     <Content Include="AppCodes\Database\initial_scripts.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_app_register_user.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_app_create_default_admin.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_delete_sibbling_biodata_info.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_save_basic_biodata_info.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_save_family_biodata_info.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_save_family_occupation_biodata_info.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_save_personal_biodata_info.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_save_sibbling_biodata_info.sql" />
+    <Content Include="AppCodes\Database\Procedures\proc_save_professional_biodata_info.sql" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -269,6 +274,9 @@
     <Content Include="Scripts\validations\constants.js" />
     <Content Include="Scripts\validations\matrimonial\addBasicInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addFamilyInfo.js" />
+    <Content Include="Scripts\validations\matrimonial\addFamilyOccupationInfo.js" />
+    <Content Include="Scripts\validations\matrimonial\addAdditionalInfo.js" />
+    <Content Include="Scripts\validations\matrimonial\addSibblingInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addProfessionalInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addPersonalInfo.js" />
     <Content Include="Scripts\validations\user\login.js" />
@@ -304,6 +312,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="AppCodes\Database\Procedures\proc_save_additional_biodata_info.sql" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -619,6 +628,9 @@
     <Content Include="Views\Matrimonial\AddPersonalInfo.cshtml" />
     <Content Include="Views\Matrimonial\AddProfessionalInfo.cshtml" />
     <Content Include="Views\Matrimonial\AddFamilyInfo.cshtml" />
+    <Content Include="Views\Matrimonial\AddFamilyOccupationInfo.cshtml" />
+    <Content Include="Views\Matrimonial\AddSibblingInfo.cshtml" />
+    <Content Include="Views\Matrimonial\AddAdditionalInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

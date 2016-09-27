@@ -86,26 +86,6 @@ $(document).ready(function () {
     familyAddressTypeValidation();
   });
 
-  $('#father-occupation').on('hidden.bs.select', function (e) {
-    fatherOccupationValidation();
-  });
-
-  $('#father-professional-sector').on('hidden.bs.select', function (e) {
-    fatherProfessionalSectorValidation();
-  });
-
-  $('#father-organization-name').focusout(function () {
-    fatherOrganizationNameValidation();
-  });
-
-  $('#father-designation').focusout(function () {
-    fatherDesignationValidation();
-  });
-
-  $('#father-organization-address').focusout(function () {
-    fatherOrganizationAddressValidation();
-  });
-
   $('#uncle-name').focusout(function () {
     uncleNameValidation();
   });
@@ -119,7 +99,7 @@ $(document).ready(function () {
   });
 
   $('#maternal-native').focusout(function () {
-    maternalGrandMotherNameValidation();
+    maternalNativeValidation();
   });
 
   $('#contact-no').focusout(function () {
@@ -237,141 +217,281 @@ function fetchFamilyBiodataInfo(code, callback) {
   });
 }
 
-function fillProfessionalInfo(data) {
-  $('#education').val(data.EducationInfo.HighestEducation);
-  $('#education').selectpicker('refresh');
+function fillFamilyInfo(data) {
+  $('#father-name').val(data.FamilyInfo.FatherName);
+  $('#father-mobile-no').val(data.FamilyInfo.FatherMobileNumber);
+  $('#grandfather-name').val(data.FamilyInfo.GrandFatherName);
 
-  $('#university').val(data.EducationInfo.UniversityAttended);
+  $('#mother-name').val(data.FamilyInfo.MotherName);
+  $('#mother-mobile-no').val(data.FamilyInfo.MotherMobileNumber);
+  $('#grandmother-name').val(data.FamilyInfo.GrandMotherName);
 
-  $('#addl-info').val(data.EducationInfo.AddlInfo);
+  $('#no-of-bros').val(data.FamilyInfo.NoOfBrothers);
+  $('#no-of-sis').val(data.FamilyInfo.NoOfSisters);
+  
+  $('#family-landline-no').val(data.FamilyInfo.LandlineNumber);
+  $('#family-type').val(data.FamilyInfo.FamilyType);
+  $('#family-type').selectpicker('refresh');
 
-  $('#occupation').val(data.OccupationInfo.Occupation);
-  $('#occupation').selectpicker('refresh');
+  $('#family-address').val(data.FamilyInfo.Address);
 
-  $('#professional-sector').val(data.OccupationInfo.ProfessionSector);
-  $('#professional-sector').selectpicker('refresh');
+  $('#country').val(data.FamilyInfo.Country);
+  $('#country').selectpicker('refresh');
+  loadStates($('#country').val(), data.FamilyInfo.State, data.FamilyInfo.City);
 
-  $('#organization-name').val(data.OccupationInfo.OrganizationName);
+  $('#family-address-type').val(data.FamilyInfo.ResidenceStatus);
+  $('#family-address-type').selectpicker('refresh');
 
-  $('#designation').val(data.OccupationInfo.Designation);
+  $('#uncle-name').val(data.MosalInfo.UncleName);
+  $('#maternal-grandfather-name').val(data.MosalInfo.GrandFatherName);
+  $('#maternal-grandmother-name').val(data.MosalInfo.GrandMotherName);
 
-  $('#organization-address').val(data.OccupationInfo.OrganizationAddress);
-
-  $('#degrees-achieved').selectpicker('refresh');
-  $('#degrees-achieved').selectpicker('val', data.EducationInfo.DegreesList);
+  $('#maternal-native').val(data.MosalInfo.Native);
+  $('#contact-no').val(data.MosalInfo.ContactNumber);
+  $('#mosal-address').val(data.MosalInfo.Address);
 }
 
-function educationValidation() {
-  $('#education-error').empty();
+function fatherNameValidation() {
+  $('#father-name-error').empty();
 
-  var errMsg = validateDropdown($('#education').val().trim());
+  var errMsg = validateFullName($('#father-name').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#education-error').html(errMsg);
+    $('#father-name-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function degreesAchievedValidation() {
-  $('#degrees-achieved-error').empty();
+function fatherMobileValidation() {
+  $('#father-mobile-no-error').empty();
 
-  var errMsg = validateMultipleDropdown($('#degrees-achieved').val());
+  var errMsg = validateOptionalMobileNo($('#father-mobile-no').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#degrees-achieved-error').html(errMsg);
+    $('#father-mobile-no-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function universityValidation() {
-  $('#university-error').empty();
+function grandFatherNameValidation() {
+  $('#grandfather-name-error').empty();
 
-  var errMsg = validateOptionalProperName($('#university').val().trim());
+  var errMsg = validateFullName($('#grandfather-name').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#university-error').html(errMsg);
+    $('#grandfather-name-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function addlInfoValidation() {
-  $('#addl-info-error').empty();
+function motherNameValidation() {
+  $('#mother-name-error').empty();
 
-  var errMsg = validateOptionalFreeText($('#addl-info').val().trim());
+  var errMsg = validateFullName($('#mother-name').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#addl-info-error').html(errMsg);
+    $('#mother-name-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function occupationValidation() {
-  $('#occupation-error').empty();
+function motherMobileValidation() {
+  $('#mother-mobile-no-error').empty();
 
-  var errMsg = validateDropdown($('#occupation').val().trim());
+  var errMsg = validateOptionalMobileNo($('#mother-mobile-no').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#occupation-error').html(errMsg);
+    $('#mother-mobile-no-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function professionalSectorValidation() {
-  $('#professional-sector-error').empty();
+function grandMotherNameValidation() {
+  $('#grandmother-name-error').empty();
 
-  var errMsg = validateDropdown($('#professional-sector').val().trim());
+  var errMsg = validateOptionalFullName($('#grandmother-name').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#professional-sector-error').html(errMsg);
+    $('#grandmother-name-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function organizationNameValidation() {
-  $('#organization-name-error').empty();
+function noOfBrosValidation() {
+  $('#no-of-bros-error').empty();
 
-  var errMsg = validateOptionalProperName($('#organization-name').val().trim());
+  var errMsg = validateNumberField($('#no-of-bros').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#organization-name-error').html(errMsg);
+    $('#no-of-bros-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function designationValidation() {
-  $('#designation-error').empty();
+function noOfSisValidation() {
+  $('#no-of-sis-error').empty();
 
-  var errMsg = validateOptionalProperName($('#designation').val().trim());
+  var errMsg = validateNumberField($('#no-of-sis').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#designation-error').html(errMsg);
+    $('#no-of-sis-error').html(errMsg);
   }
   else {
     isValid = true;
   }
 }
 
-function organizationAddressValidation() {
-  $('#organization-address-error').empty();
+function familyLandlineNoValidation() {
+  $('#family-landline-no-error').empty();
 
-  var errMsg = validateOptionalAddress($('#organization-address').val().trim());
+  var errMsg = validateOptionalLandline($('#family-landline-no').val().trim());
   if (errMsg !== '') {
     isValid = false;
-    $('#organization-address-error').html(errMsg);
+    $('#family-landline-no-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function familyTypeValidation() {
+  $('#family-type-error').empty();
+
+  var errMsg = validateDropdown($('#family-type').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#family-type-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function familyAddressValidation() {
+  $('#family-address-error').empty();
+
+  var errMsg = validateAddress($('#family-address').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#family-address-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function countryValidation() {
+  $('#country-error').empty();
+
+  var errMsg = validateDropdown($('#country').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#country-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function familyAddressTypeValidation() {
+  $('#family-address-type-error').empty();
+
+  var errMsg = validateDropdown($('#family-address-type').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#family-address-type-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function uncleNameValidation() {
+  $('#uncle-name-error').empty();
+
+  var errMsg = validateOptionalFullName($('#uncle-name').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#uncle-name-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function maternalGrandFatherNameValidation() {
+  $('#maternal-grandfather-name-error').empty();
+
+  var errMsg = validateFullName($('#maternal-grandfather-name').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#maternal-grandfather-name-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function maternalGrandMotherNameValidation() {
+  $('#maternal-grandmother-name-error').empty();
+
+  var errMsg = validateOptionalFullName($('#maternal-grandmother-name').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#maternal-grandmother-name-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function maternalNativeValidation() {
+  $('#maternal-native-error').empty();
+
+  var errMsg = validateGeography($('#maternal-native').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#maternal-native-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function contactNoValidation() {
+  $('#contact-no-error').empty();
+
+  var errMsg = validateOptionalContactNo($('#contact-no').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#contact-no-error').html(errMsg);
+  }
+  else {
+    isValid = true;
+  }
+}
+
+function mosalAddressValidation() {
+  $('#mosal-address-error').empty();
+
+  var errMsg = validateOptionalAddress($('#mosal-address').val().trim());
+  if (errMsg !== '') {
+    isValid = false;
+    $('#mosal-address-error').html(errMsg);
   }
   else {
     isValid = true;
@@ -379,63 +499,132 @@ function organizationAddressValidation() {
 }
 
 function resetData() {
-  $('#education').selectpicker('val', '0');
-  $('#degrees-achieved').selectpicker('val', '');
+  $('#father-name').val('');
+  $('#father-mobile-no').val('');
+  $('#grandfather-name').val('');
 
-  $('#university').val('');
-  $('#addl-info').val('');
+  $('#mother-name').val('');
+  $('#mother-mobile-no').val('');
+  $('#grandmother-name').val('');
 
-  $('#occupation').selectpicker('val', '0');
-  $('#professional-sector').selectpicker('val', '');
+  $('#no-of-bros').val(0);
+  $('#no-of-sis').val(0);
 
-  $('#organization-name').val('');
-  $('#designation').val('');
-  $('#organization-address').val('');
+  $('#family-landline-no').val('');
+  $('#family-type').selectpicker('val', '0');
 
-  $('#education-error').empty();
-  $('#degrees-achieved-error').empty();
-  $('#university-error').empty();
-  $('#addl-info-error').empty();
+  $('#family-address').val('');
 
-  $('#occupation-error').empty();
-  $('#professional-sector-error').empty();
-  $('#organization-name-error').empty();
-  $('#designation-error').empty();
-  $('#organization-address-error').empty();
+  $('#country').selectpicker('val', '');
+  $('#state').selectpicker('val', '');
+  $('#city').selectpicker('val', '');
+
+  $('#family-address-type').selectpicker('val', '0');
+
+  $('#uncle-name').val('');
+  $('#maternal-grandfather-name').val('');
+  $('#maternal-grandmother-name').val('');
+
+  $('#maternal-native').val('');
+  $('#contact-no').val('');
+  $('#mosal-address').val('');
+
+  $('#father-name-error').empty();
+  $('#father-mobile-no-error').empty();
+  $('#grandfather-name-error').empty();
+
+  $('#mother-name-error').empty();
+  $('#mother-mobile-no-error').empty();
+  $('#grandmother-name-error').empty();
+
+  $('#no-of-bros-error').empty();
+  $('#no-of-sis-error').empty();
+
+  $('#family-landline-no-error').empty();
+  $('#family-type-error').empty();
+
+  $('#family-address-error').empty();
+
+  $('#country-error').empty();
+  $('#state-error').empty();
+  $('#city-error').empty();
+
+  $('#family-address-type-error').empty();
+
+  $('#uncle-name-error').empty();
+  $('#maternal-grandfather-name-error').empty();
+  $('#maternal-grandmother-name-error').empty();
+
+  $('#maternal-native-error').empty();
+  $('#contact-no-error').empty();
+  $('#mosal-address-error').empty();
   
   $('#message').empty();
   $('#message').addClass('hide');
 }
 
-function saveProfessionalInfo(code) {
-  educationValidation();
-  degreesAchievedValidation();
+function saveFamilyInfo(code) {
+  fatherNameValidation();
+  fatherMobileValidation();
+  grandFatherNameValidation();
 
-  universityValidation();
-  addlInfoValidation();
-  occupationValidation();
-  professionalSectorValidation();
-  organizationNameValidation();
-  designationValidation();
-  organizationAddressValidation();
+  motherNameValidation();
+  motherMobileValidation();
+  grandMotherNameValidation();
+
+  noOfBrosValidation();
+  noOfSisValidation();
+  familyLandlineNoValidation();
+  familyTypeValidation();
+
+  familyAddressValidation();
+  familyAddressTypeValidation();
+  countryValidation();
+
+  uncleNameValidation();
+  maternalGrandFatherNameValidation();
+  maternalGrandMotherNameValidation();
+
+  maternalNativeValidation();
+  contactNoValidation();
+  mosalAddressValidation();
+
+  if (!isFilled($('#father-mobile-no').val().trim()) && !isFilled($('#mother-mobile-no').val().trim()) && !isFilled($('#family-landline-no').val().trim())) {
+    isValid = false;
+    $('#message').html('<strong> Error! </strong>Please provide with atleast one of the following three numbers: Father\'s Mobile No, Mother\'s Mobile No or Landline No.');
+    $('#message').removeClass('hide');
+    return;
+  }
 
   if (isValid) {
     var dataObject = new Object();
 
     dataObject.Code = code;
 
-    dataObject.Education = $('#education').val().trim();
-    dataObject.DegreesAchieved = $('#degrees-achieved').val();
-    dataObject.UniversityAttended = $('#university').val().trim();
-    dataObject.AddlInfo = $('#addl-info').val().trim();
+    dataObject.FatherName = $('#father-name').val().trim();
+    dataObject.FatherMobileNumber = $('#father-mobile-no').val();
+    dataObject.GrandFatherName = $('#grandfather-name').val().trim();
+    dataObject.MotherName = $('#mother-name').val().trim();
+    dataObject.MotherMobileNumber = $('#mother-mobile-no').val();
+    dataObject.GrandMotherName = $('#grandmother-name').val().trim();
+    dataObject.NoOfBrothers = $('#no-of-bros').val().trim();
+    dataObject.NoOfSisters = $('#no-of-sis').val().trim();
+    dataObject.LandlineNumber = $('#family-landline-no').val().trim();
+    dataObject.FamilyType = $('#family-type').val().trim();
+    dataObject.Address = $('#family-address').val().trim();
+    dataObject.Country = $('#country').val().trim();
+    dataObject.State = $('#state').val().trim();
+    dataObject.City = $('#city').val().trim();
+    dataObject.ResidenceStatus = $('#family-address-type').val().trim();
 
-    dataObject.Occupation = $('#occupation').val().trim();
-    dataObject.ProfessionalSector = $('#professional-sector').val().trim();
-    dataObject.OrganizationName = $('#organization-name').val().trim();
-    dataObject.Designation = $('#designation').val().trim();
-    dataObject.OrganizationAddress = $('#organization-address').val().trim();
+    dataObject.UncleName = $('#uncle-name').val().trim();
+    dataObject.MaternalGrandFatherName = $('#maternal-grandfather-name').val().trim();
+    dataObject.MaternalGrandMotherName = $('#maternal-grandmother-name').val().trim();
+    dataObject.Native = $('#maternal-native').val().trim();
+    dataObject.ContactNumber = $('#contact-no').val().trim();
+    dataObject.MosalAddress = $('#mosal-address').val().trim();
 
-    var url = BASEURL + '/api/MatrimonialApi/SaveProfessionalInfo';
+    var url = BASEURL + '/api/MatrimonialApi/SaveFamilyInfo';
 
     $.ajax({
       url: url,
@@ -449,7 +638,7 @@ function saveProfessionalInfo(code) {
           $('#message').removeClass('hide');
         },
         200: function (responseData) {
-          $(location).attr('href', BASEURL + '/Matrimonial/AddFamilyInfo?code=' + responseData);
+          $(location).attr('href', BASEURL + '/Matrimonial/AddFamilyOccupationInfo?code=' + responseData);
         },
         401: function () {
           $(location).attr('href', BASEURL + '/User/Logout');

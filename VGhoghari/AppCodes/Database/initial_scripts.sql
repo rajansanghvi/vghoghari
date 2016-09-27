@@ -218,6 +218,10 @@ create table if not exists app_cities
   on delete cascade on UPDATE CASCADE
 )engine InnoDb;
 
+
+
+
+
 /*Update User Profile*/
 CREATE PROCEDURE vghoghari.`update_user_profile`(
   a_userCode varchar(100)
@@ -768,11 +772,6 @@ create table if not exists app_biodata_family_infos
   no_of_sisters tinyint(4) not null default 0,
   family_type tinyint(4) null,
   landline_number varchar(20) null,
-  father_occupation tinyint(4) not null,
-  father_profession varchar(255) null,
-  father_occupation_at varchar(500) null,
-  father_designation varchar(200) null,
-  father_office_address varchar(1000) null,
   address varchar(1000) not null,
   city varchar(200) null,
   state varchar(200) null,
@@ -794,6 +793,228 @@ create table app_biodata_mosal_infos
   address varchar(1000) null
 )engine InnoDB;
 
+DROP PROCEDURE IF EXISTS vghoghari.save_family_biodata_info;
+CREATE PROCEDURE vghoghari.`save_family_biodata_info`(
+  a_code varchar(100)
+  , a_father_name varchar(500)
+  , a_father_mobile_number varchar(20)
+  , a_mother_name varchar(500)
+  , a_mother_mobile_number varchar(20)
+  , a_grandfather_name varchar(500)
+  , a_grandmother_name varchar(500)
+  , a_no_of_brothers tinyint(4)
+  , a_no_of_sisters tinyint(4)
+  , a_family_type tinyint(4)
+  , a_landline_number varchar(20)
+  , a_address varchar(1000)
+  , a_city varchar(200)
+  , a_state varchar(200)
+  , a_country varchar(200)
+  , a_residential_status tinyint(4)
+  , a_uncle_name varchar(500)
+  , a_maternal_grandfather_name varchar(500)
+  , a_maternal_grandmother_name varchar(500)
+  , a_native varchar(200)
+  , a_contact_number varchar(20)
+  , a_mosal_address varchar(1000)
+  , a_username varchar(200)
+)
+BEGIN
+	declare exit handler for sqlexception
+    begin
+      rollback;
+    end;
+    
+  declare exit handler for sqlwarning
+    begin
+      rollback;
+    end;
+    
+  start transaction;
+    set @biodataCount = 0;
+    select count(id) into @biodataCount from app_biodata_basic_infos where code = a_code; 
+    
+    if @biodataCount > 0 then
+      set @biodataId = 0;
+      select id into @biodataId from app_biodata_basic_infos where code = a_code;
+      
+      set @familyCount = 0;
+      select count(id) into @familyCount from app_biodata_family_infos where biodata_id = @biodataId;
+      
+      if @familyCount > 0 then
+        update app_biodata_family_infos
+        set
+        father_name = a_father_name
+        , father_mobile_number = a_father_mobile_number
+        , mother_name = a_mother_name
+        , mother_mobile_number = a_mother_mobile_number
+        , grandfather_name =  a_grandfather_name
+        , grandmother_name = a_grandmother_name
+        , no_of_brothers = a_no_of_brothers
+        , no_of_sisters = a_no_of_sisters
+        , family_type = a_family_type
+        , landline_number = a_landline_number
+        , address = a_address
+        , city = a_city
+        , state = a_state
+        , country = a_country
+        , residential_status = a_residential_status
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_family_infos
+        (biodata_id, father_name, father_mobile_number, mother_name, mother_mobile_number,
+        grandfather_name, grandmother_name, no_of_brothers, no_of_sisters, family_type, landline_number,
+        address, city, state, country, residential_status)
+        values
+        (@biodataId, a_father_name, a_father_mobile_number, a_mother_name, a_mother_mobile_number,
+        a_grandfather_name, a_grandmother_name, a_no_of_brothers, a_no_of_sisters, a_family_type, a_landline_number,
+        a_address, a_city, a_state, a_country, a_residential_status);
+      end if;
+      
+      set @mosalCount = 0;
+      select count(id) into @mosalCount from app_biodata_mosal_infos where biodata_id = @biodataId;
+      
+      if @mosalCount > 0 then
+        update app_biodata_mosal_infos
+        set
+        uncle_name = a_uncle_name
+        , maternal_grandfather_name = a_maternal_grandfather_name
+        , maternal_grandmother_name = a_maternal_grandmother_name
+        , native = a_native
+        , contact_number = a_contact_number
+        , address = a_mosal_address
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_mosal_infos
+        (biodata_id, uncle_name, maternal_grandfather_name, maternal_grandmother_name, native, contact_number, address)
+        values
+        (@biodataId, a_uncle_name, a_maternal_grandfather_name, a_maternal_grandmother_name, a_native, a_contact_number, a_mosal_address);
+      end if;
+      
+      set @status = 0;
+      select approval_status into @status from app_biodata_basic_infos where id = @biodataId;
+      
+      if @status > 0 then
+        set @status = 1;
+      end if;
+        
+      update app_biodata_basic_infos
+      set
+      approval_status = @status
+      , modified_by = a_username
+      , modified_at = now()
+      where
+      id = @biodataId;
+      
+      select @biodataId;
+    else
+      rollback;
+    end if;
+  commit;
+END;
+
+create table app_biodata_family_occupation_infos
+(
+  id int(11) not null auto_increment primary key,
+  biodata_id int(11) not null,
+  foreign key(biodata_id) references app_biodata_basic_infos(id)
+  on delete cascade on update cascade,
+  father_occupation tinyint(4) not null,
+  father_profession varchar(500) null,
+  father_occupation_at varchar(500) null,
+  father_designation varchar(500) null,
+  father_occupation_address varchar(1000) null,
+  mother_occupation tinyint(4) not null,
+  mother_profession varchar(500) null,
+  mother_occupation_at varchar(500) null,
+  mother_designation varchar(500) null,
+  mother_occupation_address varchar(1000) null
+)engine InnoDb;
+
+CREATE PROCEDURE vghoghari.`save_family_occupation_biodata_info`(
+  a_code varchar(100)
+  , a_father_occupation tinyint(4)
+  , a_father_profession varchar(500)
+  , a_father_occupation_at varchar(500)
+  , a_father_designation varchar(500)
+  , a_father_occupation_address varchar(1000)
+  , a_mother_occupation tinyint(4)
+  , a_mother_profession varchar(500)
+  , a_mother_occupation_at varchar(500)
+  , a_mother_designation varchar(500)
+  , a_mother_occupation_address varchar(1000)
+  , a_username varchar(200)
+)
+BEGIN
+	declare exit handler for sqlexception
+    begin
+      rollback;
+    end;
+    
+  declare exit handler for sqlwarning
+    begin
+      rollback;
+    end;
+    
+  start transaction;
+    set @biodataCount = 0;
+    select count(id) into @biodataCount from app_biodata_basic_infos where code = a_code; 
+    
+    if @biodataCount > 0 then
+      set @biodataId = 0;
+      select id into @biodataId from app_biodata_basic_infos where code = a_code;
+      
+      set @familyOccupationCount = 0;
+      select count(id) into @familyOccupationCount from app_biodata_family_occupation_infos where biodata_id = @biodataId;
+      
+      if @familyOccupationCount > 0 then
+        update app_biodata_family_occupation_infos
+        set
+        father_occupation = a_father_occupation
+        , father_profession = a_father_profession
+        , father_occupation_at = a_father_occupation_at
+        , father_designation = a_father_designation
+        , father_occupation_address = a_father_occupation_address
+        , mother_occupation = a_mother_occupation
+        , mother_profession = a_mother_profession
+        , mother_occupation_at = a_mother_occupation_at
+        , mother_designation = a_mother_designation
+        , mother_occupation_address = a_mother_occupation_address
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_family_occupation_infos
+        (biodata_id, father_occupation, father_profession, father_occupation_at, father_designation, father_occupation_address
+        , mother_occupation, mother_profession, mother_occupation_at, mother_designation, mother_occupation_address)
+        values
+        (@biodataId, a_father_occupation, a_father_profession, a_father_occupation_at, a_father_designation, a_father_occupation_address
+        , a_mother_occupation, a_mother_profession, a_mother_occupation_at, a_mother_designation, a_mother_occupation_address);
+      end if;
+      
+      set @status = 0;
+      select approval_status into @status from app_biodata_basic_infos where id = @biodataId;
+      
+      if @status > 0 then
+        set @status = 1;
+      end if;
+        
+      update app_biodata_basic_infos
+      set
+      approval_status = @status
+      , modified_by = a_username
+      , modified_at = now()
+      where
+      id = @biodataId;
+      
+      select @biodataId;
+    else
+      rollback;
+    end if;
+  commit;
+END;
+
 create table app_biodata_sibbling_infos
 (
   id int(11) not null auto_increment primary key,
@@ -804,8 +1025,69 @@ create table app_biodata_sibbling_infos
   sibbling_gender tinyint(4) not null,
   sibbling_in_law_name varchar(500) null,
   sibbling_in_law_native varchar(200) null,
-  active tinyint(4) not null
+  active tinyint(4) not null,
+  code varchar(100) not null
 )engine InnoDb;
+
+CREATE PROCEDURE vghoghari.`save_sibbling_biodata_info`(
+  a_code varchar(100)
+  , a_name varchar(500)
+  , a_gender tinyint(4)
+  , a_family_name varchar(500)
+  , a_native varchar(200)
+  , a_sibbling_code varchar(100)
+  , a_username varchar(200)
+)
+BEGIN
+    declare exit handler for sqlexception
+    begin
+      rollback;
+    end;
+    
+  declare exit handler for sqlwarning
+    begin
+      rollback;
+    end;
+    
+  start transaction;
+    set @biodataCount = 0;
+    select count(id) into @biodataCount from app_biodata_basic_infos where code = a_code; 
+    
+    if @biodataCount > 0 then
+      set @biodataId = 0;
+      select id into @biodataId from app_biodata_basic_infos where code = a_code;
+      
+      set @newSibblingId = 0;
+      
+      insert into app_biodata_sibbling_infos
+      (biodata_id, sibbling_name, sibbling_gender, sibbling_in_law_name, sibbling_in_law_native, active, code)
+      values
+      (@biodataId, a_name, a_gender, a_family_name, a_native, true, a_sibbling_code);
+      
+      select LAST_INSERT_ID() into @newSibblingId;
+      
+      set @status = 0;
+      select approval_status into @status from app_biodata_basic_infos where id = @biodataId;
+      
+      if @status > 0 then
+        set @status = 1;
+      end if;
+        
+      update app_biodata_basic_infos
+      set
+      approval_status = @status
+      , modified_by = a_username
+      , modified_at = now()
+      where
+      id = @biodataId;
+      
+      select @newSibblingId;
+    else
+      rollback;
+    end if;
+  commit;
+END;
+
 
 create table app_biodata_other_infos
 (

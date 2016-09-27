@@ -11,7 +11,7 @@ var addressPattern = /^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;"',./?]{2,}$/
 var geographyPattern = /^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;"',./?]{2,}$/;
 var freeTextPattern = /^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;"',./?]{2,}$/;
 var pincodePattern = /^\d{3,10}$/;
-var validImageExtensions = ['.jpg', '.jpeg', '.gif', '.png'];
+var validImageExtensions = ['.jpg', '.jpeg', '.png'];
 
 function validateDropdown(content) {
   if (content === undefined || content === null || content === '' || content.length === 0 || content == 0) {
@@ -43,6 +43,18 @@ function validateFullName(content) {
   }
   else if (!content.match(fullNamePattern)) {
     return 'This field can consits of only letters [A-Z or a-z] and spaces between them. It can not start or end with a space. It should have a minimum of 2 letters and a maximum of 4 words.';
+  }
+  return '';
+}
+
+function validateOptionalFullName(content) {
+  if (content !== undefined && content !== null && content !== '' && content.length > 0) {
+    if (content.length < 2 || content.length > 500) {
+      return 'This field should have a minimum of 2 characters and a maximum of 500 characters.';
+    }
+    else if (!content.match(fullNamePattern)) {
+      return 'This field can consits of only letters [A-Z or a-z] and spaces between them. It can not start or end with a space. It should have a minimum of 2 letters and a maximum of 4 words.';
+    }
   }
   return '';
 }
@@ -96,6 +108,30 @@ function validateMobileNo(content) {
   return '';
 }
 
+function validateOptionalMobileNo(content) {
+  if (content !== undefined && content !== null && content !== '' && content.length > 0) {
+    if (content.length < 4 || content.length > 20) {
+      return 'This field should have a minimum of 4 digits and a maximum of 20 digits.';
+    }
+    else if (!content.match(mobileNoPattern)) {
+      return 'This is an invalid mobile number. Please enter a mobile number in +917755661234 or 7755661234 format. Please specify country code for numbers other than Indian Mobile Numbers.';
+    }
+  }
+  return '';
+}
+
+function validateOptionalContactNo(content) {
+  if (content !== undefined && content !== null && content !== '' && content.length > 0) {
+    if (content.length < 4 || content.length > 20) {
+      return 'This field should have a minimum of 4 digits and a maximum of 20 digits.';
+    }
+    else if (!content.match(mobileNoPattern) && !content.match(landlinePattern)) {
+      return 'This is an invalid contact number. For mobile number please enter in +917755661234 or 7755661234 format. For landline number please enter in +91225566778 or 02225566778 format.';
+    }
+  }
+  return '';
+}
+
 function validateOptionalEmailId(content) {
   if (content !== undefined && content !== null && content !== '' && content.length > 0) {
     if (content.length > 200) {
@@ -131,7 +167,7 @@ function validateReligion(content) {
   }
   else if (!content.match(religionPattern)) {
     return 'This field should have atleast one letter or a number. It can not consists of the following special charaters (`, ~, ^, , { }, [ ], <>, \\, |).';
-   }
+  }
   return '';
 }
 
@@ -195,7 +231,7 @@ function validateAge(content) {
   else if (isNaN(age)) {
     return "This is an invalid age. Please peovide a valid date of birth to calculate your age.";
   }
-  else {   
+  else {
     return age;
   }
 }
@@ -311,7 +347,7 @@ function validateOptionalFreeText(content) {
 function validateOptionalTime(content) {
   if (content !== undefined && content !== null && content !== '' && content.length > 0) {
     if (!moment(content, 'HH:mm').isValid()) {
-      return 'This is an invalid time. Please select a valid time using available time selector.' 
+      return 'This is an invalid time. Please select a valid time using available time selector.'
     }
   }
   return '';
@@ -333,10 +369,20 @@ function validateImageType(fileName) {
 }
 
 function validateOptionalNumberField(content) {
-  if(content !== undefined && content !== null && content !== '' && content.length > 0) {
-    if(isNaN(content)){
+  if (content !== undefined && content !== null && content !== '' && content.length > 0) {
+    if (isNaN(content)) {
       return 'This is not a valid number.';
     }
+  }
+  return '';
+}
+
+function validateNumberField(content) {
+  if (content === undefined || content === null || content === '' || content.length === 0) {
+    return 'This is a required field.';
+  }
+  else if (isNaN(content)) {
+    return 'This is not a valid number.';
   }
   return '';
 }

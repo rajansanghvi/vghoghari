@@ -1,0 +1,146 @@
+﻿@{
+  ViewBag.Title = "Additional Info - Continue creating your Biodata Online and Register as a Bride or a Groom";
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax" style="background-image:url(@Url.Content("~/images/page_headers/biodata_page_header.jpg"));">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300;" })</li>
+          <li class="active" style="color: #BA6E0B">Matrimonial</li>
+          <li class="active" style="color: #BA6E0B">Create Biodata</li>
+          <li class="active" style="color: #BA6E0B">Additional Info</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="color: #EDA159">Add Additional Info</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title" style="color: #eea546;">Complete by adding your Additional Info</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details and continue to register yourselves as a bride or a groom.</h6>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message" class="alert alert-error fade in hide">
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Profile Image </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6 margin-15">
+                    <img id="biodata-profile-image" src="http://placehold.it/300x300&amp;text=Profile-Image" alt="Profile Image" class="img-responsive" />
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <label class="input-group-btn" for="profile-image">
+                        <span class="btn btn-info">
+                          Browse<input type="file" id="profile-image" name="profile-image" style="display: none;">
+                        </span>
+                      </label>
+                      <input type="text" id="file-name" class="form-control input-sm" disabled>
+                    </div>
+                    <span id="image-upload-info">
+                      Please select an image in either .jpg, .jpeg or .png format.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <hr />
+              </div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Additional Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="hobbies" class="control-label thin-label">Hobbies:</label>
+                  <textarea id="hobbies" name="hobbies" class="form-control input-sm"></textarea>
+                  <div id="hobbies-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="interest" class="control-label thin-label">Interest:</label>
+                  <textarea id="interest" name="interest" class="form-control input-sm"></textarea>
+                  <div id="interest-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="expectations" class="control-label thin-label">Expectations:</label>
+                  <textarea id="expectations" name="expectations" class="form-control input-sm"></textarea>
+                  <div id="expectations-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Submit and Complete Registration" />
+
+                <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h6>
+                  @Html.ActionLink("Click here to go back and manage the existing biodata...", "Manage", "Matrimonial", null, new { @class = "pull-right" })
+                </h6>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts{
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/validation.js")
+  @Scripts.Render("~/Scripts/validations/matrimonial/addadditionalInfo.js")
+}

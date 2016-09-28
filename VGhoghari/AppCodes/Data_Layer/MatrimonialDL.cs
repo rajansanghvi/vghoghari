@@ -135,7 +135,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
 
     public static BiodataTO FetchPersonalInfo(string code) {
       const string sql = @"select
-                          if(r.religion, '') as religion
+                          ifnull(r.religion, '') as religion
                           , ifnull(r.caste, '') as caste
                           , ifnull(r.subcaste, '') as subcaste
                           , ifnull(s.manglik, 0) as manglik

@@ -171,6 +171,19 @@ function validateReligion(content) {
   return '';
 }
 
+function validateProperName(content) {
+  if (content === undefined || content === null || content === '' || content.length === 0) {
+    return 'This is a required field.'
+  }
+  else if (content.length > 500) {
+    return 'This field can consists of a maximum of 500 characters.';
+  }
+  else if (!content.match(properNamePattern)) {
+    return 'This field should have atleast one letter or a number. It can not consists of the following special charaters (`, ~, ^, , { }, [ ], <>, \\, |).';
+  }
+  return '';
+}
+
 function validateOptionalProperName(content) {
   if (content !== undefined && content !== null && content !== '' && content.length > 0) {
     if (content.length > 500) {
@@ -386,3 +399,31 @@ function validateNumberField(content) {
   }
   return '';
 }
+
+/* Validation for Event Categories */
+function validateCategoryName(content) {
+  if (content === undefined || content === null || content === '' || content.length === 0) {
+    return 'This is a required field.'
+  }
+  else if (content.length > 100) {
+    return 'This field can consists of a maximum of 500 characters.';
+  }
+  else if (!content.match(properNamePattern)) {
+    return 'This field should have atleast one letter or a number. It can not consists of the following special charaters (`, ~, ^, , { }, [ ], <>, \\, |).';
+  }
+  return '';
+}
+
+function validateOptionalCategoryDescription(content) {
+  if (content !== undefined && content !== null && content !== '' && content.length > 0) {
+    if (content.length > 500) {
+      return 'This field can consists of a maximum of 500 characters.';
+    }
+    else if (!content.match(freeTextPattern)) {
+      return 'This field should have atleast one letter or a number. It can not consists of the following special charaters (`, ~, ^, , { }, [ ], <>, \\, |).';
+    }
+    return '';
+  }
+  return '';
+}
+/* End of Event Category Validation */

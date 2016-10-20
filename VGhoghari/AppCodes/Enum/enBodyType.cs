@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enBodyType {
-    UnSpecified = 0,
+    Un_Specified = 0,
     Thin = 1,
     Normal = 2,
     Atheletic = 3,

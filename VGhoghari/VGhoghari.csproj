@@ -77,6 +77,14 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -145,17 +153,23 @@
   <ItemGroup>
     <Folder Include="AppData\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Theme\audio\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppCodes\Business_Layer\AppBL.cs" />
+    <Compile Include="AppCodes\Business_Layer\EventBL.cs" />
     <Compile Include="AppCodes\Business_Layer\MatrimonialBL.cs" />
+    <Compile Include="AppCodes\Business_Layer\ProjectBL.cs" />
     <Compile Include="AppCodes\Business_Layer\UserBL.cs" />
     <Compile Include="AppCodes\Data_Layer\AppDL.cs" />
+    <Compile Include="AppCodes\Data_Layer\EventDL.cs" />
     <Compile Include="AppCodes\Data_Layer\GlobalDL.cs" />
     <Compile Include="AppCodes\Data_Layer\MatrimonialDL.cs" />
+    <Compile Include="AppCodes\Data_Layer\ProjectDL.cs" />
     <Compile Include="AppCodes\Data_Layer\UserDL.cs" />
     <Compile Include="AppCodes\Enum\enAddressType.cs" />
+    <Compile Include="AppCodes\Enum\enApprovalStatus.cs" />
     <Compile Include="AppCodes\Enum\enBiodataStatus.cs" />
     <Compile Include="AppCodes\Enum\enBodyType.cs" />
     <Compile Include="AppCodes\Enum\enFamilyType.cs" />
@@ -172,6 +186,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\EventApiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EventController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MatrimonialController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProjectApiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProjectController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -201,9 +222,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AppApiController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatrimonialApiController.cs" />
     <Compile Include="Controllers\MatrimonialController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -211,7 +234,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BiodataTO.cs" />
+    <Compile Include="Models\EventCategoryTO.cs" />
+    <Compile Include="Models\EventTO.cs" />
     <Compile Include="Models\MediaTO.cs" />
+    <Compile Include="Models\ProjectTO.cs" />
     <Compile Include="Models\UserTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -257,10 +283,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="images\page_headers\biodata_page_header.jpg" />
+    <Content Include="images\page_headers\event_header.jpg" />
     <Content Include="images\page_headers\login_page_header.jpg" />
     <Content Include="images\page_headers\register_page_header.jpg" />
     <Content Include="plugins\bootstrap-datetimepicker-master\css\bootstrap-datetimepicker.min.css" />
@@ -270,8 +298,77 @@
     <Content Include="plugins\bootstrap-fileinput-master\js\fileinput.min.js" />
     <Content Include="plugins\bootstrap-select-1.10.0\css\bootstrap-select.min.css" />
     <Content Include="plugins\bootstrap-select-1.10.0\js\bootstrap-select.min.js" />
+    <Content Include="Areas\Admin\Views\Event\Categories.cshtml" />
+    <Content Include="Areas\Admin\Views\Event\ManageCategories.cshtml" />
+    <Content Include="Areas\Admin\Views\Event\Save.cshtml" />
+    <Content Include="plugins\summernote-0.8.2\font\summernote.eot" />
+    <Content Include="plugins\summernote-0.8.2\font\summernote.ttf" />
+    <Content Include="plugins\summernote-0.8.2\font\summernote.woff" />
+    <Content Include="Areas\Admin\Views\Event\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Event\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Matrimonial\BiodataCounts.cshtml" />
+    <Content Include="Areas\Admin\Views\Matrimonial\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Matrimonial\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Event\CountEvents.cshtml" />
+    <Content Include="Areas\Admin\Views\Event\UpcomingEventByCount.cshtml" />
+    <Content Include="Areas\Admin\Views\Event\ActiveEventCategories.cshtml" />
+    <Content Include="Areas\Admin\Views\Project\Save.cshtml" />
+    <Content Include="Areas\Admin\Views\Project\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Project\Details.cshtml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-ar-AR.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-bg-BG.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-ca-ES.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-cs-CZ.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-da-DK.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-de-DE.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-es-ES.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-es-EU.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-fa-IR.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-fi-FI.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-fr-FR.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-gl-ES.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-he-IL.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-hr-HR.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-hu-HU.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-id-ID.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-it-IT.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-ja-JP.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-ko-KR.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-lt-LT.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-lt-LV.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-nb-NO.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-nl-NL.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-pl-PL.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-pt-BR.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-pt-PT.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-ro-RO.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-ru-RU.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-sk-SK.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-sl-SI.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-sr-RS-Latin.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-sr-RS.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-sv-SE.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-th-TH.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-tr-TR.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-uk-UA.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-vi-VN.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-zh-CN.js" />
+    <Content Include="plugins\summernote-0.8.2\lang\summernote-zh-TW.js" />
+    <Content Include="plugins\summernote-0.8.2\plugin\databasic\summernote-ext-databasic.css" />
+    <Content Include="plugins\summernote-0.8.2\plugin\databasic\summernote-ext-databasic.js" />
+    <Content Include="plugins\summernote-0.8.2\plugin\hello\summernote-ext-hello.js" />
+    <Content Include="plugins\summernote-0.8.2\plugin\specialchars\summernote-ext-specialchars.js" />
+    <Content Include="plugins\summernote-0.8.2\summernote.css" />
+    <Content Include="plugins\summernote-0.8.2\summernote.js" />
+    <Content Include="plugins\summernote-0.8.2\summernote.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\validations\constants.js" />
+    <Content Include="Scripts\validations\event\saveEvent.js" />
+    <Content Include="Scripts\validations\event\addEventCategory.js" />
     <Content Include="Scripts\validations\matrimonial\addBasicInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addFamilyInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addFamilyOccupationInfo.js" />
@@ -279,6 +376,7 @@
     <Content Include="Scripts\validations\matrimonial\addSibblingInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addProfessionalInfo.js" />
     <Content Include="Scripts\validations\matrimonial\addPersonalInfo.js" />
+    <Content Include="Scripts\validations\project\saveProject.js" />
     <Content Include="Scripts\validations\user\login.js" />
     <Content Include="Scripts\validations\userProfile.js" />
     <Content Include="Scripts\validations\validation.js" />
@@ -313,6 +411,11 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="AppCodes\Database\Procedures\proc_save_additional_biodata_info.sql" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -336,6 +439,7 @@
     <Content Include="Theme\colors\color7.css" />
     <Content Include="Theme\colors\color8.css" />
     <Content Include="Theme\colors\color9.css" />
+    <Content Include="Theme\css\admin.css" />
     <Content Include="Theme\css\animations.css" />
     <Content Include="Theme\css\bootstrap.css" />
     <Content Include="Theme\css\custom.css" />
@@ -631,6 +735,23 @@
     <Content Include="Views\Matrimonial\AddFamilyOccupationInfo.cshtml" />
     <Content Include="Views\Matrimonial\AddSibblingInfo.cshtml" />
     <Content Include="Views\Matrimonial\AddAdditionalInfo.cshtml" />
+    <Content Include="Views\Matrimonial\Manage.cshtml" />
+    <Content Include="Views\Matrimonial\MyBiodataDetails.cshtml" />
+    <Content Include="Views\Matrimonial\AllBiodata.cshtml" />
+    <Content Include="Views\Matrimonial\Details.cshtml" />
+    <Content Include="Views\Event\List.cshtml" />
+    <Content Include="Views\Event\Details.cshtml" />
+    <Content Include="Views\Event\UpcomingEventByCount.cshtml" />
+    <Content Include="Views\Event\ActiveEventCategories.cshtml" />
+    <Content Include="Views\Event\TopUpcomingEvent.cshtml" />
+    <Content Include="Views\Event\TopThreeUpcomingEvent.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Home\Donate.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\List.cshtml" />
+    <Content Include="Views\Home\Forms.cshtml" />
+    <Content Include="Views\Home\Gallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

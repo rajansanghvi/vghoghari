@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enBoolean {
-    UnSpecified = 0,
+    Un_Specified = 0,
     Yes = 1,
     No = 2
   }

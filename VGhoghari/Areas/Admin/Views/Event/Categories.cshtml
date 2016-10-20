@@ -1,0 +1,89 @@
+﻿@{
+  ViewBag.Title = "Manage Event Categories";
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+          <li class="active">Events</li>
+          <li class="active">Add Category</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1>Event Categories</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 margin-15">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title">Add Event Category</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details to add a new category.</h6>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message" class="alert alert-error fade in hide"></div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="category-name" class="control-label thin-label required">Category Name: <span class="red">*</span></label>
+                  <input type="text" id="category-name" name="category-name" class="form-control input-sm" />
+                  <div id="category-name-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="category-description" class="control-label thin-label">Category Description:</label>
+                  <textarea id="category-description" name="category-description" class="form-control input-sm" placeholder="Max. 500 characters"></textarea>
+                  <div id="category-description-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Add New Category!" />
+                @Html.ActionLink("Go Back Too Manage Categories", "ManageCategories", "Event", null, new { @class = "btn btn-lg btn-default" })
+                <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@section scripts{
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/validation.js")
+  @Scripts.Render("~/Scripts/validations/event/addEventCategory.js")
+}

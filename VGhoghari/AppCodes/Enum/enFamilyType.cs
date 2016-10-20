@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enFamilyType {
-    UnSpecified = 0,
+    Un_Specified = 0,
     Joint = 1,
     Nuclear = 2
   }

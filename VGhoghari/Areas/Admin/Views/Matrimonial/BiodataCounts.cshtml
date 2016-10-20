@@ -1,0 +1,52 @@
+﻿<div class="row">
+  <div class="col-md-12">
+    <header class="single-post-header clearfix">
+      <h3 class="post-title">Biodata Counts</h3>
+    </header>
+  </div>
+  <div class="spacer-20"></div>
+
+  <div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-aqua">
+      <div class="inner">
+        <h3>@ViewBag.PendingCount</h3>
+
+        <p>Pending Biodata</p>
+      </div>
+      <a href="@Url.Action("List", "Matrimonial", new { status = 1})" class="small-box-footer">
+        More info <i class="fa fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h3>@ViewBag.ApprovedCount</h3>
+
+        <p>Approved Biodata</p>
+      </div>
+      <a href="@Url.Action("List", "Matrimonial", new { status = 2})" class="small-box-footer">
+        More info <i class="fa fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-red">
+      <div class="inner">
+        <h3>@ViewBag.RejectedCount</h3>
+
+        <p>Rejected Biodata</p>
+      </div>
+      <a href="@Url.Action("List", "Matrimonial", new { status = 3})" class="small-box-footer">
+        More info <i class="fa fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+

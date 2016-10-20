@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enGender {
-    UnSpecified = 0,
+    Un_Specified = 0,
     Male = 1,
     Female = 2
   }

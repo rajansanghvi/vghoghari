@@ -1,0 +1,105 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using VGhoghari.AppCodes.Enum;
+@model IPagedList<VGhoghari.Models.BiodataTO>
+
+@{
+  ViewBag.Title = "Manage Your Biodata Online";
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax" style="background-image:url(@Url.Content("~/images/page_headers/biodata_manage_page_header.jpg"));">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300;" })</li>
+          <li class="active" style="color: #920e0a">Matrimonial</li>
+          <li class="active" style="color: #920e0a">Manage</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="color: #920e0a">Manage Biodata</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title" style="color: #920e0a;">Manage Your @ViewBag.Status Biodata</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                @Html.ActionLink("Incomplete Biodata", "Manage", "Matrimonial", new { status = 0 }, new { @class = "btn btn-warning btn-lg" })
+
+                @Html.ActionLink("Pending Biodata", "Manage", "Matrimonial", new { status = 1 }, new { @class = "btn btn-info btn-lg" })
+
+                @Html.ActionLink("Approved Biodata", "Manage", "Matrimonial", new { status = 2 }, new { @class = "btn btn-success btn-lg" })
+
+                @Html.ActionLink("Rejected Biodata", "Manage", "Matrimonial", new { status = 3 }, new { @class = "btn btn-danger btn-lg" })
+
+                @Html.ActionLink("Add New Biodata", "AddBasicInfo", "Matrimonial", new { page = Request.QueryString["page"], status = Request.QueryString["status"] }, new { @class = "btn btn-primary btn-lg pull-right" })
+              </div>
+              <div class="clearfix spacer-20"></div>
+
+              <div class="col-md-12">
+                <table id="biodata-list" class="table table-bordered table-hover table-responsive">
+                  <thead>
+                    <tr>
+                      <th> Biodata Code </th>
+                      <th> Candidate's Full Name</th>
+                      <th colspan="3" class="text-align-center"> Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @if(Model.Count > 0) {
+                      foreach(var item in Model) {
+                        <tr>
+                          <td>@item.Code</td>
+                          <td>@item.FullName</td>
+                          <td class="text-align-center">@Html.ActionLink("View", "MyBiodataDetails", "Matrimonial", new { code = item.Code, page = Request.QueryString["page"], status = Request.QueryString["status"] }, new { @class = "btn btn-info" })</td>
+                          <td class="text-align-center">@Html.ActionLink("Edit", "AddBasicInfo", "Matrimonial", new { code = item.Code, page = Request.QueryString["page"], status = Request.QueryString["status"] }, new { @class = "btn btn-warning" })</td>
+                          <td class="text-align-center">
+                            @using(Html.BeginForm("DeleteMyBiodata", "Matrimonial", new { code = item.Code, page = Request.QueryString["page"], status = Request.QueryString["status"] }, FormMethod.Post, null)) {
+                              <button type="submit" id="delete-biodata" class="btn btn-danger">Delete</button>
+                            }
+                          </td>
+                        </tr>
+                      }
+                    }
+                    else {
+                      <tr>
+                        <td colspan="5" class="text-align-center"> Hey! You don't have any @ViewBag.Status Biodata. </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix spacer-20"></div>
+
+              <div class="col-md-12">
+                <div class="pull-right">
+                  @Html.PagedListPager(Model, page => Url.Action("Manage", "Matrimonial", new { page, status = Request.QueryString["status"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

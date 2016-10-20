@@ -5,9 +5,9 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enMaritalStatus {
-    UnSpecified = 0,
-    NeverMarried = 1,
-    EngagementBroken = 2,
+    Un_Specified = 0,
+    Never_Married = 1,
+    Engagement_Broken = 2,
     Seperated = 3,
     Divorced = 4,
     Widow = 5

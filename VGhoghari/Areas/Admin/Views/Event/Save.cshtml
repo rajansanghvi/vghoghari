@@ -1,0 +1,256 @@
+﻿@{
+  ViewBag.Title = "Save Event Details";
+}
+
+@section css{
+  @Styles.Render("~/plugins/bootstrap-select-1.10.0/css/bootstrap-select.min.css")
+  @Styles.Render("~/plugins/summernote-0.8.2/summernote.css")
+  @Styles.Render("~/plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css")
+}
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+          <li class="active">Events</li>
+          <li class="active">Save Details</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1>Save Event Details</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 margin-15">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title">Manage Event Details</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <div>
+                  <h6>All fields marked with <span class="red">*</span> are compulsory. Please fill in the required details to save event details.</h6>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div id="message" class="alert alert-error fade in hide"></div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Event Details</h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="event-tags" class="control-label thin-label required">Tag Your Event: <span class="red">*</span></label>
+                  <select id="event-tags" name="event-tags" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" multiple></select>
+                  <h6>@Html.ActionLink("No relevant tags for your event? Click here to create a new one", "Categories", "Event")</h6>
+                  <div id="event-tags-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="title" class="control-label thin-label required">Event Title: <span class="red">*</span></label>
+                  <input type="text" id="title" name="title" class="form-control input-sm" />
+                  <div id="title-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="short-description" class="control-label thin-label required">Short Description: <span class="red">*</span></label>
+                  <textarea id="short-description" name="short-description" class="form-control input-sm"></textarea>
+                  <div id="short-description-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="description" class="control-label thin-label">Description: </label>
+                  <textarea id="description" name="description" class="form-control input-sm"></textarea>
+                  <div id="description-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="start-time" class="control-label thin-label required">Start Time: <span class="red">*</span></label>
+                  <input type="text" id="start-time" name="start-time" class="form-control input-sm" />
+                  <div id="start-time-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="end-time" class="control-label thin-label">End Time:</label>
+                  <input type="text" id="end-time" name="end-time" class="form-control input-sm" />
+                  <div id="end-time-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="cost-per-person" class="control-label thin-label required">Cost Per Person: <span class="red">*</span></label>
+                  <input type="text" id="cost-per-person" name="cost-per-person" class="form-control input-sm" />
+                  <div id="cost-per-person-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="total-capacity" class="control-label thin-label required">Total Capacity: <span class="red">*</span></label>
+                  <input type="text" id="total-capacity" name="total-capacity" class="form-control input-sm" />
+                  <div id="total-capacity-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="venue" class="control-label thin-label">Venue: </label>
+                  <textarea id="venue" name="venue" class="form-control input-sm"></textarea>
+                  <div id="venue-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="country" class="control-label thin-label required">Country: <span class="red">*</span></label>
+                  <select id="country" name="country" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" data-live-search="true">
+                    <option value="">Select One</option>
+                  </select>
+                  <div id="country-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="state" class="control-label thin-label">State:</label>
+                  <select id="state" name="state" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" data-live-search="true">
+                    <option value="">Select One</option>
+                  </select>
+                  <div id="state-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="city" class="control-label thin-label">City:</label>
+                  <select id="city" name="city" class="form-control selectpicker" data-show-tick="true" data-tick-icon="fa fa-check" data-show-menu-arrow="true" data-live-search="true">
+                    <option value="">Select One</option>
+                  </select>
+                  <div id="city-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Contact Info </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="contact-person" class="control-label thin-label">Contact Person:</label>
+                  <input type="text" id="contact-person" name="contact-person" class="form-control input-sm" />
+                  <div id="contact-person-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="contact-number" class="control-label thin-label">Contact Number:</label>
+                  <input type="text" id="contact-number" name="contact-number" class="form-control input-sm" />
+                  <div id="contact-number-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="contact-email" class="control-label thin-label">Contact Email:</label>
+                  <input type="text" id="contact-email" name="contact-email" class="form-control input-sm" />
+                  <div id="contact-email-error" class="text-danger text-justify"></div>
+                </div>
+              </div>
+
+              <div class="col-md-12 margin-10">
+                <h4 class="post-title"> Banner Image </h4>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-8 margin-15">
+                    <img id="banner-image" src="http://placehold.it/800x450&amp;text=Banner-Image" alt="Banner Image" class="img-thumbnail img-responsive" />
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <label class="input-group-btn" for="inp-banner-image">
+                        <span class="btn btn-info">
+                          Browse<input type="file" id="inp-banner-image" name="inp-banner-image" style="display: none;">
+                        </span>
+                      </label>
+                      <input type="text" id="file-name" class="form-control input-sm" disabled>
+                    </div>
+                    <span id="image-upload-info">
+                      Please select an image in either .jpg, .jpeg or .png format.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="spacer-20"></div>
+
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Save Event Details!" />
+
+                @Html.ActionLink("Go Back To Manage Events", "Manage", "Event", new { page = Request.QueryString["page"], eventType = Request.QueryString["eventType"]}, new { @class = "btn btn-lg btn-default" })
+
+                <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@section scripts{
+  @Scripts.Render("~/Scripts/moment.js")
+  @Scripts.Render("~/plugins/bootstrap-select-1.10.0/js/bootstrap-select.min.js")
+  @Scripts.Render("~/plugins/summernote-0.8.2/summernote.min.js")
+  @Scripts.Render("~/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js")
+
+  @Scripts.Render("~/Scripts/validations/constants.js")
+  @Scripts.Render("~/Scripts/validations/validation.js")
+  @Scripts.Render("~/Scripts/validations/event/saveEvent.js")
+}

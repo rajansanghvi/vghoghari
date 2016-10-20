@@ -1,0 +1,17 @@
+﻿@model IEnumerable<string>
+<div class="widget sidebar-widget">
+  <div class="sidebar-widget-title">
+    <h3>Events Categories</h3>
+  </div>
+  <div id="event-categories" class="tag-cloud">
+    @if(Model.ToList().Count > 0) {
+      foreach(var item in Model) {
+        @Html.ActionLink(item, "List", "Event")
+      }
+    }
+    else {
+      <p class="text-center"> No Tags Available </p>
+    }
+  </div>
+</div>
+

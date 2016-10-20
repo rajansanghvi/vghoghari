@@ -242,7 +242,6 @@ function fetchBasicBiodataInfo(code, callback) {
 
 function fillBasicInfo(data) {
 
-  console.log(data);
   $('#gender').val(data.BasicInfo.Gender);
   $('#gender').selectpicker('refresh');
   $('#fullname').val(data.BasicInfo.Fullname);

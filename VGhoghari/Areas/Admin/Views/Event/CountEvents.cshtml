@@ -1,0 +1,53 @@
+﻿<div class="row">
+  <div class="col-md-12">
+    <header class="single-post-header clearfix">
+      <h3 class="post-title">Event Counts</h3>
+    </header>
+  </div>
+  <div class="spacer-20"></div>
+
+  <div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-aqua">
+      <div class="inner">
+        <h3>@ViewBag.UpcomingEventCount</h3>
+
+        <p>Upcoming Events</p>
+      </div>
+      <a href="@Url.Action("Manage", "Event", new { eventType = "upcoming" })" class="small-box-footer">
+        More info <i class="fa fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h3>@ViewBag.OngoingEventCount</h3>
+
+        <p>Ongoing Events</p>
+      </div>
+      <a href="@Url.Action("Manage", "Event", new { eventType = "ongoing" })" class="small-box-footer">
+        More info <i class="fa fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-red">
+      <div class="inner">
+        <h3>@ViewBag.PreviousEventCount</h3>
+
+        <p>Previous Events</p>
+      </div>
+      <a href="@Url.Action("Manage", "Event", new { eventType = "previous" })" class="small-box-footer">
+        More info <i class="fa fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+

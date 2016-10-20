@@ -11,6 +11,10 @@ using VGhoghari.Models;
 namespace VGhoghari.AppCodes.Business_Layer {
   public class MatrimonialBL {
 
+    public static int MY_BIODATA_LIST_PAGE_SIZE = 5;
+
+    public static int BIODATA_LIST_PAGE_SIZE = 9;
+
     public static bool IsMyBiodata(string code) {
       return MatrimonialDL.IsMyBiodata(code);
     }
@@ -20,7 +24,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
     }
 
     private static int ValidateBasicInfo(BiodataTO data) {
-      if(data.BasicInfo.Gender == enGender.UnSpecified) {
+      if(data.BasicInfo.Gender == enGender.Un_Specified) {
         return -1;
       }
       if(string.IsNullOrWhiteSpace(data.BasicInfo.Fullname)
@@ -49,7 +53,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         || data.BasicInfo.Age > 100) {
         return -1;
       }
-      if(data.BasicInfo.MaritalStatus == enMaritalStatus.UnSpecified) {
+      if(data.BasicInfo.MaritalStatus == enMaritalStatus.Un_Specified) {
         return -1;
       }
       if(string.IsNullOrWhiteSpace(data.BasicInfo.Native)
@@ -100,7 +104,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         || !Regex.IsMatch(data.ContactInfo.Address, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
         return -1;
       }
-      if(data.ContactInfo.AddressType == enAddressType.UnSpecified) {
+      if(data.ContactInfo.AddressType == enAddressType.Un_Specified) {
         return -1;
       }
       if(string.IsNullOrWhiteSpace(data.ContactInfo.Country)) {
@@ -166,7 +170,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         }
       }
 
-      if(data.SocialInfo.Manglik == enBoolean.UnSpecified) {
+      if(data.SocialInfo.Manglik == enBoolean.Un_Specified) {
         return -1;
       }
       if(!string.IsNullOrWhiteSpace(data.SocialInfo.SelfGothra)) {
@@ -191,13 +195,13 @@ namespace VGhoghari.AppCodes.Business_Layer {
       if(data.PhysicalInfo.Weight < 0) {
         return -1;
       }
-      if(data.PhysicalInfo.BodyType == enBodyType.UnSpecified) {
+      if(data.PhysicalInfo.BodyType == enBodyType.Un_Specified) {
         return -1;
       }
       if(string.IsNullOrWhiteSpace(data.PhysicalInfo.Complexion)) {
         return -1;
       }
-      if(data.PhysicalInfo.Optics == enBoolean.UnSpecified) {
+      if(data.PhysicalInfo.Optics == enBoolean.Un_Specified) {
         return -1;
       }
       if(string.IsNullOrWhiteSpace(data.PhysicalInfo.Diet)) {
@@ -247,7 +251,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         return -1;
       }
 
-      if(data.EducationInfo.HighestEducation == enHighestEducation.UnSpecified) {
+      if(data.EducationInfo.HighestEducation == enHighestEducation.Un_Specified) {
         return -1;
       }
 
@@ -269,7 +273,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         }
       }
 
-      if(data.OccupationInfo.Occupation == enOccupation.UnSpecified) {
+      if(data.OccupationInfo.Occupation == enOccupation.Un_Specified) {
         return -1;
       }
 
@@ -339,7 +343,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         return -1;
       }
 
-      if(data.FamilyInfo.FamilyType == enFamilyType.UnSpecified) {
+      if(data.FamilyInfo.FamilyType == enFamilyType.Un_Specified) {
         return -1;
       }
 
@@ -405,7 +409,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         return -1;
       }
 
-      if(data.FamilyInfo.ResidenceStatus == enAddressType.UnSpecified) {
+      if(data.FamilyInfo.ResidenceStatus == enAddressType.Un_Specified) {
         return -1;
       }
 
@@ -489,7 +493,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         return -1;
       }
 
-      if(data.FatherOccupationInfo.Occupation == enOccupation.UnSpecified) {
+      if(data.FatherOccupationInfo.Occupation == enOccupation.Un_Specified) {
         return -1;
       }
 
@@ -518,7 +522,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         }
       }
 
-      if(data.MotherOccupationInfo.Occupation == enOccupation.UnSpecified) {
+      if(data.MotherOccupationInfo.Occupation == enOccupation.Un_Specified) {
         return -1;
       }
 
@@ -585,23 +589,24 @@ namespace VGhoghari.AppCodes.Business_Layer {
         return -1;
       }
 
-      if(data.Gender == enGender.UnSpecified) {
+      if(data.Gender == enGender.Un_Specified) {
         return -1;
       }
 
-      if(string.IsNullOrWhiteSpace(data.Family)
-        || data.Family.Length < 2
+      if(!string.IsNullOrWhiteSpace(data.Family)) {
+        if(data.Family.Length < 2
         || data.Family.Length > 500
         || !Regex.IsMatch(data.Family, @"^([A-Za-z]{1,})([ ]{0,1})([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})?([ ]{0,1})?([A-Za-z]{1,})$")) {
-        return -1;
+          return -1;
+        }
       }
 
-      if(string.IsNullOrWhiteSpace(data.Native)
-        || data.Name.Length > 200
+      if(!string.IsNullOrWhiteSpace(data.Native)) {
+        if(data.Name.Length > 200
         || !Regex.IsMatch(data.Native, @"^(?=.*[a-zA-Z\d].*)[a-zA-Z\d !@#$%&*()\-_+=:;""',./?]{2,}$")) {
-        return -1;
+          return -1;
+        }
       }
-
       return 0;
     }
 
@@ -669,7 +674,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
         }
       }
 
-      if(string.IsNullOrWhiteSpace(MatrimonialDL.GetProfileImageNameByCode(data.Code))) {
+      if(string.IsNullOrWhiteSpace(MatrimonialDL.FetchProfileImageNameByCode(data.Code))) {
         if(string.IsNullOrWhiteSpace(profileImageData)) {
           return -1;
         }
@@ -698,7 +703,7 @@ namespace VGhoghari.AppCodes.Business_Layer {
             }
             string path = Path.Combine(directory, data.ProfileImage);
             File.WriteAllBytes(path, Convert.FromBase64String(imageData));
-            string oldFileName = MatrimonialDL.GetProfileImageNameByCode(data.Code);
+            string oldFileName = MatrimonialDL.FetchProfileImageNameByCode(data.Code);
             if(!string.IsNullOrWhiteSpace(oldFileName)) {
               string oldFilePath = Path.Combine(directory, oldFileName);
               if(File.Exists(oldFilePath)) {
@@ -724,6 +729,67 @@ namespace VGhoghari.AppCodes.Business_Layer {
       }
       //validation failed hence -1
       return validationResponse;
+    }
+
+    public static int CountMyBiodataList() {
+      return MatrimonialDL.CountMyBiodataList();
+    }
+
+    public static List<BiodataTO> GetMyBiodataList(int? pageNumber) {
+
+      int offset = (pageNumber ?? 1) - 1;
+      return MatrimonialDL.FetchMyBiodataList(offset, MY_BIODATA_LIST_PAGE_SIZE);
+    }
+
+    public static BiodataTO GetMyBiodataDetails(string code) {
+      BiodataTO biodata = MatrimonialDL.FetchBiodataByCode(code);
+      if(biodata != null) {
+        biodata.Sibblings = MatrimonialDL.FetchSibblingInfoByBiodataCode(code);
+      }
+
+      return biodata;
+    }
+
+    public static int CountMyBiodataByStatus(enApprovalStatus status) {
+      return MatrimonialDL.CountMyBiodataByStatus(status);
+    }
+
+    public static List<BiodataTO> GetMyBiodataListByStatus(int? pageNumber, enApprovalStatus status) {
+
+      int offset = ((pageNumber ?? 1) - 1) * MY_BIODATA_LIST_PAGE_SIZE;
+
+      return MatrimonialDL.FetchMyBiodataListByStatus(offset, MY_BIODATA_LIST_PAGE_SIZE, status);
+    }
+
+    public static int DeleteMyBiodataByCode(string code) {
+      return MatrimonialDL.DeleteMyBiodataByCode(code);
+    }
+
+    public static int CountAllActiveBiodatas() {
+      return MatrimonialDL.CountTotalActiveBiodatas();
+    }
+
+    public static List<BiodataTO> GetAllBiodatas(int? pageNumber) {
+      int offset = ((pageNumber ?? 1) - 1) * BIODATA_LIST_PAGE_SIZE;
+      return MatrimonialDL.FetchAllBiodata(offset, BIODATA_LIST_PAGE_SIZE);
+    }
+
+    public static int CountOfMyActiveBiodata() {
+      return MatrimonialDL.CountOfMyActiveBiodata();
+    }
+
+    public static int GetBiodataCountByStatus(enApprovalStatus status) {
+      return MatrimonialDL.GetBiodataCountByStatus(status);
+    }
+
+    public static List<BiodataTO> GetBiodataListByStatus(int? pageNumber, enApprovalStatus status) {
+      int offset = ((pageNumber ?? 1) - 1) * MY_BIODATA_LIST_PAGE_SIZE;
+
+      return MatrimonialDL.GetBiodataListByStatus(offset, MY_BIODATA_LIST_PAGE_SIZE, status);
+    }
+
+    public static int UpdateApprovalStatus(string code, enApprovalStatus status) {
+      return MatrimonialDL.UpdateApprovalStatus(code, status);
     }
   }
 }

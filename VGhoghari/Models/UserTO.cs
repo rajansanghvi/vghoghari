@@ -16,7 +16,7 @@ namespace VGhoghari.Models {
       this.ConfirmPassword = string.Empty;
       this.HashedPassword = string.Empty;
       this.Fullname = string.Empty;
-      this.Gender = enGender.UnSpecified;
+      this.Gender = enGender.Un_Specified;
       this.Dob = null;
       this.MobileNumber = string.Empty;
       this.EmailId = string.Empty;

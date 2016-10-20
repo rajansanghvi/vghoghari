@@ -1,0 +1,97 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<VGhoghari.Models.ProjectTO>
+
+
+@{
+  ViewBag.Title = "Manage Projects";
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+          <li class="active">Projects</li>
+          <li class="active">Manage</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1>Manage Projects</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 margin-15">
+          <header class="single-post-header clearfix">
+            <h3 class="post-title">Manage Projects</h3>
+          </header>
+          <div class="post-content">
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                @Html.ActionLink("Add New Project", "Save", "Project", new { page = Request.QueryString["page"] }, new { @class = "btn btn-lg btn-primary pull-right" })
+              </div>
+              <div class="spacer-20"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 margin-15">
+                <table class="table table-bordered table-hover table-responsive event-data">
+                  <thead>
+                    <tr>
+                      <th> <h4> Title </h4> </th>
+                      <th colspan="3" class="text-align-center"> <h4> Actions </h4></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @if(Model.Count > 0) {
+                      foreach(var item in Model) {
+                        <tr>
+                          <td> @item.Title </td>
+                          <td class="text-align-center"> @Html.ActionLink("View", "Details", "Project", new { code = item.Code, page = Request.QueryString["page"] }, new { @class = "btn btn-info" }) </td>
+
+                          <td class="text-align-center"> @Html.ActionLink("Edit", "Save", "Project", new { code = item.Code, page = Request.QueryString["page"] }, new { @class = "btn btn-warning" }) </td>
+
+                          <td class="text-align-center"> @Html.ActionLink("Delete", "Delete", "Project", new { code = item.Code, page = Request.QueryString["page"] }, new { @class = "btn btn-danger" }) </td>
+                        </tr>
+                      }
+                    }
+                    else {
+                      <tr>
+                        <td colspan="4" class="text-align-center"> No projects available. Please add one now!</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix"></div>
+
+              <div class="col-md-12">
+                <div class="pull-right">
+                  @Html.PagedListPager(Model, page => Url.Action("Manage", "Project", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

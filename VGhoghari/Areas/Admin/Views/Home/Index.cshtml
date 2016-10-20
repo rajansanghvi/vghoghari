@@ -1,0 +1,36 @@
+﻿@{
+  ViewBag.Title = "Admin Section";
+}
+
+<!-- Start Hero Slider -->
+<div class="hero-slider flexslider clearfix" data-autoplay="no" data-pagination="no" data-arrows="no" data-style="fade" data-pause="yes">
+  <ul class="slides">
+    <li class="parallax" style="background-image:url(@Url.Content("~/images/banners/logo_banner.jpg"));"></li>
+  </ul>
+</div>
+<!-- End Hero Slider -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1>Welcome Admin</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      @{
+        Html.RenderAction("BiodataCounts", "Matrimonial");
+      }
+
+      @{
+        Html.RenderAction("CountEvents", "Event");
+      }
+    </div>
+  </div>
+</div>

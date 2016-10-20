@@ -1,0 +1,83 @@
+﻿@model VGhoghari.Models.ProjectTO
+
+@{
+  ViewBag.Title = "Project Details";
+}
+
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+          <li class="active">Project</li>
+          <li class="active">Details</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1>Project Details</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <header class="single-post-header clearfix">
+            <h2 class="post-title">@Model.Title</h2>
+          </header>
+          <article class="post-content cause-item">
+            <span class="post-meta meta-data">
+              <span><i class="fa fa-male"></i> @Model.ContactPerson</span>
+              <span><i class="fa fa-phone"></i> @Model.ContactNumber</span>
+              <span><a href="#"><i class="fa fa-envelope"></i> @Model.ContactEmail</a></span>
+            </span>
+            <div class="spacer-20"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                @if(string.IsNullOrWhiteSpace(Model.BannerImage)) {
+                  <img src="http://placehold.it/600x400&amp;text=IMAGE+PLACEHOLDER" class="img-responsive">
+                }
+                else {
+                  <img src="@Url.Content("~/AppData/projects/" + Model.BannerImage)" class="img-responsive">
+                }
+              </div>
+            </div>
+            <div class="spacer-30"></div>
+            <div class="row">
+              <div class="12 margin-15">
+                <h2> Short Description </h2>
+              </div>
+              <div class="col-md-12 text-justify">
+                @Html.Raw(Model.ShortDescription)
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="12 margin-15">
+                <h2 class="single-post-header"> Description </h2>
+              </div>
+              <div class="col-md-12 text-justify">
+                @Html.Raw(Model.Description)
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

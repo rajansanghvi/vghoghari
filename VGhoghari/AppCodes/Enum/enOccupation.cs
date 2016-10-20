@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enOccupation {
-    UnSpecified = 0,
+    Un_Specified = 0,
     Business = 1,
     Professsion = 2,
     Service = 3,

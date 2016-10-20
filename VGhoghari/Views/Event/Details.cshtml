@@ -1,0 +1,124 @@
+﻿@model VGhoghari.Models.EventTO
+
+@{
+  ViewBag.Title = "Event Details - " + Model.Title;
+}
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax" style="background-image:url(@Url.Content("~/images/page_headers/event_header.jpg"));">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300;" })</li>
+          <li class="active" style="color: #201e1f">Events</li>
+          <li class="active" style="color: #201e1f">Details</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Nav Backed Header -->
+<!-- Start Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="color: #201e1f">Event Details</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+  <div id="content" class="content full">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <header class="single-post-header clearfix">
+            <nav class="btn-toolbar pull-right"> <a href="#" class="btn btn-default" data-placement="bottom" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></a> <a href="#" class="btn btn-default" data-placement="bottom" data-toggle="tooltip" data-original-title="Contact us"><i class="fa fa-envelope"></i></a> <a href="#" class="btn btn-default" data-placement="bottom" data-toggle="tooltip" data-original-title="Share event"><i class="fa fa-location-arrow"></i></a> </nav>
+            <h2 class="post-title">@Model.Title</h2>
+          </header>
+          <article class="post-content">
+            <div class="event-description">
+              @if(!string.IsNullOrWhiteSpace(Model.BannerImage)) {
+                <img src="@Url.Content("~/AppData/events/" + Model.BannerImage)" class="img-responsive">
+              }
+              else {
+                <img src="http://placehold.it/800x450&amp;text=IMAGE+PLACEHOLDER" class="img-responsive">
+              }
+              <div class="spacer-20"></div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Event Details</h3>
+                    </div>
+                    <div class="panel-body">
+                      <ul class="info-table">
+                        @if(Model.EndDate.HasValue && !string.IsNullOrWhiteSpace(Model.FormattedEndDate)) {
+                          <li><i class="fa fa-calendar"></i> <strong>@Model.StartDate.ToString("dddd")</strong> | @Model.StartDate.ToString("dd MMMM, yyyy HH:mm") - @Model.EndDate.Value.ToString("dd MMMM, yyyy HH:mm")</li>
+                        }
+                        else {
+                          <li><i class="fa fa-calendar"></i> <strong>@Model.StartDate.ToString("dddd")</strong> | @Model.StartDate.ToString("dd MMMM, yyyy HH:mm")</li>
+                        }
+                        <li><i class="fa fa-map-marker"></i> @Model.Venue: @Model.City @Model.State @Model.Country </li>
+                        <li><i class="fa fa-phone"></i> @Model.ContactPerson : @Model.ContactNumber : @Model.ContactEmail</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <ul class="list-group">
+                    <li class="list-group-item tag-cloud">
+                      <i class="fa fa-tag pull-right"></i>
+                      @foreach(string tag in Model.TagList) {
+                        if(!string.IsNullOrWhiteSpace(tag)) {
+                          @Html.ActionLink(tag, "List", "Event", new { category = tag }, null)
+                        }
+                      }
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="spacer-20"></div>
+
+              <div class="row">
+                <div class="12 margin-15">
+                  <h2> Short Description </h2>
+                </div>
+                <div class="col-md-12 text-justify">
+                  @Html.Raw(Model.ShortDescription)
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="12 margin-15">
+                  <h2 class="single-post-header"> Description </h2>
+                </div>
+                <div class="col-md-12 text-justify">
+                  @Html.Raw(Model.Description)
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-12">
+                  @Html.ActionLink("Go Back To View Events", "List", "Event", new { page = Request.QueryString["page"], eventType = Request.QueryString["eventType"] }, new { @class = "btn btn-default btn-lg" })
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <!-- Start Sidebar -->
+        <div class="col-md-3 sidebar">
+          @{ 
+            Html.RenderAction("UpcomingEventByCount", "Event", new { count = 3 });
+          }
+          @{
+            Html.RenderAction("ActiveEventCategories", "Event");
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -22,8 +22,8 @@ $(document).ready(function () {
             + '<td>'
             + value.Native
             + '</td>'
-            + '<td>'
-            + '<a id="' + value.Code + '" href="#" onclick="deleteSibbling(this)">Delete</a>'
+            + '<td class="text-align-center">'
+            + '<a id="' + value.Code + '" href="#" class="btn btn-danger" onclick="deleteSibbling(this)">Delete</a>'
             + '</td>'
             + '</tr>'
             );
@@ -223,8 +223,8 @@ function saveSibblingInfo(code) {
             + '<td>'
             + responseData.Native
             + '</td>'
-            + '<td>'
-            + '<a id="' + responseData.Code + '" href="#" onclick="deleteSibbling(this)">Delete</a>'
+            + '<td class="text-align-center">'
+            + '<a id="' + responseData.Code + '" href="#" class="btn btn-danger" onclick="deleteSibbling(this)">Delete</a>'
             + '</td>'
             + '</tr>'
             );

@@ -116,11 +116,11 @@
 
               <div class="col-md-12">
                 <div class="row">
-                  <div class="col-md-6 margin-15">
-                    <img id="biodata-profile-image" src="http://placehold.it/300x300&amp;text=Profile-Image" alt="Profile Image" class="img-responsive" />
+                  <div class="col-md-8 margin-15">
+                    <img id="biodata-profile-image" src="http://placehold.it/800x450&amp;text=Profile-Image" alt="Profile Image" class="img-thumbnail img-responsive" />
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="input-group">
                       <label class="input-group-btn" for="profile-image">
                         <span class="btn btn-info">
@@ -174,17 +174,11 @@
 
             <div class="row">
               <div class="col-md-12">
-                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Submit and Complete Registration" />
+                <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" style="background-color: #eea546;" value="Save and Complete Registration!" />
+
+                @Html.ActionLink("Go Back & Manage Existing Biodata", "Manage", "Matrimonial", null, new { @class = "btn btn-lg btn-default" })
 
                 <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
-              </div>
-              <div class="clearfix"></div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h6>
-                  @Html.ActionLink("Click here to go back and manage the existing biodata...", "Manage", "Matrimonial", null, new { @class = "pull-right" })
-                </h6>
               </div>
               <div class="clearfix"></div>
             </div>

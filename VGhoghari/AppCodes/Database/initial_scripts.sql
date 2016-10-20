@@ -1100,6 +1100,72 @@ create table app_biodata_other_infos
   expectation varchar(1000) null
 )engine InnoDB;
 
+CREATE PROCEDURE vghoghari.`save_additional_biodata_info`(
+  a_code varchar(100)
+  , a_hobbies varchar(1000)
+  , a_interest varchar(1000)
+  , a_expectation varchar(1000)
+  , a_username varchar(200)
+)
+BEGIN
+  declare exit handler for sqlexception
+    begin
+      rollback;
+    end;
+    
+  declare exit handler for sqlwarning
+    begin
+      rollback;
+    end;
+    
+  start transaction;
+    set @biodataCount = 0;
+    select count(id) into @biodataCount from app_biodata_basic_infos where code = a_code; 
+    
+    if @biodataCount > 0 then
+      set @biodataId = 0;
+      select id into @biodataId from app_biodata_basic_infos where code = a_code;
+      
+      set @additionInfoCount = 0;
+      select count(id) into @additionInfoCount from app_biodata_other_infos where biodata_id = @biodataId;
+      
+      if @additionInfoCount > 0 then
+        update app_biodata_other_infos
+        set
+        hobbies = a_hobbies
+        , interest = a_interest
+        , expectation = a_expectation
+        where
+        biodata_id = @biodataId;
+      else
+        insert into app_biodata_other_infos
+        (biodata_id, hobbies, interest, expectation)
+        values
+        (@biodataId, a_hobbies, a_interest, a_expectation);
+      end if;
+      
+      set @status = 0;
+      select approval_status into @status from app_biodata_basic_infos where id = @biodataId;
+      
+      if @status > 0 then
+        set @status = 1;
+      end if;
+        
+      update app_biodata_basic_infos
+      set
+      approval_status = @status
+      , modified_by = a_username
+      , modified_at = now()
+      where
+      id = @biodataId;
+      
+      select @biodataId;
+    else
+      rollback;
+    end if;
+  commit;
+END;
+
 /*End of matrimonial section*/
 
 
@@ -1176,59 +1242,10 @@ create table if not exists app_media
   modified_at datetime not null
 )engine InnoDB;
 
+
+
 /*Start of Event Section*/
-/*Event Table*/
-create table if not exists app_events
-(
-  id int(11) not null auto_increment primary key,
-  code varchar(100) not null,
-  title varchar(500) not null,
-  short_description text not null,
-  long_description mediumtext null,
-  start_time datetime not null,
-  end_time datetime null,
-  venue varchar(255) not null,
-  address varchar(1000) null,
-  price int(6) not null default 0,
-  capacity int(6) not null default 0,
-  contact_person varchar(500) null,
-  contact_number varchar(25) null,
-  contact_email varchar(200) null,
-  attending_count int(11) not null default 0,
-  not_attending_count int(11) not null default 0,
-  attending_maybe int(11) not null default 0,
-  primary_image_id int(11) null,
-  foreign key(primary_image_id) references app_media(id)
-  on delete set null on update cascade,
-  active tinyint(4) not null,
-  effective_from date not null,
-  effective_to date null,
-  created_by varchar(200) not null,
-  created_at datetime not null,
-  modified_by varchar(200) not null,
-  modified_at datetime not null  
-)engine InnoDB;
 
-/*Event Media Relation*/
-create table if not exists app_event_media_rel
-(
-  id int(11) not null auto_increment primary key,
-  event_id int(11) not null,
-  foreign key(event_id) references app_events(id)
-  on delete cascade on update cascade,
-  media_id int(11) not null,
-  foreign key(media_id) references app_media(id)
-  on delete cascade on update cascade,
-  active tinyint(4) not null,
-  effective_from date not null,
-  effective_to date null,
-  created_by varchar(200) not null,
-  created_at datetime not null,
-  modified_by varchar(200) not null,
-  modified_at datetime not null
-)engine InnoDB;
-
-/*Event Categories*/
 create table if not exists app_event_categories
 (
 	id int(11) not null auto_increment primary key,
@@ -1243,23 +1260,49 @@ create table if not exists app_event_categories
   modified_at datetime not null
 )engine InnoDB;
 
-/*Add default event categories*/
 insert into app_event_categories
 (name, description, active, effective_from, effective_to, created_by, created_at, modified_by, modified_at )
 values
-('Business', 'Everything related to the Business and Profession', 1, CURRENT_DATE(), null, 'system', now(), 'system', now());
+('Business', 'Events related to the Business and Profession', 1, CURRENT_DATE(), null, 'system', now(), 'system', now());
 
 insert into app_event_categories
 (name, description, active, effective_from, effective_to, created_by, created_at, modified_by, modified_at )
 values
-('Education', 'Everything related to the Education', 1, CURRENT_DATE(), null, 'system', now(), 'system', now());
+('Education', 'Events related to the Education and Career', 1, CURRENT_DATE(), null, 'system', now(), 'system', now());
 
 insert into app_event_categories
 (name, description, active, effective_from, effective_to, created_by, created_at, modified_by, modified_at )
 values
-('Social', 'Everything related to the Social Activities', 1, CURRENT_DATE(), null, 'system', now(), 'system', now());
+('Social', 'Events related to the Social Activities', 1, CURRENT_DATE(), null, 'system', now(), 'system', now());
 
-/*Event Categories Rel*/
+create table if not exists app_events
+(
+  id int(11) not null auto_increment primary key,
+  code varchar(100) not null,
+  title varchar(500) not null,
+  short_description text not null,
+  long_description mediumtext null,
+  start_time datetime not null,
+  end_time datetime null,
+  cost_per_person int(6) not null default 0,
+  capacity int(6) not null default 0,
+  venue varchar(1000) null,
+  city varchar(100) null,
+  state varchar(100) null,
+  country varchar(100) not null,
+  contact_person varchar(500) null,
+  contact_number varchar(20) null,
+  contact_email varchar(200) null,
+  banner_image varchar(100) null,
+  active tinyint(4) not null,
+  effective_from date not null,
+  effective_to date null,
+  created_by varchar(200) not null,
+  created_at datetime not null,
+  modified_by varchar(200) not null,
+  modified_at datetime not null  
+)engine InnoDB;
+
 create table if not exists app_event_category_rel
 (
 	id int(11) not null auto_increment primary key,
@@ -1268,6 +1311,124 @@ create table if not exists app_event_category_rel
   on delete cascade on update cascade,
   category_id int(11) not null,
   foreign key (category_id) references app_event_categories(id)
+  on delete cascade on update cascade,
+  active tinyint(4) not null,
+  effective_from date not null,
+  effective_to date null,
+  created_by varchar(200) not null,
+  created_at datetime not null,
+  modified_by varchar(200) not null,
+  modified_at datetime not null
+)engine InnoDB;
+
+
+CREATE PROCEDURE vghoghari.`app_save_event`(
+  a_code varchar(200)
+  , a_title varchar(500)
+  , a_short_description text
+  , a_description mediumtext
+  , a_start_time datetime
+  , a_end_time datetime
+  , a_cost_per_person int(6)
+  , a_total_capacity int(6)
+  , a_venue varchar(1000)
+  , a_country varchar(200)
+  , a_state varchar(200)
+  , a_city varchar(200)
+  , a_contact_person varchar(500)
+  , a_contact_number varchar(20)
+  , a_contact_email varchar(200)
+  , a_banner_image varchar(100)
+  , a_username varchar(200)
+)
+BEGIN
+	declare exit handler for sqlexception
+    begin
+      rollback;
+    end;
+    
+  declare exit handler for sqlwarning
+    begin
+      rollback;
+    end;
+    
+  start transaction;
+    set @eventCount = 0;
+    
+    select count(id) into @eventCount from app_events where code = a_code and active = true;
+    
+    if @eventCount > 0 then
+      set @eventId = 0;
+      select id into @eventId from app_events where code = a_code and active = true;
+      update app_events
+      set
+      title = a_title
+      , short_description = a_short_description
+      , long_description = a_description
+      , start_time = a_start_time
+      , end_time =a_end_time
+      , cost_per_person = a_cost_per_person
+      , capacity = a_total_capacity
+      , venue = a_venue
+      , city = a_city
+      , state = a_state
+      , country = a_country
+      , contact_person = a_contact_person
+      , contact_number = a_contact_number
+      , contact_email = a_contact_email
+      , banner_image = a_banner_image
+      , modified_by = a_username
+      , modified_at = now()
+      where
+      id = @eventId;
+      
+      select @eventId;
+    else
+      insert into app_events
+      (code, title, short_description, long_description, start_time, end_time, cost_per_person, capacity
+      , venue, city, state, country,  contact_person, contact_number, contact_email, banner_image
+      , active, effective_from, effective_to, created_by, created_at, modified_by, modified_at)
+      values
+      (a_code, a_title, a_short_description, a_description, a_start_time, a_end_time, a_cost_per_person, a_total_capacity
+      , a_venue, a_city, a_state, a_country, a_contact_person, a_contact_number, a_contact_email, a_banner_image
+      , 1, CURRENT_DATE(), null, a_username, now(), a_username, now());
+      
+      select LAST_INSERT_ID();
+    end if;
+  commit;
+END;
+/*Event End*/
+
+create table if not exists app_projects
+(
+  id int(11) not null auto_increment primary key,
+  code varchar(100) not null,
+  title varchar(500) not null,
+  short_description text not null,
+  long_description mediumtext null,
+  contact_person varchar(500) null,
+  contact_number varchar(20) null,
+  contact_email varchar(200) null,
+  banner_image varchar(100) null,
+  active tinyint(4) not null,
+  effective_from date not null,
+  effective_to date null,
+  created_by varchar(200) not null,
+  created_at datetime not null,
+  modified_by varchar(200) not null,
+  modified_at datetime not null  
+)engine InnoDB;
+
+
+/*Event Media Relation*/
+create table if not exists app_event_media_rel
+(
+  id int(11) not null auto_increment primary key,
+  event_id int(11) not null,
+  foreign key(event_id) references app_events(id)
+  on delete cascade on update cascade,
+  media_id int(11) not null,
+  foreign key(media_id) references app_media(id)
   on delete cascade on update cascade,
   active tinyint(4) not null,
   effective_from date not null,

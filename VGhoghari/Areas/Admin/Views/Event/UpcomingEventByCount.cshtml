@@ -1,0 +1,23 @@
+﻿@model IEnumerable<VGhoghari.Models.EventTO>
+
+<div class="widget-upcoming-events widget">
+  <div class="sidebar-widget-title">
+    <h3>Upcoming Events</h3>
+  </div>
+  @if(Model.ToList().Count > 0) {
+    <ul>
+      @foreach(var item in Model) {
+        <li class="item event-item clearfix">
+          <div class="event-date"> <span class="date">@item.StartDate.ToString("dd")</span> <span class="month">@item.StartDate.ToString("MMM")</span> </div>
+          <div class="event-detail">
+            <h4>@Html.ActionLink(item.Title, "List", "Event", new { code = item.Code, page = Request.QueryString["page"], eventType = Request.QueryString["eventType"] }, null)</h4>
+            <span class="event-dayntime meta-data">@item.StartDate.ToString("dddd") | @item.StartDate.ToString("HH:mm")</span>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+  else {
+    <p class="text-center"> No Upcoming Events </p>
+  }
+</div>

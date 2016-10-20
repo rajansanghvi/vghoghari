@@ -1,4 +1,3 @@
-DROP PROCEDURE IF EXISTS vghoghari.save_additional_biodata_info;
 CREATE PROCEDURE vghoghari.`save_additional_biodata_info`(
   a_code varchar(100)
   , a_hobbies varchar(1000)

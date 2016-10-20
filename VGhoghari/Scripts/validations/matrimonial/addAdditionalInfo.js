@@ -8,7 +8,7 @@ $(document).ready(function () {
     var input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-    console.log(input.get(0).files.length)
+    //console.log(input.get(0).files.length)
     if (validateImageType(label)) {
       isValid = true;
       $('#image-upload-info').removeClass('text-danger');
@@ -240,13 +240,13 @@ function save(object) {
         $('#message').removeClass('hide');
       },
       200: function () {
-        $(location).attr('href', BASEURL + '/Matrimonial/Manage');
+        $(location).attr('href', BASEURL + '/Matrimonial/Manage?status=1');
       },
       401: function () {
         $(location).attr('href', BASEURL + '/User/Logout');
       },
       403: function () {
-        $(location).attr('href', BASEURL + '/Matrimonial/Manage');
+        $(location).attr('href', BASEURL + '/Matrimonial/Manage?status=1');
       }
     }
   });

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enStarSign {
-    UnSpecified = 0,
+    Un_Specified = 0,
     Aries = 1,
     Taurus = 2,
     Gemini = 3,

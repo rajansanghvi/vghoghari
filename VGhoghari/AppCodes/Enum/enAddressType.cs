@@ -5,9 +5,9 @@ using System.Web;
 
 namespace VGhoghari.AppCodes.Enum {
   public enum enAddressType {
-    UnSpecified = 0,
+    Un_Specified = 0,
     Owned = 1,
-    FamilyOwned = 2,
+    Family_Owned = 2,
     Rented = 3,
     PG = 4
   }

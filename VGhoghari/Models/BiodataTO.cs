@@ -12,6 +12,10 @@ namespace VGhoghari.Models {
       this.Id = 0;
       this.Code = string.Empty;
       this.ProfileImage = string.Empty;
+      this.FullName = string.Empty;
+      this.Status = enApprovalStatus.In_Complete;
+      this.StatusString = string.Empty;
+      this.AdminNotes = string.Empty;
 
       this.BasicInfo = null;
       this.ContactInfo = null;
@@ -30,12 +34,18 @@ namespace VGhoghari.Models {
       this.MotherOccupationInfo = null;
 
       this.AdditionalInfo = null;
+
+      this.Sibblings = null;
     }
 
     [JsonIgnore]
     public int Id { get; set; }
     public string Code { get; set; }
+    public string FullName { get; set; }
     public string ProfileImage { get; set; }
+    public enApprovalStatus Status { get; set; }
+    public string StatusString { get; set; }
+    public string AdminNotes { get; set; }
 
     public BasicInfoTO BasicInfo { get; set; }
     public ContactInfoTO ContactInfo { get; set; }
@@ -54,30 +64,38 @@ namespace VGhoghari.Models {
     public OccupationInfoTO MotherOccupationInfo { get; set; }
 
     public AdditionalBiodataInfoTO AdditionalInfo { get; set; }
+
+    public List<SibblingInfoTO> Sibblings { get; set; }
   }
 
   public class BasicInfoTO {
 
     public BasicInfoTO() {
-      this.Gender = enGender.UnSpecified;
+      this.Gender = enGender.Un_Specified;
+      this.GenderString = string.Empty;
       this.Fullname = string.Empty;
       this.Dob = new DateTime(1870, 01, 01);
+      this.DobString = string.Empty;
       this.BirthTime = null;
       this.StringBirthTime = string.Empty;
       this.Age = 0;
-      this.MaritalStatus = enMaritalStatus.UnSpecified;
+      this.MaritalStatus = enMaritalStatus.Un_Specified;
+      this.MaritalStatusString = string.Empty;
       this.Native = string.Empty;
       this.BirthPlace = string.Empty;
       this.AboutMe = string.Empty;
     }
 
     public enGender Gender { get; set; }
+    public string GenderString { get; set; }
     public string Fullname { get; set; }
     public DateTime Dob { get; set; }
+    public string DobString { get; set; }
     public DateTime? BirthTime { get; set; }
     public string StringBirthTime { get; set; }
     public int Age { get; set; }
     public enMaritalStatus MaritalStatus { get; set; }
+    public string MaritalStatusString { get; set; }
     public string Native { get; set; }
     public string BirthPlace { get; set; }
     public string AboutMe { get; set; }
@@ -91,7 +109,8 @@ namespace VGhoghari.Models {
       this.EmailId = string.Empty;
       this.FacebookUrl = string.Empty;
       this.Address = string.Empty;
-      this.AddressType = enAddressType.UnSpecified;
+      this.AddressType = enAddressType.Un_Specified;
+      this.AddressTypeString = string.Empty;
       this.Country = string.Empty;
       this.State = string.Empty;
       this.City = string.Empty;
@@ -104,6 +123,7 @@ namespace VGhoghari.Models {
     public string FacebookUrl { get; set; }
     public string Address { get; set; }
     public enAddressType AddressType { get; set; }
+    public string AddressTypeString { get; set; }
     public string Country { get; set; }
     public string State { get; set; }
     public string City { get; set; }
@@ -126,16 +146,20 @@ namespace VGhoghari.Models {
   public class SocialInfoTO {
 
     public SocialInfoTO() {
-      this.Manglik = enBoolean.UnSpecified;
+      this.Manglik = enBoolean.Un_Specified;
+      this.ManglikString = string.Empty;
       this.SelfGothra = string.Empty;
       this.MaternalGothra = string.Empty;
-      this.StarSign = enStarSign.UnSpecified;
+      this.StarSign = enStarSign.Un_Specified;
+      this.StarSignString = string.Empty;
     }
 
     public enBoolean Manglik { get; set; }
+    public string ManglikString { get; set; }
     public string SelfGothra { get; set; }
     public string MaternalGothra { get; set; }
     public enStarSign StarSign { get; set; }
+    public string StarSignString { get; set; }
   }
 
   public class PhysicalInfoTO {
@@ -144,13 +168,15 @@ namespace VGhoghari.Models {
       this.HeightFt = 0;
       this.HeightInch = -1;
       this.Weight = 0;
-      this.BodyType = enBodyType.UnSpecified;
+      this.BodyType = enBodyType.Un_Specified;
+      this.BodyTypeString = string.Empty;
       this.BloodGroup = string.Empty;
       this.Complexion = string.Empty;
       this.Diet = string.Empty;
       this.Smoke = string.Empty;
       this.Drink = string.Empty;
-      this.Optics = enBoolean.UnSpecified;
+      this.Optics = enBoolean.Un_Specified;
+      this.OpticsString = string.Empty;
       this.Deformity = string.Empty;
     }
 
@@ -158,19 +184,22 @@ namespace VGhoghari.Models {
     public int HeightInch { get; set; }
     public int Weight { get; set; }
     public enBodyType BodyType { get; set; }
+    public string BodyTypeString { get; set; }
     public string BloodGroup { get; set; }
     public string Complexion { get; set; }
     public string Diet { get; set; }
     public string Smoke { get; set; }
     public string Drink { get; set; }
     public enBoolean Optics { get; set; }
+    public string OpticsString { get; set; }
     public string Deformity { get; set; }
   }
 
   public class EducationInfoTO {
 
     public EducationInfoTO() {
-      this.HighestEducation = enHighestEducation.UnSpecified;
+      this.HighestEducation = enHighestEducation.Un_Specified;
+      this.HighestEducationString = string.Empty;
       this.DegreesAchieved = string.Empty;
       this.DegreesList = new List<string>();
       this.UniversityAttended = string.Empty;
@@ -178,6 +207,7 @@ namespace VGhoghari.Models {
     }
 
     public enHighestEducation HighestEducation { get; set; }
+    public string HighestEducationString { get; set; }
     public string DegreesAchieved { get; set; }
     public List<string> DegreesList { get; set; }
     public string UniversityAttended { get; set; }
@@ -187,7 +217,8 @@ namespace VGhoghari.Models {
   public class OccupationInfoTO {
 
     public OccupationInfoTO() {
-      this.Occupation = enOccupation.UnSpecified;
+      this.Occupation = enOccupation.Un_Specified;
+      this.OccupationString = string.Empty;
       this.ProfessionSector = string.Empty;
       this.OrganizationName = string.Empty;
       this.OrganizationAddress = string.Empty;
@@ -195,6 +226,7 @@ namespace VGhoghari.Models {
     }
 
     public enOccupation Occupation { get; set; }
+    public string OccupationString { get; set; }
     public string ProfessionSector { get; set; }
     public string OrganizationName { get; set; }
     public string Designation { get; set; }
@@ -212,13 +244,15 @@ namespace VGhoghari.Models {
       this.GrandMotherName = string.Empty;
       this.NoOfBrothers = 0;
       this.NoOfSisters = 0;
-      this.FamilyType = enFamilyType.UnSpecified;
+      this.FamilyType = enFamilyType.Un_Specified;
+      this.FamilyTypeString = string.Empty;
       this.LandlineNumber = string.Empty;
       this.Address = string.Empty;
       this.City = string.Empty;
       this.State = string.Empty;
       this.Country = string.Empty;
-      this.ResidenceStatus = enAddressType.UnSpecified;
+      this.ResidenceStatus = enAddressType.Un_Specified;
+      this.ResidenceStatusString = string.Empty;
     }
 
     public string FatherName { get; set; }
@@ -230,12 +264,14 @@ namespace VGhoghari.Models {
     public int NoOfBrothers { get; set; }
     public int NoOfSisters { get; set; }
     public enFamilyType FamilyType { get; set; }
+    public string FamilyTypeString { get; set; }
     public string LandlineNumber { get; set; }
     public string Address { get; set; }
     public string City { get; set; }
     public string State { get; set; }
     public string Country { get; set; }
     public enAddressType ResidenceStatus { get; set; }
+    public string ResidenceStatusString { get; set; }
   }
 
   public class MosalInfoTO {
@@ -262,7 +298,7 @@ namespace VGhoghari.Models {
     public SibblingInfoTO() {
       this.Code = string.Empty;
       this.Name = string.Empty;
-      this.Gender = enGender.UnSpecified;
+      this.Gender = enGender.Un_Specified;
       this.Family = string.Empty;
       this.Native = string.Empty;
       this.GenderString = string.Empty;

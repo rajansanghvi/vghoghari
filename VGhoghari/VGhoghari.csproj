@@ -151,10 +151,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppData\biodata\" />
-    <Folder Include="AppData\events\" />
-    <Folder Include="AppData\profile_image\" />
-    <Folder Include="AppData\projects\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Theme\audio\" />
@@ -281,6 +277,10 @@
     <Content Include="AppCodes\Database\Procedures\proc_save_personal_biodata_info.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_save_sibbling_biodata_info.sql" />
     <Content Include="AppCodes\Database\Procedures\proc_save_professional_biodata_info.sql" />
+    <Content Include="AppData\biodata\info.txt" />
+    <Content Include="AppData\events\info.txt" />
+    <Content Include="AppData\profile_image\info.txt" />
+    <Content Include="AppData\projects\info.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="audio\navkar_mantra.mp3" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -333,6 +333,7 @@
     <Content Include="Areas\Admin\Views\Project\Save.cshtml" />
     <Content Include="Areas\Admin\Views\Project\Manage.cshtml" />
     <Content Include="Areas\Admin\Views\Project\Details.cshtml" />
+    <None Include="Properties\PublishProfiles\vghoghari_prod.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="plugins\summernote-0.8.2\lang\summernote-ar-AR.js" />
     <Content Include="plugins\summernote-0.8.2\lang\summernote-bg-BG.js" />

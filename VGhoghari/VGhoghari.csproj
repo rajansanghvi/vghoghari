@@ -151,7 +151,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppData\" />
+    <Folder Include="AppData\biodata\" />
+    <Folder Include="AppData\events\" />
+    <Folder Include="AppData\profile_image\" />
+    <Folder Include="AppData\projects\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Theme\audio\" />

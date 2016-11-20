@@ -54,7 +54,9 @@
                     </a>
                     <div class="grid-content">
                       <h3>@Html.ActionLink(item.Title, "Details", "Event", new { code = item.Code, page = Request.QueryString["page"], eventType=Request.QueryString["eventType"] }, null)</h3>
-                      <p>@Html.Raw(item.ShortDescription)</p>
+                      <div class="text-justify">
+                        <p>@Html.Raw(item.ShortDescription)</p>
+                      </div>
                     </div>
                     <ul class="info-table">
                       @if(item.EndDate.HasValue && !string.IsNullOrWhiteSpace(item.FormattedEndDate)) {

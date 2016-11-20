@@ -53,7 +53,9 @@
                       <span><i class="fa fa-phone"></i> @item.ContactNumber</span>
                       <span><a href="#"><i class="fa fa-envelope"></i> @item.ContactEmail</a></span>
                     </span>
-                    <p class="text-justify">@Html.Raw(item.ShortDescription)</p>
+                    <div class="text-justify">
+                      <p> @Html.Raw(item.ShortDescription) </p>
+                    </div>
                   </div>
                 </div>
               </article>

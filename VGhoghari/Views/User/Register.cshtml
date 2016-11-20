@@ -8,9 +8,9 @@
     <div class="row">
       <div class="col-md-12">
         <ol class="breadcrumb">
-          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #f28100" })</li>
-          <li class="active" style="color: #f59800">User</li>
-          <li class="active" style="color: #f59800">Register</li>
+          <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color: #3E2300" })</li>
+          <li class="active" style="color: #429801">User</li>
+          <li class="active" style="color: #429801">Register</li>
         </ol>
       </div>
     </div>
@@ -33,7 +33,7 @@
   <div id="content" class="content full">
     <div class="container">
       <div class="row">
-        <div class="col-md-9 col-sm-8">
+        <div class="col-md-12 col-sm-12">
           <header class="single-post-header clearfix">
             <h2 class="post-title" style="color: #f5a800">Register Here!</h2>
           </header>
@@ -103,27 +103,13 @@
 
               <div class="col-md-12">
                 <input id="submit" name="submit" type="submit" class="btn btn-primary btn-lg pull-right" value="Register now!" />
+
+                @Html.ActionLink("Have an account ? Login Now!", "Login", "User", null, new { @class = "btn btn-lg btn-default pull-right margin-right-10" })
+
                 <input id="reset" name="reset" type="reset" class="btn btn-default btn-lg" value="Reset" />
               </div>
               <div class="clearfix"></div>
-
-              <div class="col-md-12">
-                <h6>
-                  @Html.ActionLink("Already have an account? Click here to login...", "Login", "User", null, new { @class = "pull-right" })
-                </h6>
-              </div>
-              <div class="clearfix"></div>
             </div>
-          </div>
-        </div>
-
-        <!-- Start Sidebar -->
-        <div class="col-md-3 col-sm-4">
-          <div class="widget sidebar-widget">
-            <div class="sidebar-widget-title">
-              <h3>Advertisement</h3>
-            </div>
-            <a href="#"><img src="http://placehold.it/300x300&amp;text=Advertise Here" alt="AD"></a>
           </div>
         </div>
       </div>

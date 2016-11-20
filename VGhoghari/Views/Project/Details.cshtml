@@ -75,6 +75,12 @@
                 @Html.Raw(Model.Description)
               </div>
             </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-12">
+                @Html.ActionLink("Go Back To View Project", "List", "Project", new { page = Request.QueryString["page"] }, new { @class = "btn btn-default btn-lg" })
+              </div>
+            </div>
           </article>
         </div>
       </div>

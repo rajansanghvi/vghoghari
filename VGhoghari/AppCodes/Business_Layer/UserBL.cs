@@ -271,5 +271,9 @@ namespace VGhoghari.AppCodes.Business_Layer {
       }
       return new KeyValuePair<int, string>(validationResult, string.Empty);
     }
+
+    public static bool IsAdminUser(string username) {
+      return UserDL.IsAdminUser(username.ToLower());
+    }
   }
 }

@@ -82,5 +82,16 @@ namespace VGhoghari.AppCodes.Utilities {
         }
       }
     }
+
+    public static bool isAdminUser {
+      get {
+        try {
+          return UserBL.IsAdminUser(Utility.CurrentUser);
+        }
+        catch (Exception) {
+          return false;
+        }
+      }
+    }
   }
 }

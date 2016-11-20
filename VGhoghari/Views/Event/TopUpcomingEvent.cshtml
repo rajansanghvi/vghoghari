@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<VGhoghari.Models.EventTO>
 
-<div class="notice-bar">
-  <div class="container">
-    <div class="row">
-      @if(Model.ToList().Count == 1) {
+
+@if(Model.ToList().Count == 1) {
         foreach(var item in Model) {
+    <div class="notice-bar">
+      <div class="container">
+        <div class="row">
           <div class="col-md-3 col-sm-6 col-xs-6 notice-bar-title"> <span class="notice-bar-title-icon hidden-xs"><i class="fa fa-calendar fa-3x"></i></span> <span class="title-note">Next</span> <strong>Upcoming Event</strong> </div>
           <div class="col-md-3 col-sm-6 col-xs-6 notice-bar-event-title">
             <h5><a href="single-event.html">@item.Title</a></h5>
@@ -17,8 +18,23 @@
             <div class="timer-col"> <span id="seconds"></span> <span class="timer-type">secs</span> </div>
           </div>
           <div class="col-md-2 col-sm-6 hidden-xs"> @Html.ActionLink("All Events", "List", "Event", null, new { @class = "btn btn-primary btn-lg btn-block" }) </div>
-        }
-      }
+        </div>
+      </div>
+    </div>
+  }
+}
+else {
+  <div class="notice-bar latest-sermon">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 hidden-xs">
+          <h3><i class="fa fa-microphone"></i> Navkar Mantra</h3>
+        </div>
+        <div class="col-md-9 col-sm-8 col-xs-12">
+          <audio class="audio-player" src="@Url.Content("~/audio/navkar_mantra.mp3")" type="audio/mp3" controls></audio>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+}
+

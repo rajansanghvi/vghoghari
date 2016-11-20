@@ -76,6 +76,15 @@
                 @Html.Raw(Model.Description)
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                @Html.ActionLink("Go Back To View Projects", "Manage", "Project", new { page = Request.QueryString["page"] }, new { @class = "btn btn-default btn-lg" })
+
+                @Html.ActionLink("Delete", "Delete", "Project", new { code = Request.QueryString["code"], page = Request.QueryString["page"] }, new { @class = "btn btn-danger btn-lg pull-right" })
+
+                @Html.ActionLink("Edit", "Save", "Project", new { code = Request.QueryString["code"], page = Request.QueryString["page"] }, new { @class = "btn btn-warning btn-lg pull-right", style = "margin-right: 5px;" })
+              </div>
+            </div>
           </article>
         </div>
       </div>

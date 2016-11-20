@@ -1,12 +1,14 @@
-﻿<!DOCTYPE HTML>
+﻿@using VGhoghari.AppCodes.Utilities;
+
+<!DOCTYPE HTML>
 <html class="no-js">
 <head>
   <!-- Basic Page Needs
   ================================================== -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>@ViewBag.Title - VGhoghari.org : Shree Visha Shrimali Ghoghari Mahila Federation</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>@ViewBag.Title - VGhoghari.org : Shree Ghoghari Visha Shrimali Jain Mahila Federation</title>
+  <meta name="description" content="Shree Ghoghari Visha Shrimali Jain Mahila Federation is a national level organization. It is an apex consortium entity which include 35 Ghoghari Mahila Mandal across India and constitues about 5000 members. It is an eminent embodiment of women organization which promotes women empowerment, ensures educational help to anyone within the Jain community to the maximum extent it can, helps individuals find the perfect partners through their Matrimonial Programme and are involved in many such social and religious activities for the growth and improvement of the Jain Community. It has illuminated Educational, Cultural, Religious and Social Programmes.">
+  <meta name="keywords" content="Jain, Visha, Shrimali, Ghoghari, Matrimonial, Education, Projects, Events, Social, Religious, Community, Jainism, Dasha, Business, Mahila, Mandal, Federation, Mumbai, India, Jain Site, Jain Website, Jain Religion, Match Making, Loan, Fees, Help, Derasar">
   <meta name="author" content="Rajan Sanghvi">
 
   <!-- Mobile Specific Metas
@@ -45,19 +47,21 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4 col-sm-6 col-xs-8">
-              <h1 class="logo"> <a href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Theme/images/logo.png")" alt="Logo"></a> </h1>
+              <h1 class="logo"> <a href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/images/logo.png")" alt="Shree Ghoghari Visha Shrimali Jain Mahila Mandal Federation Logo"></a> </h1>
             </div>
             <div class="col-md-8 col-sm-6 col-xs-4">
               <ul class="top-navigation hidden-sm hidden-xs">
-                @if (User.Identity.IsAuthenticated) {
-                  <li>@Html.ActionLink("My Profile", "MyProfile", "User")</li>
-                  <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                @if(User.Identity.IsAuthenticated) {
+                  @*<li>@Html.ActionLink("My Profile", "MyProfile", "User")</li>*@
+                if(Utility.isAdminUser) {
+                  <li>@Html.ActionLink("Go To Admin Panel", "Index", "Home", new { area = "Admin" }, new { target = "_blank" })</li>
+                }
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
                 }
                 else {
                   <li>@Html.ActionLink("Register", "Register", "User")</li>
                   <li>@Html.ActionLink("Login", "Login", "User")</li>
                 }
-                <li>@Html.ActionLink("Donate", "Donate", "Home")</li>
               </ul>
               <a href="#" class="visible-sm visible-xs menu-toggle"><i class="fa fa-bars"></i></a>
             </div>
@@ -75,18 +79,16 @@
                   </li>
                   <li>
                     @Html.ActionLink("About Us", "AboutUs", "Home")
-                    <ul class="dropdown">
-                      <li>@Html.ActionLink("Overview", "AboutUs", "Home")</li>
-                      <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
-                    </ul>
                   </li>
                   <li>
                     @Html.ActionLink("Matrimonial", "AllBiodata", "Matrimonial")
-                    <ul class="dropdown">
-                      <li>@Html.ActionLink("View All Biodata", "AllBiodata", "Matrimonial")</li>
-                      <li>@Html.ActionLink("Manage Existing Biodata", "Manage", "Matrimonial")</li>
-                      <li>@Html.ActionLink("Add New Biodata", "AddBasicInfo", "Matrimonial")</li>
-                    </ul>
+                    @if(User.Identity.IsAuthenticated) {
+                      <ul class="dropdown">
+                        <li>@Html.ActionLink("View All Biodata", "AllBiodata", "Matrimonial")</li>
+                        <li>@Html.ActionLink("Manage Existing Biodata", "Manage", "Matrimonial")</li>
+                        <li>@Html.ActionLink("Add New Biodata", "AddBasicInfo", "Matrimonial")</li>
+                      </ul>
+                    }
                   </li>
                   <li>
                     @Html.ActionLink("Events", "List", "Event")
@@ -99,15 +101,30 @@
                   <li>
                     @Html.ActionLink("Porjects", "List", "Project")
                   </li>
-                  <li>
-                    @Html.ActionLink("Forms", "Forms", "Home")
+                  <li class="hidden-md hidden-lg">
+                    @Html.ActionLink("User", "Login", "User")
+                    <ul class="dropdown">
+                      @if(User.Identity.IsAuthenticated) {
+                        if(Utility.isAdminUser) {
+                          <li>@Html.ActionLink("Go To Admin Panel", "Index", "Home", new { area = "Admin" }, new { target = "_blank" })</li>
+                        }
+                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                      }
+                      else {
+                        <li>@Html.ActionLink("Register", "Register", "User")</li>
+                        <li>@Html.ActionLink("Login", "Login", "User")</li>
+                      }
+                    </ul>
                   </li>
-                  <li>
-                    @Html.ActionLink("Gallery", "Gallery", "Home")
-                  </li>
-                  <li>
-                    @Html.ActionLink("Contact Us", "ContactUs", "Home")
-                  </li>
+                  @*<li>
+                      @Html.ActionLink("Forms", "Forms", "Home")
+                    </li>
+                    <li>
+                      @Html.ActionLink("Gallery", "Gallery", "Home")
+                    </li>
+                    <li>
+                      @Html.ActionLink("Contact Us", "ContactUs", "Home")
+                    </li>*@
                 </ul>
               </nav>
             </div>
@@ -118,15 +135,18 @@
     <!-- End Site Header -->
     @RenderBody()
     <!-- Start Footer -->
-    
+
     <footer class="site-footer-bottom">
       <div class="container">
         <div class="row">
           <div class="copyrights-col-left col-md-6 col-sm-6">
-            <p>&copy; @DateTime.Now.Year VGhoghari.org : Shree Visha Shrimal Ghoghari Mahila Federation. All Rights Reserved</p>
+            <p>&copy; @DateTime.Now.Year vghoghari.org : Shree Ghoghari Visha Shrimali Jain Mahila Federation. All Rights Reserved</p>
           </div>
           <div class="copyrights-col-right col-md-6 col-sm-6">
-            <div class="social-icons"> <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a> <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a> <a href="http://www.pinterest.com/" target="_blank"><i class="fa fa-pinterest"></i></a> <a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus"></i></a> <a href="http://www.pinterest.com/" target="_blank"><i class="fa fa-youtube"></i></a> <a href="#"><i class="fa fa-rss"></i></a> </div>
+            <div class="pull-right">
+              <p>Sponsored By: <a href="http://tharco.in" target="_blank">Shree Jayesh Ramniklal Thar</a></p>
+              <p>Developed By: <a href="https://about.me/rajansanghvi" target="_blank">Rajan Pravin Sanghvi</a></p>
+            </div>
           </div>
         </div>
       </div>

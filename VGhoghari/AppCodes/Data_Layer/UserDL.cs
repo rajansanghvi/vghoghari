@@ -33,7 +33,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
 
       GlobalDL dl = new GlobalDL();
       dl.AddParam("username", username);
-       
+
       //Query returns 1 if username exists in DB. If 1 then username is not available hence return false else return true
       return dl.ExecuteSqlReturnScalar<int>(Utility.ConnectionString, sql) == 1 ? false : true;
     }
@@ -121,13 +121,13 @@ namespace VGhoghari.AppCodes.Data_Layer {
       GlobalDL dl = new GlobalDL();
       dl.AddParam("username", username);
 
-      using (MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
-        if (dr.Read()) {
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+        if(dr.Read()) {
           return new UserTO() {
             Code = dr.GetString("code"),
             Username = dr.GetString("username"),
             Fullname = dr.GetString("fullname"),
-            Gender = (enGender)dr.GetInt32("gender"),
+            Gender = (enGender) dr.GetInt32("gender"),
             Dob = dr.GetDateTime("dob"),
             Religion = dr.GetString("religion"),
             ProfileImage = dr.GetString("profile_image"),
@@ -148,7 +148,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
     }
 
     public static void UpdateUserProfileByUsercode(UserTO data) {
-      using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
         const string procedureName = @"update_user_profile";
 
         GlobalDL dl = new GlobalDL();
@@ -174,7 +174,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
     }
 
     public static string AttachProfileImageToUser(string code, string fileName) {
-      using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
+      using(TransactionScope ts = new TransactionScope(TransactionScopeOption.Required)) {
         const string sql = @"update app_users
                             set profile_image = ?profileImage
                             where code = ?userCode;
@@ -205,6 +205,30 @@ namespace VGhoghari.AppCodes.Data_Layer {
       dl.AddParam("userCode", code);
 
       return dl.ExecuteSqlReturnScalar<string>(Utility.ConnectionString, sql);
+    }
+
+    public static bool IsAdminUser(string username) {
+      const string sql = @"select 1
+                              from
+                              app_users u
+                              left join
+                              app_user_role_rel urr
+                              on
+                              u.id = urr.user_id
+                              left join
+                              app_roles r
+                              on
+                              urr.role_id = r.id
+                              where
+                              u.username = ?username
+                              and
+                              r.name = 'admin';
+                              ";
+
+      GlobalDL dl = new GlobalDL();
+      dl.AddParam("username", username);
+
+      return dl.ExecuteSqlReturnScalar<int>(Utility.ConnectionString, sql) == 1 ? true : false;
     }
   }
 }

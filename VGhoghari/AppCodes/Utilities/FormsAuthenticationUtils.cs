@@ -54,7 +54,7 @@ namespace VGhoghari.AppCodes.Utilities {
       int timeout = 30; //default timeout is 30 minutes
       XmlDocument webConfig = new XmlDocument();
       webConfig.Load(HttpContext.Current.Server.MapPath(@"~\web.config"));
-      XmlNode node = webConfig.SelectSingleNode("/configuration/system.web/authentication/forms");
+      XmlNode node = webConfig.SelectSingleNode("/configuration/location/system.web/authentication/forms");
 
       if (node != null && node.Attributes["timeout"] != null) {
         timeout = int.Parse(node.Attributes["timeout"].Value);

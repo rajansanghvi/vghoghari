@@ -811,7 +811,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
                          , ifnull(so.manglik, 0) as manglik
                          , ifnull(so.self_gothra, '') as self_gothra
                          , ifnull(so.maternal_gothra, '') as maternal_gothra
-                         , ifnull(so.star_sign, '') as star_sign
+                         , ifnull(so.star_sign, 0) as star_sign
                   from
                   app_biodata_basic_infos b
                   left join

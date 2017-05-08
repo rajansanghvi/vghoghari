@@ -49,7 +49,7 @@ $(document).ready(function () {
   });
 
   $('#country').on('hidden.bs.select', function (e) {
-    countryValidation();
+    //countryValidation();
 
     if ($('#country').val() !== '') {
       loadStates($('#country').val(), '', '');
@@ -557,7 +557,7 @@ function saveBasicInfo(code) {
 
   addressValidation();
   addressTypeValidation();
-  countryValidation();
+  //countryValidation();
 
   optionalPincodeValidation();
 

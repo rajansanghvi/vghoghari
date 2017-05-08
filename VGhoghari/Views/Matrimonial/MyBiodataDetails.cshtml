@@ -42,12 +42,12 @@
           <div class="post-content">
             <div class="row">
               <div class="col-md-6 margin-15">
-                @if(!string.IsNullOrWhiteSpace(Model.ProfileImage)) {
+                @if (!string.IsNullOrWhiteSpace(Model.ProfileImage)) {
                   <img id="biodata-profile-image" src="@Url.Content("~/AppData/biodata/" + Model.ProfileImage)" alt="Profile Image" class="img-thumbnail img-responsive" />
-                }
+}
                 else {
                   <img id="biodata-profile-image" src="http://placehold.it/800x1000&amp;text=Profile-Image" alt="Profile Image" class="img-thumbnail img-responsive" />
-                }
+}
               </div>
               <div class="col-md-6">
                 <div class="row">
@@ -55,12 +55,12 @@
                   <div class="col-md-6 value"><h5>@Model.StatusString</h5></div>
                 </div>
 
-                @if(Model.Status == enApprovalStatus.Rejected) {
+                @if (Model.Status == enApprovalStatus.Rejected) {
                   <div class="row">
                     <div class="col-md-6 margin-15 key"><h5>Reason<span class="pull-right">:</span></h5></div>
                     <div class="col-md-6 value"><h5>@Model.AdminNotes</h5></div>
                   </div>
-                }
+}
 
                 <div class="row">
                   <div class="col-md-6 margin-15 key"><h5>Age<span class="pull-right">:</span></h5></div>
@@ -82,9 +82,9 @@
                   <div class="col-md-6 margin-15 key"><h5>Education<span class="pull-right">:</span></h5></div>
                   <div class="col-md-6 value">
                     <ul class="unordered" style="margin-top: 0px;">
-                      @foreach(var item in Model.EducationInfo.DegreesList) {
+                      @foreach (var item in Model.EducationInfo.DegreesList) {
                         <li><h5>@item</h5></li>
-                      }
+}
                     </ul>
                   </div>
                 </div>
@@ -93,9 +93,9 @@
                   <div class="col-md-6 value">
                     <h5>
                       @Model.OccupationInfo.OccupationString
-                      @if(!string.IsNullOrWhiteSpace(Model.OccupationInfo.Designation)) {
+                      @if (!string.IsNullOrWhiteSpace(Model.OccupationInfo.Designation)) {
                         <span> / @Model.OccupationInfo.Designation</span>
-                      }
+}
                     </h5>
                   </div>
                 </div>
@@ -104,9 +104,9 @@
                   <div class="col-md-6 value">
                     <h5>
                       @Model.ContactInfo.Country
-                      @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.City)) {
+                      @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.City)) {
                         <span> / @Model.ContactInfo.City </span>
-                      }
+}
                     </h5>
                   </div>
                 </div>
@@ -118,12 +118,12 @@
                   <div class="col-md-6 margin-15 key"><h5>Native<span class="pull-right">:</span></h5></div>
                   <div class="col-md-6 value"><h5>@Model.BasicInfo.Native</h5></div>
                 </div>
-                @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.FacebookUrl)) {
+                @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.FacebookUrl)) {
                   <div class="row">
                     <div class="col-md-6 margin-15 key"><h5>Facebook Profile<span class="pull-right">:</span></h5></div>
                     <div class="col-md-6 value"><h5>@Model.ContactInfo.FacebookUrl</h5></div>
                   </div>
-                }
+}
               </div>
             </div>
             <div class="row spacer-20"></div>
@@ -140,14 +140,14 @@
                   </ul>
                   <div class="tab-content">
                     <div id="tab1" class="tab-pane active">
-                      @if(!string.IsNullOrWhiteSpace(Model.BasicInfo.AboutMe)) {
+                      @if (!string.IsNullOrWhiteSpace(Model.BasicInfo.AboutMe)) {
                         <div class="row">
                           <div class="col-md-12">
                             <h4 class="post-title margin-10" style="color: #c32143;"> About Me </h4>
                             <div class="value"><h5 style="text-align:justify;">@Model.BasicInfo.AboutMe</h5></div>
                           </div>
                         </div>
-                      }
+}
                       <div class="row">
                         <div class="col-md-12 margin-10">
                           <h4 class="post-title" style="color: #c32143;"> Basic Info </h4>
@@ -182,23 +182,23 @@
                           <h5>@Model.BasicInfo.Native</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.BasicInfo.StringBirthTime)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.BasicInfo.StringBirthTime)) {
                           <div class="col-md-3 key">
                             <h6>Birth Time<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.BasicInfo.StringBirthTime</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.BasicInfo.BirthPlace)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.BasicInfo.BirthPlace)) {
                           <div class="col-md-3 key">
                             <h6>Birth Place<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.BasicInfo.BirthPlace</h5>
                           </div>
-                        }
+}
                       </div>
 
                       <div class="row">
@@ -214,32 +214,32 @@
                           <h5>@Model.ContactInfo.MobileNumber</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.LandlineNumber)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.LandlineNumber)) {
                           <div class="col-md-3 key">
                             <h6>Landline Number<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.ContactInfo.LandlineNumber</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.EmailId)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.EmailId)) {
                           <div class="col-md-3 key">
                             <h6>Email Id<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.ContactInfo.EmailId</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.FacebookUrl)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.FacebookUrl)) {
                           <div class="col-md-3 key">
                             <h6>Facebook Profile<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.ContactInfo.FacebookUrl</h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
 
                         <div class="col-md-3 key">
@@ -248,37 +248,39 @@
                         <div class="col-md-9 value">
                           <h5 style="text-align: justify;">
                             @Model.ContactInfo.Address
-                            @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.Pincode)) {
+                            @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.Pincode)) {
                               <span> - @Model.ContactInfo.Pincode </span>
-                            }
+}
                           </h5>
                         </div>
                         <div class="clearfix"></div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.City)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.City)) {
                           <div class="col-md-3 key">
                             <h6>City<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.ContactInfo.City</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.ContactInfo.State)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.State)) {
                           <div class="col-md-3 key">
                             <h6>State<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.ContactInfo.State</h5>
                           </div>
-                        }
+}
 
-                        <div class="col-md-3 key">
-                          <h6>Country<span class="pull-right">:</span></h6>
-                        </div>
-                        <div class="col-md-3 value">
-                          <h5>@Model.ContactInfo.Country</h5>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(Model.ContactInfo.Country)) {
+                          <div class="col-md-3 key">
+                            <h6>Country<span class="pull-right">:</span></h6>
+                          </div>
+                          <div class="col-md-3 value">
+                            <h5>@Model.ContactInfo.Country</h5>
+                          </div>
+}
 
                         <div class="col-md-3 key">
                           <h6>Residence Status<span class="pull-right">:</span></h6>
@@ -310,14 +312,14 @@
                           <h5>@Model.ReligionInfo.Caste</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.ReligionInfo.SubCaste)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.ReligionInfo.SubCaste)) {
                           <div class="col-md-3 key">
                             <h6>Sub Caste<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3" value>
                             <h5>@Model.ReligionInfo.SubCaste</h5>
                           </div>
-                        }
+}
                       </div>
 
                       <div class="row">
@@ -326,39 +328,41 @@
                         </div>
                         <div class="clearfix"></div>
 
-                        <div class="col-md-3 key">
-                          <h6>Manglik<span class="pull-right">:</span></h6>
-                        </div>
-                        <div class="col-md-3 value">
-                          <h5>@Model.SocialInfo.ManglikString</h5>
-                        </div>
+                        @if (Model.SocialInfo.Manglik != enBoolean.Un_Specified) {
+                          <div class="col-md-3 key">
+                            <h6>Manglik<span class="pull-right">:</span></h6>
+                          </div>
+                          <div class="col-md-3 value">
+                            <h5>@Model.SocialInfo.ManglikString</h5>
+                          </div>
+                        }
 
-                        @if(Model.SocialInfo.StarSign != enStarSign.Un_Specified) {
+                        @if (Model.SocialInfo.StarSign != enStarSign.Un_Specified) {
                           <div class="col-md-3 key">
                             <h6>Star Sign<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.SocialInfo.StarSignString</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.SocialInfo.SelfGothra)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.SocialInfo.SelfGothra)) {
                           <div class="col-md-3 key">
                             <h6>Self Gothra<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.SocialInfo.SelfGothra</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.SocialInfo.MaternalGothra)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.SocialInfo.MaternalGothra)) {
                           <div class="col-md-3 key">
                             <h6>Maternal Gothra<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.SocialInfo.MaternalGothra</h5>
                           </div>
-                        }
+}
                       </div>
 
                       <div class="row">
@@ -374,44 +378,50 @@
                           <h5>@Model.PhysicalInfo.HeightFt ft - @Model.PhysicalInfo.HeightInch in</h5>
                         </div>
 
-                        @if(Model.PhysicalInfo.Weight != 0) {
+                        @if (Model.PhysicalInfo.Weight != 0) {
                           <div class="col-md-3 key">
                             <h6>Weight (kgs)<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.PhysicalInfo.Weight</h5>
                           </div>
-                        }
+}
+                        @if (Model.PhysicalInfo.BodyType != enBodyType.Un_Specified) {
+                          <div class="col-md-3 key">
+                            <h6>Body Type<span class="pull-right">:</span></h6>
+                          </div>
+                          <div class="col-md-3 value">
+                            <h5>@Model.PhysicalInfo.BodyTypeString</h5>
+                          </div>
+}
+                        
+                        @if (!string.IsNullOrWhiteSpace(Model.PhysicalInfo.Complexion)) {
+                          <div class="col-md-3 key">
+                            <h6>Complexion<span class="pull-right">:</span></h6>
+                          </div>
+                          <div class="col-md-3 value">
+                            <h5>@Model.PhysicalInfo.Complexion</h5>
+                          </div>
+}
+                        
+                        @if (Model.PhysicalInfo.Optics != enBoolean.Un_Specified) {
+                          <div class="col-md-3 key">
+                            <h6>Optics<span class="pull-right">:</span></h6>
+                          </div>
+                          <div class="col-md-3 value">
+                            <h5>@Model.PhysicalInfo.OpticsString</h5>
+                          </div>
+}
+                        
 
-                        <div class="col-md-3 key">
-                          <h6>Body Type<span class="pull-right">:</span></h6>
-                        </div>
-                        <div class="col-md-3 value">
-                          <h5>@Model.PhysicalInfo.BodyTypeString</h5>
-                        </div>
-
-                        <div class="col-md-3 key">
-                          <h6>Complexion<span class="pull-right">:</span></h6>
-                        </div>
-                        <div class="col-md-3 value">
-                          <h5>@Model.PhysicalInfo.Complexion</h5>
-                        </div>
-
-                        <div class="col-md-3 key">
-                          <h6>Optics<span class="pull-right">:</span></h6>
-                        </div>
-                        <div class="col-md-3 value">
-                          <h5>@Model.PhysicalInfo.OpticsString</h5>
-                        </div>
-
-                        @if(!string.IsNullOrWhiteSpace(Model.PhysicalInfo.BloodGroup)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.PhysicalInfo.BloodGroup)) {
                           <div class="col-md-3 key">
                             <h6>Blood Group<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.PhysicalInfo.BloodGroup</h5>
                           </div>
-                        }
+}
 
                         <div class="col-md-3 key">
                           <h6>Diet<span class="pull-right">:</span></h6>
@@ -420,22 +430,26 @@
                           <h5>@Model.PhysicalInfo.Diet</h5>
                         </div>
 
-                        <div class="col-md-3 key">
-                          <h6>Smoke<span class="pull-right">:</span></h6>
-                        </div>
-                        <div class="col-md-3 value">
-                          <h5>@Model.PhysicalInfo.Smoke</h5>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(Model.PhysicalInfo.Smoke)) {
+                          <div class="col-md-3 key">
+                            <h6>Smoke<span class="pull-right">:</span></h6>
+                          </div>
+                          <div class="col-md-3 value">
+                            <h5>@Model.PhysicalInfo.Smoke</h5>
+                          </div>
+}
 
-                        <div class="col-md-3 key">
-                          <h6>Drink<span class="pull-right">:</span></h6>
-                        </div>
-                        <div class="col-md-3 value">
-                          <h5>@Model.PhysicalInfo.Drink</h5>
-                        </div>
-                        <div class="clearfix"></div>
-
-                        @if(!string.IsNullOrWhiteSpace(Model.PhysicalInfo.Deformity)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.PhysicalInfo.Drink)) {
+                          <div class="col-md-3 key">
+                            <h6>Drink<span class="pull-right">:</span></h6>
+                          </div>
+                          <div class="col-md-3 value">
+                            <h5>@Model.PhysicalInfo.Drink</h5>
+                          </div>
+                          <div class="clearfix"></div>
+}
+                        
+                        @if (!string.IsNullOrWhiteSpace(Model.PhysicalInfo.Deformity)) {
                           <div class="col-md-3 key">
                             <h6>Deformity<span class="pull-right">:</span></h6>
                           </div>
@@ -444,7 +458,7 @@
                               @Model.PhysicalInfo.Deformity
                             </h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
                       </div>
                     </div>
@@ -463,14 +477,14 @@
                           <h5>@Model.EducationInfo.HighestEducationString</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.EducationInfo.UniversityAttended)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.EducationInfo.UniversityAttended)) {
                           <div class="col-md-3 key">
                             <h6>Last University Attended<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.EducationInfo.UniversityAttended</h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
 
                         <div class="col-md-3 key">
@@ -483,7 +497,7 @@
                         </div>
                         <div class="clearfix"></div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.EducationInfo.AddlInfo)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.EducationInfo.AddlInfo)) {
                           <div class="col-md-3 key">
                             <h6>Additional Info<span class="pull-right">:</span></h6>
                           </div>
@@ -492,7 +506,7 @@
                               @Model.EducationInfo.AddlInfo
                             </h5>
                           </div>
-                        }
+}
                       </div>
 
                       <div class="row">
@@ -515,26 +529,26 @@
                           <h5>@Model.OccupationInfo.ProfessionSector</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.OccupationInfo.OrganizationName)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.OccupationInfo.OrganizationName)) {
                           <div class="col-md-3 key">
                             <h6>Organization Name<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.OccupationInfo.OrganizationName</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.OccupationInfo.Designation)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.OccupationInfo.Designation)) {
                           <div class="col-md-3 key">
                             <h6>Designation<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.OccupationInfo.Designation</h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.OccupationInfo.OrganizationAddress)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.OccupationInfo.OrganizationAddress)) {
                           <div class="col-md-3 key">
                             <h6>Address:<span class="pull-right">:</span></h6>
                           </div>
@@ -543,7 +557,7 @@
                               @Model.OccupationInfo.OrganizationAddress
                             </h5>
                           </div>
-                        }
+}
                       </div>
                     </div>
 
@@ -575,41 +589,41 @@
                           <h5>@Model.FamilyInfo.GrandFatherName</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FamilyInfo.GrandMotherName)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FamilyInfo.GrandMotherName)) {
                           <div class="col-md-3 key">
                             <h6>Grandmother's Mobile No.<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FamilyInfo.GrandMotherName</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FamilyInfo.FatherMobileNumber)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FamilyInfo.FatherMobileNumber)) {
                           <div class="col-md-3 key">
                             <h6>Father's Mobile No.<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FamilyInfo.FatherMobileNumber</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FamilyInfo.MotherMobileNumber)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FamilyInfo.MotherMobileNumber)) {
                           <div class="col-md-3 key">
                             <h6>Mother's Mobile No.<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FamilyInfo.MotherMobileNumber</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FamilyInfo.LandlineNumber)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FamilyInfo.LandlineNumber)) {
                           <div class="col-md-3 key">
                             <h6>Landline No.<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FamilyInfo.LandlineNumber</h5>
                           </div>
-                        }
+}
 
                         <div class="col-md-3 key">
                           <h6>Family Type<span class="pull-right">:</span></h6>
@@ -650,23 +664,23 @@
                           <h5>@Model.FamilyInfo.ResidenceStatusString</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FamilyInfo.City)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FamilyInfo.City)) {
                           <div class="col-md-3 key">
                             <h6>City<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FamilyInfo.City</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FamilyInfo.State)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FamilyInfo.State)) {
                           <div class="col-md-3 key">
                             <h6>State<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FamilyInfo.State</h5>
                           </div>
-                        }
+}
 
                         <div class="col-md-3 key">
                           <h6>Country<span class="pull-right">:</span></h6>
@@ -696,26 +710,26 @@
                           <h5>@Model.FatherOccupationInfo.ProfessionSector</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FatherOccupationInfo.OrganizationName)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FatherOccupationInfo.OrganizationName)) {
                           <div class="col-md-3 key">
                             <h6>Father's Organization Name <span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FatherOccupationInfo.OrganizationName</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FatherOccupationInfo.Designation)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FatherOccupationInfo.Designation)) {
                           <div class="col-md-3 key">
                             <h6>Father's Designation<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.FatherOccupationInfo.Designation</h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.FatherOccupationInfo.OrganizationAddress)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.FatherOccupationInfo.OrganizationAddress)) {
                           <div class="col-md-3 key">
                             <h6>Father's Office Address:<span class="pull-right">:</span></h6>
                           </div>
@@ -724,7 +738,7 @@
                               @Model.FatherOccupationInfo.OrganizationAddress
                             </h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
 
                         <div class="col-md-12">
@@ -745,33 +759,33 @@
                           <h5>@Model.MotherOccupationInfo.ProfessionSector</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.MotherOccupationInfo.OrganizationName)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.MotherOccupationInfo.OrganizationName)) {
                           <div class="col-md-3 key">
                             <h6>Mother's Organization Name <span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.MotherOccupationInfo.OrganizationName</h5>
                           </div>
-                        }
+}
 
-                        @if(!string.IsNullOrWhiteSpace(Model.MotherOccupationInfo.Designation)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.MotherOccupationInfo.Designation)) {
                           <div class="col-md-3 key">
                             <h6>Mother's Designation<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.MotherOccupationInfo.Designation</h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.MotherOccupationInfo.OrganizationAddress)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.MotherOccupationInfo.OrganizationAddress)) {
                           <div class="col-md-12 key">
                             <h6>Mother's Office Address<span>:</span></h6>
                           </div>
                           <div class="col-md-12 value">
                             <p style="text-align: justify; color: #000">@Model.MotherOccupationInfo.OrganizationAddress</p>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
                       </div>
 
@@ -781,14 +795,14 @@
                         </div>
                         <div class="clearfix"></div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.MosalInfo.UncleName)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.MosalInfo.UncleName)) {
                           <div class="col-md-3 key">
                             <h6>Uncle's Name<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.MosalInfo.UncleName</h5>
                           </div>
-                        }
+}
 
                         <div class="col-md-3 key">
                           <h6>Grandfather's Name<span class="pull-right">:</span></h6>
@@ -797,14 +811,14 @@
                           <h5>@Model.MosalInfo.GrandFatherName</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.MosalInfo.GrandMotherName)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.MosalInfo.GrandMotherName)) {
                           <div class="col-md-3 key">
                             <h6>Grandmother's Name<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.MosalInfo.GrandMotherName</h5>
                           </div>
-                        }
+}
 
                         <div class="col-md-3 key">
                           <h6>Native<span class="pull-right">:</span></h6>
@@ -813,17 +827,17 @@
                           <h5>@Model.MosalInfo.Native</h5>
                         </div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.MosalInfo.ContactNumber)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.MosalInfo.ContactNumber)) {
                           <div class="col-md-3 key">
                             <h6>Contact Number<span class="pull-right">:</span></h6>
                           </div>
                           <div class="col-md-3 value">
                             <h5>@Model.MosalInfo.ContactNumber</h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
 
-                        @if(!string.IsNullOrWhiteSpace(Model.MosalInfo.Address)) {
+                        @if (!string.IsNullOrWhiteSpace(Model.MosalInfo.Address)) {
                           <div class="col-md-3 key">
                             <h6>Address:<span class="pull-right">:</span></h6>
                           </div>
@@ -832,7 +846,7 @@
                               @Model.MosalInfo.Address
                             </h5>
                           </div>
-                        }
+}
                         <div class="clearfix"></div>
                       </div>
                     </div>
@@ -855,21 +869,21 @@
                               </tr>
                             </thead>
                             <tbody>
-                              @if(Model.Sibblings.Count > 0) {
-                                foreach(var sibbling in Model.Sibblings) {
+                              @if (Model.Sibblings.Count > 0) {
+                                foreach (var sibbling in Model.Sibblings) {
                                   <tr>
                                     <td>@sibbling.Name</td>
                                     <td>@sibbling.GenderString</td>
                                     <td>@sibbling.Family</td>
                                     <td>@sibbling.Native</td>
                                   </tr>
-                                }
+}
                               }
                               else {
                                 <tr>
                                   <td class="text-align-center" colspan="4">No Sibbling Info</td>
                                 </tr>
-                              }
+}
                             </tbody>
                           </table>
                         </div>
@@ -927,11 +941,11 @@
                 @Html.ActionLink("Go Back To Manage Biodata", "Manage", "Matrimonial", new { page = Request.QueryString["page"], status = Request.QueryString["status"] }, new { @class = "btn btn-default btn-lg" })
 
 
-                @using(Html.BeginForm("DeleteMyBiodata", "Matrimonial", new { code = Request.QueryString["code"], page = Request.QueryString["page"], status = Request.QueryString["Status"] }, FormMethod.Post, new { @class = "pull-right" })) {
+                @using (Html.BeginForm("DeleteMyBiodata", "Matrimonial", new { code = Request.QueryString["code"], page = Request.QueryString["page"], status = Request.QueryString["Status"] }, FormMethod.Post, new { @class = "pull-right" })) {
                   <button type="submit" id="delete-biodata" class="btn btn-danger btn-lg">Delete</button>
-                }
+}
 
-                @Html.ActionLink("Edit", "AddBasicInfo", "Matrimonial", new { code = Request.QueryString["code"], page = Request.QueryString["page"], status = Request.QueryString["status"] }, new { @class = "btn btn-warning btn-lg pull-right", style = "margin-right: 5px;"})
+                @Html.ActionLink("Edit", "AddBasicInfo", "Matrimonial", new { code = Request.QueryString["code"], page = Request.QueryString["page"], status = Request.QueryString["status"] }, new { @class = "btn btn-warning btn-lg pull-right", style = "margin-right: 5px;" })
               </div>
             </div>
           </div>

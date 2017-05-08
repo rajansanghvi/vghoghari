@@ -17,9 +17,9 @@ $(document).ready(function () {
     educationValidation();
   });
 
-  $('#degrees-achieved').on('hidden.bs.select', function (e) {
-    degreesAchievedValidation();
-  });
+  //$('#degrees-achieved').on('hidden.bs.select', function (e) {
+  //  degreesAchievedValidation();
+  //});
 
   $('#university').focusout(function () {
     universityValidation();
@@ -244,7 +244,7 @@ function resetData() {
 
 function saveProfessionalInfo(code) {
   educationValidation();
-  degreesAchievedValidation();
+  //degreesAchievedValidation();
 
   universityValidation();
   addlInfoValidation();

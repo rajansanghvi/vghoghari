@@ -16,7 +16,7 @@ $(document).ready(function () {
   });
 
   $('#country').on('hidden.bs.select', function (e) {
-    countryValidation();
+    // countryValidation();
 
     if ($('#country').val() !== '') {
       loadStates($('#country').val(), '', '');
@@ -46,9 +46,9 @@ $(document).ready(function () {
     fatherMobileValidation();
   });
 
-  $('#grandfather-name').focusout(function () {
-    grandFatherNameValidation();
-  });
+  //$('#grandfather-name').focusout(function () {
+  //  grandFatherNameValidation();
+  //});
 
   $('#mother-name').focusout(function () {
     motherNameValidation();
@@ -74,9 +74,9 @@ $(document).ready(function () {
     familyLandlineNoValidation();
   });
 
-  $('#family-type').on('hidden.bs.select', function (e) {
-    familyTypeValidation();
-  });
+  //$('#family-type').on('hidden.bs.select', function (e) {
+  //  familyTypeValidation();
+  //});
 
   $('#family-address').focusout(function () {
     familyAddressValidation();
@@ -90,9 +90,9 @@ $(document).ready(function () {
     uncleNameValidation();
   });
 
-  $('#maternal-grandfather-name').focusout(function () {
-    maternalGrandFatherNameValidation();
-  });
+  //$('#maternal-grandfather-name').focusout(function () {
+  //  maternalGrandFatherNameValidation();
+  //});
 
   $('#maternal-grandmother-name').focusout(function () {
     maternalGrandMotherNameValidation();
@@ -566,7 +566,7 @@ function resetData() {
 function saveFamilyInfo(code) {
   fatherNameValidation();
   fatherMobileValidation();
-  grandFatherNameValidation();
+  //grandFatherNameValidation();
 
   motherNameValidation();
   motherMobileValidation();
@@ -575,14 +575,14 @@ function saveFamilyInfo(code) {
   noOfBrosValidation();
   noOfSisValidation();
   familyLandlineNoValidation();
-  familyTypeValidation();
+  //familyTypeValidation();
 
   familyAddressValidation();
   familyAddressTypeValidation();
-  countryValidation();
+  //countryValidation();
 
   uncleNameValidation();
-  maternalGrandFatherNameValidation();
+  //maternalGrandFatherNameValidation();
   maternalGrandMotherNameValidation();
 
   maternalNativeValidation();

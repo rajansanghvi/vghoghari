@@ -34,9 +34,9 @@ $(document).ready(function () {
     subCasteValidation();
   });
 
-  $('#manglik').on('hidden.bs.select', function (e) {
-    manglikValidation();
-  });
+  //$('#manglik').on('hidden.bs.select', function (e) {
+  //  manglikValidation();
+  //});
 
   $('#self-gothra').focusout(function () {
     selfGotraValidation();
@@ -58,29 +58,29 @@ $(document).ready(function () {
     weightValidation();
   });
 
-  $('#body-type').on('hidden.bs.select', function (e) {
-    bodyTypeValidation();
-  });
+  //$('#body-type').on('hidden.bs.select', function (e) {
+  //  bodyTypeValidation();
+  //});
 
-  $('#complexion').on('hidden.bs.select', function (e) {
-    complexionValidation();
-  });
+  //$('#complexion').on('hidden.bs.select', function (e) {
+  //  complexionValidation();
+  //});
 
-  $('#optics').on('hidden.bs.select', function (e) {
-    opticsValidation();
-  });
+  //$('#optics').on('hidden.bs.select', function (e) {
+  //  opticsValidation();
+  //});
 
   $('#diet').on('hidden.bs.select', function (e) {
     dietValidation();
   });
 
-  $('#smoke').on('hidden.bs.select', function (e) {
-    smokeValidation();
-  });
+  //$('#smoke').on('hidden.bs.select', function (e) {
+  //  smokeValidation();
+  //});
 
-  $('#drink').on('hidden.bs.select', function (e) {
-    drinkValidation();
-  });
+  //$('#drink').on('hidden.bs.select', function (e) {
+  //  drinkValidation();
+  //});
 
   $('#deformity').focusout(function () {
     optionalDeformityValidation();
@@ -429,18 +429,18 @@ function savePersonalInfo(code) {
     subCasteValidation();
   }
 
-  manglikValidation();
+  // manglikValidation();
   selfGotraValidation();
   maternalGotraValidation();
   heightFtValidation();
   heightInchValidation();
   weightValidation();
-  bodyTypeValidation();
-  complexionValidation();
-  opticsValidation();
+  //bodyTypeValidation();
+  //complexionValidation();
+  //opticsValidation();
   dietValidation();
-  smokeValidation();
-  drinkValidation();
+  //smokeValidation();
+  //drinkValidation();
   optionalDeformityValidation();
 
   if (isValid) {

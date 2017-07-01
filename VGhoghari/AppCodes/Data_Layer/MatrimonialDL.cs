@@ -1135,7 +1135,7 @@ namespace VGhoghari.AppCodes.Data_Layer {
 
       List<BiodataTO> biodatas = new List<BiodataTO>();
 
-      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, sql)) {
+      using(MySqlDataReader dr = dl.ExecuteSqlReturnReader(Utility.ConnectionString, query)) {
         while(dr.Read()) {
           biodatas.Add(new BiodataTO() {
             Code = dr.GetString("code"),

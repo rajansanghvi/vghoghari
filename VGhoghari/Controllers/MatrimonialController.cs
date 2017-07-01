@@ -194,7 +194,7 @@ namespace VGhoghari.Controllers {
       if(count > 0) {
         biodatas = MatrimonialBL.GetAllBiodatas(page);
       }
-      var pagedData = new StaticPagedList<BiodataTO>(biodatas, page ?? 1, MatrimonialBL.BIODATA_LIST_PAGE_SIZE, count);
+      var pagedData = new StaticPagedList<BiodataTO>(biodatas, page.HasValue ? page.Value : 1, MatrimonialBL.BIODATA_LIST_PAGE_SIZE, count);
       return View(pagedData);
     }
 
